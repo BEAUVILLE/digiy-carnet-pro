@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Payer ce professionnel — DIGIY</title>
+  <title>Mon argent — payer ce professionnel</title>
   <meta name="theme-color" content="#04110d" />
   <meta
     name="description"
-    content="Carte publique DIGIY : paiement direct au professionnel via Wave, avec lecture simple et confiance claire."
+    content="Carte publique Mon argent by DIGIY : vérifier le professionnel, payer directement via Wave, puis laisser une trace claire."
   />
 
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=1" />
@@ -709,7 +709,7 @@
             <button id="btnFocusCode" class="hero-action-primary" type="button">🔎 Entrer un code</button>
             <button id="btnScrollPay" class="hero-action-secondary" type="button">💳 Voir la carte</button>
             <a class="hero-action-secondary" href="https://digiylyfe.com/">🌍 Site</a>
-            <a class="hero-action-secondary" href="https://pro-espace.digiylyfe.com/">🧭 HUB</a>
+            <a class="hero-action-secondary" href="https://digiy-hub.digiylyfe.com/">🧭 HUB</a>
             <a class="hero-action-secondary" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
           </div>
         </div>
@@ -786,7 +786,7 @@
 
         <div class="btnrow">
           <button id="btnCopy" class="btn gold" type="button">📋 Copier le numéro</button>
-          <a id="btnCall" class="btn ghost" href="#">📞 Appeler</a>
+          <a id="btnCall" class="btn ghost" href="#">📋 Numéro</a>
           <a id="btnPayNow" class="btn primary" href="#">✅ J’ai payé</a>
         </div>
 
@@ -806,7 +806,7 @@
         </span>
         <div class="return-actions">
           <a class="btn ghost" href="https://digiylyfe.com/">🌍 Site DIGIYLYFE</a>
-          <a class="btn primary" href="https://pro-espace.digiylyfe.com/">🧭 HUB DIGIY</a>
+          <a class="btn primary" href="https://digiy-hub.digiylyfe.com/">🧭 HUB DIGIY</a>
           <a class="btn gold" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
         </div>
       </div>
@@ -829,7 +829,7 @@
         <strong id="stickyPayText">Entre un code professionnel pour ouvrir la carte.</strong>
       </div>
       <div class="sticky-paybar-actions">
-        <a class="sticky-open" href="https://pro-espace.digiylyfe.com/">🧭 HUB</a>
+        <a class="sticky-open" href="https://digiy-hub.digiylyfe.com/">🧭 HUB</a>
         <button id="btnStickyOpen" class="sticky-open" type="button">🔎 Ouvrir</button>
         <a id="btnStickyPaid" class="sticky-paid" href="#">✅ J’ai payé</a>
       </div>
@@ -840,7 +840,7 @@
   <nav class="digiy-bottom-nav" aria-label="Navigation rapide PAY public">
     <div class="digiy-bottom-nav-inner">
       <a href="https://digiylyfe.com/"><span class="ico">🌍</span><span>Site</span></a>
-      <a href="https://pro-espace.digiylyfe.com/"><span class="ico">🧭</span><span>HUB</span></a>
+      <a href="https://digiy-hub.digiylyfe.com/"><span class="ico">🧭</span><span>HUB</span></a>
       <a href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer"><span class="ico">📦</span><span>Tarifs</span></a>
       <button id="btnBottomOpen" type="button"><span class="ico">🔎</span><span>Code</span></button>
       <a class="active" id="btnBottomPaid" href="#"><span class="ico">✅</span><span>Payé</span></a>
@@ -891,6 +891,49 @@
         .replace(/[^a-z0-9-]/g, "")
         .replace(/-+/g, "-")
         .replace(/^-|-$/g, "");
+    }
+
+    function cleanPublicUrl(){
+      try{
+        const url = new URL(window.location.href);
+        let changed = false;
+
+        [
+          "phone",
+          "tel",
+          "owner_phone",
+          "owner_id",
+          "slug",
+          "pay_slug",
+          "subscription_slug",
+          "business_phone",
+          "wave_phone",
+          "wallet_phone",
+          "pay_phone",
+          "access_note",
+          "keybox_code",
+          "keybox_location"
+        ].forEach(function(key){
+          if(url.searchParams.has(key)){
+            url.searchParams.delete(key);
+            changed = true;
+          }
+        });
+
+        if(changed){
+          history.replaceState({}, document.title, url.pathname + url.search + url.hash);
+        }
+      }catch(_){}
+    }
+
+    function safePublicUrl(value, fallback){
+      const raw = String(value || "").trim();
+      if(!raw) return fallback || "#";
+      try{
+        const url = new URL(raw, window.location.href);
+        if(/^https?:$/i.test(url.protocol)) return url.href;
+      }catch(_){}
+      return fallback || "#";
     }
 
     function escapeHtml(value){
@@ -1054,10 +1097,24 @@
     function updateUrlCode(code){
       try{
         const url = new URL(window.location.href);
+        [
+          "phone",
+          "tel",
+          "owner_phone",
+          "owner_id",
+          "slug",
+          "pay_slug",
+          "subscription_slug",
+          "business_phone",
+          "wave_phone",
+          "wallet_phone",
+          "pay_phone"
+        ].forEach(function(key){ url.searchParams.delete(key); });
+
         const cleaned = normalizeCode(code);
         if (cleaned) url.searchParams.set("pro", cleaned);
         else url.searchParams.delete("pro");
-        history.replaceState({}, "", url.toString());
+        history.replaceState({}, "", url.pathname + url.search + url.hash);
       }catch(_){}
     }
 
@@ -1102,19 +1159,34 @@
 
     function buildPayerUrl(row, code){
       const params = new URLSearchParams();
-      const slug = pickSlug(row);
-      const phone = pickPhone(row);
       const cleanedCode = normalizeCode(code);
       const businessName = pickBusinessName(row, code);
 
       params.set("module", MODULE);
       params.set("base_module", MODULE);
-      params.set("public_label", businessName);
       params.set("plan", "payment");
 
       if (cleanedCode) params.set("code", cleanedCode);
-      if (phone) params.set("phone", phone);
-      if (slug) params.set("slug", slug);
+      if (businessName) params.set("public_label", businessName);
+
+      /*
+        Sécurité : on ne transporte plus phone/slug dans l'URL.
+        La carte publique reste disponible via le code et la session locale.
+        payer.html devra relire le code ou la session locale, pas l'adresse.
+      */
+      try{
+        const payload = {
+          ts: Date.now(),
+          code: cleanedCode,
+          business_name: businessName,
+          wave_phone: pickPhone(row),
+          slug: pickSlug(row)
+        };
+        sessionStorage.setItem("digiy_pay_public_card", JSON.stringify(payload));
+        if(cleanedCode){
+          sessionStorage.setItem("digiy_pay_public_card_" + cleanedCode, JSON.stringify(payload));
+        }
+      }catch(_){}
 
       return PAYER_URL + "?" + params.toString();
     }
@@ -1146,12 +1218,17 @@
 
       els.payName.textContent = businessName;
       els.payPhone.textContent = displayPhone;
-      els.btnCall.href = "tel:" + cleanPhone;
+      els.btnCall.href = "#";
+      els.btnCall.onclick = async (event) => {
+        event.preventDefault();
+        const copied = await copyTextSafe(displayPhone);
+        showMsg(copied ? "Numéro copié : " + displayPhone : "Numéro à copier : " + displayPhone);
+      };
       els.btnPayNow.href = payerUrl;
       els.btnStickyPaid.href = payerUrl;
       const bottomPaid = document.getElementById("btnBottomPaid");
       if (bottomPaid) bottomPaid.href = payerUrl;
-      els.stickyPayText.textContent = "Vérifie le nom et le numéro, puis paie directement.";
+      els.stickyPayText.textContent = "Vérifie le nom et le numéro affiché, puis paie directement.";
 
       els.btnCopy.onclick = async () => {
         const original = els.btnCopy.textContent;
@@ -1187,6 +1264,48 @@
       show(els.paybox, true);
     }
 
+    function unwrapRpcCard(data, fallbackCode){
+      if(!data) return null;
+
+      const root = Array.isArray(data) ? data[0] : data;
+      if(!root) return null;
+
+      const card =
+        root.card ||
+        root.item ||
+        root.pro ||
+        root.profile ||
+        root.data ||
+        root;
+
+      if(root.ok === false) return null;
+      if(!card || typeof card !== "object") return null;
+
+      const row = {
+        business_name:
+          card.business_name ||
+          card.display_name ||
+          card.public_label ||
+          card.merchant_name ||
+          card.shop_name ||
+          fallbackCode,
+        business_code: normalizeCode(card.business_code || card.code || fallbackCode),
+        wave_phone: normalizePhone(
+          card.wave_phone ||
+          card.public_wave_phone ||
+          card.pay_phone ||
+          card.wallet_phone ||
+          card.phone ||
+          ""
+        ),
+        slug: normalizeSlug(card.slug || card.pay_slug || card.subscription_slug || ""),
+        is_active: card.is_active !== false && card.status !== "inactive"
+      };
+
+      if(!row.business_code) row.business_code = normalizeCode(fallbackCode);
+      return row;
+    }
+
     async function fetchDirectByCode(code){
       const cleaned = normalizeCode(code);
       if (!cleaned) return null;
@@ -1195,65 +1314,32 @@
       const cached = readCache(cleaned);
       if (cached) return cached;
 
-      const { data, error } = await withTimeout(
-        sb
-          .from("digiy_pay_pro")
-          .select("business_name,business_code,wave_phone,is_active")
-          .eq("business_code", cleaned)
-          .limit(1)
-          .maybeSingle(),
-        FETCH_TIMEOUT_MS,
-        "pay_public_lookup_timeout"
-      );
+      const attempts = [
+        { name: "digiy_pay_public_card_by_code", args: { p_code: cleaned } },
+        { name: "digiy_pay_public_card", args: { p_code: cleaned } },
+        { name: "digiy_pay_get_public_card", args: { p_code: cleaned } },
+        { name: "digiy_pay_public_pro_by_code", args: { p_code: cleaned } }
+      ];
 
-      if (error || !data) return null;
-
-      const row = {
-        ...data,
-        business_code: normalizeCode(data.business_code || cleaned)
-      };
-
-      const phoneDigits = pickPhone(row);
-      if (phoneDigits){
+      for(const attempt of attempts){
         try{
-          const [sub, subPlus] = await Promise.allSettled([
-            withTimeout(
-              sb
-                .from("digiy_subscriptions_public")
-                .select("phone,slug,module")
-                .eq("phone", phoneDigits)
-                .eq("module", MODULE)
-                .limit(1)
-                .maybeSingle(),
-              FETCH_TIMEOUT_MS,
-              "pay_subscription_lookup_timeout"
-            ),
-            withTimeout(
-              sb
-                .from("digiy_subscriptions_public")
-                .select("phone,slug,module")
-                .eq("phone", "+" + phoneDigits)
-                .eq("module", MODULE)
-                .limit(1)
-                .maybeSingle(),
-              FETCH_TIMEOUT_MS,
-              "pay_subscription_lookup_timeout"
-            )
-          ]);
+          const { data, error } = await withTimeout(
+            sb.rpc(attempt.name, attempt.args),
+            FETCH_TIMEOUT_MS,
+            "pay_public_lookup_timeout"
+          );
 
-          const first = sub.status === "fulfilled" ? sub.value : null;
-          const second = subPlus.status === "fulfilled" ? subPlus.value : null;
+          if(error) continue;
 
-          if (!first?.error && first?.data?.slug){
-            row.slug = normalizeSlug(first.data.slug);
-          } else if (!second?.error && second?.data?.slug){
-            row.slug = normalizeSlug(second.data.slug);
+          const row = unwrapRpcCard(data, cleaned);
+          if(row && row.business_name && pickPhone(row).length >= 12){
+            saveCache(cleaned, row);
+            return row;
           }
         }catch(_){}
       }
 
-      saveCache(cleaned, row);
-      return row;
+      return null;
     }
 
     async function loadByCode(rawCode){
@@ -1387,6 +1473,8 @@
         els.searchPanel.scrollIntoView({ behavior:"smooth", block:"center" });
       });
     }
+
+    cleanPublicUrl();
 
     const params = new URLSearchParams(location.search);
     const bootCode = normalizeCode(params.get("pro") || "");
