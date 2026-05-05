@@ -1,141 +1,51 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>DIGIY — Validation en cours</title>
-  <meta name="theme-color" content="#16a34a"/>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+from pathlib import Path
 
-  <script>
-    window.DIGIY_SUPABASE_URL =
-      window.DIGIY_SUPABASE_URL || "https://wesqmwjjtsefyjnluosj.supabase.co";
-    window.DIGIY_SUPABASE_ANON_KEY =
-      window.DIGIY_SUPABASE_ANON_KEY || "sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3";
-    window.DIGIY_SUPABASE_ANON =
-      window.DIGIY_SUPABASE_ANON || window.DIGIY_SUPABASE_ANON_KEY;
-  </script>
+src = Path("/mnt/data/Texte collé(905).txt")
+html = src.read_text(encoding="utf-8")
+if html.startswith(">"):
+    html = html[1:]
 
-  <style>
-    :root{
-      --bg:#061b14; --card:#0b2a1f; --line:rgba(255,255,255,.14);
-      --text:#eafff1; --muted:rgba(234,255,241,.75);
-      --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444; --gold:#facc15;
-      --radius:18px; --shadow:0 18px 50px rgba(0,0,0,.35);
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
-    .wrap{max-width:760px;margin:0 auto;padding:16px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
-    h1{margin:0;font-size:18px;font-weight:900}
-    p{margin:8px 0 0;color:var(--muted);line-height:1.4}
-    .hr{height:1px;background:var(--line);margin:14px 0}
-    .status{padding:12px;border-radius:16px;border:1px solid var(--line);font-weight:900;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-    .tag{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
-    .tag.ok{ color:var(--ok); border-color:rgba(34,197,94,.45); }
-    .tag.warn{ color:var(--warn); border-color:rgba(245,158,11,.45); }
-    .tag.bad{ color:var(--bad); border-color:rgba(239,68,68,.45); }
-    .tag.gold{ color:var(--gold); border-color:rgba(250,204,21,.45); }
-    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
-    .btn{width:100%;min-height:50px;border-radius:16px;cursor:pointer;border:1px solid var(--line);background:rgba(0,0,0,.10);color:var(--text);padding:12px 14px;font-weight:900}
-    .btn:disabled{opacity:.6;cursor:not-allowed}
-    .row{display:flex;gap:10px;flex-wrap:wrap}
-    .row > *{flex:1;min-width:220px}
-    .small{font-size:13px;color:var(--muted);line-height:1.35}
-    .box{border:1px solid var(--line);border-radius:16px;padding:14px;background:rgba(0,0,0,.12)}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    @media (max-width:640px){ .grid{ grid-template-columns:1fr; } }
-    .label{font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:900}
-    .value{font-size:14px;font-weight:900;line-height:1.4;word-break:break-word}
-    .flow{padding:10px 12px;border-radius:14px;border:1px solid rgba(250,204,21,.28);background:rgba(250,204,21,.06);color:#fff5c4;font-size:13px}
-  </style>
-</head>
+# Title/copy
+html = html.replace("<title>DIGIY — Validation en cours</title>", "<title>Mon argent — validation en cours</title>")
+html = html.replace("Dès que c’est confirmé, on te redirige automatiquement vers ta destination.", "Dès que c’est confirmé, la preuve reste lisible et le professionnel peut la traiter proprement.")
+html = html.replace("carte publique DIGIY → payer.html → wait.html → destination finale", "carte publique DIGIY → preuve → attente de validation")
 
-<body>
-  <div class="wrap">
-    <div class="card">
-      <h1>⏳ Validation en cours…</h1>
-      <p class="small">On vérifie ton paiement. Dès que c’est confirmé, on te redirige automatiquement vers ta destination.</p>
+# Labels visible: remove phone/slug/url final exposure
+html = html.replace('<div class="label">Statut / destination</div>', '<div class="label">Statut</div>')
+html = html.replace('<div class="label">Destination</div>', '<div class="label">Espace concerné</div>')
+html = html.replace('<div class="label">Téléphone</div>', '<div class="label">Contact pro</div>')
+html = html.replace('<div class="label">Identifiant</div>', '<div class="label">Référence protégée</div>')
+html = html.replace('<div class="label">URL finale</div>', '<div class="label">Suite</div>')
 
-      <div class="hr"></div>
+# Add top return links after flow maybe before status? Simple top actions after flow block.
+html = html.replace(
+'''<div class="hr"></div>
 
-      <div class="flow">
-        Parcours actif :
-        <span class="mono">carte publique DIGIY → payer.html → wait.html → destination finale</span>
-      </div>
-
-      <div class="hr"></div>
-
-      <div class="status" id="statusBox">
-        <div id="waitText">Connexion…</div>
-        <span class="tag warn" id="statusTag">EN COURS</span>
-      </div>
-
-      <div class="hr"></div>
-
-      <div class="box">
-        <div class="grid">
-          <div>
-            <div class="label">Référence</div>
-            <div class="value mono" id="refBox">—</div>
-          </div>
-          <div>
-            <div class="label">Statut / destination</div>
-            <div class="value mono" id="destBox">—</div>
-          </div>
-
-          <div>
-            <div class="label">Destination</div>
-            <div class="value mono" id="moduleBox">—</div>
-          </div>
-          <div>
-            <div class="label">Plan</div>
-            <div class="value mono" id="planBox">—</div>
-          </div>
-
-          <div>
-            <div class="label">Boost</div>
-            <div class="value mono" id="boostBox">—</div>
-          </div>
-          <div>
-            <div class="label">Téléphone</div>
-            <div class="value mono" id="phoneBox">—</div>
-          </div>
-
-          <div>
-            <div class="label">Identifiant</div>
-            <div class="value mono" id="slugBox">—</div>
-          </div>
-          <div>
-            <div class="label">Montant</div>
-            <div class="value mono" id="amountBox">—</div>
-          </div>
-
-          <div style="grid-column:1/-1">
-            <div class="label">URL finale</div>
-            <div class="value mono" id="urlBox">—</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hr"></div>
+      <div class="status" id="statusBox">''',
+'''<div class="hr"></div>
 
       <div class="row">
-        <button class="btn" id="btnRetry" type="button">🔄 Réessayer</button>
-        <button class="btn" id="btnSupport" type="button">💬 Support WhatsApp</button>
+        <a class="btn" href="./index.html">⬅️ Retour carte</a>
+        <a class="btn" href="https://digiylyfe.com/">🌍 Site</a>
+        <a class="btn" href="https://digiy-hub.digiylyfe.com/">🧭 HUB</a>
       </div>
 
-      <p class="small" style="margin-top:12px;">
-        Astuce : si tu viens juste d’envoyer le reçu, laisse un peu. Dès que la validation confirme, ça ouvre automatiquement.
-      </p>
-    </div>
-  </div>
+      <div class="hr"></div>
 
-  <script>
-  (function(){
-    "use strict";
+      <div class="status" id="statusBox">'''
+)
 
-    const SUPPORT_WA = "+221771342889";
+# add a{ styles? Buttons are button only, but .btn applies to buttons; CSS .btn no text-decoration? It doesn't set display inline-flex? We'll update
+html = html.replace(
+'''.btn{width:100%;min-height:50px;border-radius:16px;cursor:pointer;border:1px solid var(--line);background:rgba(0,0,0,.10);color:var(--text);padding:12px 14px;font-weight:900}''',
+'''.btn{width:100%;min-height:50px;border-radius:16px;cursor:pointer;border:1px solid var(--line);background:rgba(0,0,0,.10);color:var(--text);padding:12px 14px;font-weight:900;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;text-align:center;font-family:inherit}'''
+)
+
+# Replace support label
+html = html.replace("💬 Support WhatsApp", "💬 Support")
+
+# Add clean URL and harden safeRedirectUrl/redirect behavior + remove MODULE_URLS
+start = '''    const SUPPORT_WA = "+221771342889";
     const MAX_TRIES = 150;
     const DELAY_MS = 2000;
     const LOCAL_KEY = "DIGIY_PAY_LAST_PROOF";
@@ -156,38 +66,73 @@
     };
 
     const qp = new URLSearchParams(location.search);
+    const ref = (qp.get("ref") || "").trim();'''
+replacement = '''    const SUPPORT_WA = "+221771342889";
+    const MAX_TRIES = 150;
+    const DELAY_MS = 2000;
+    const LOCAL_KEY = "DIGIY_PAY_LAST_PROOF";
+    const LOCAL_REF_PREFIX = "DIGIY_PAY_PROOF_REF_";
+
+    const qp = new URLSearchParams(location.search);
     const ref = (qp.get("ref") || "").trim();
 
-    const $ = (id)=>document.getElementById(id);
+    cleanPublicUrl();'''
+if start not in html:
+    raise RuntimeError("constants block not found")
+html = html.replace(start, replacement)
 
-    let tries = 0;
-    let running = false;
-    let stopRequested = false;
-
-    function wa(msg){
-      const num = SUPPORT_WA.replace(/\+/g,"");
+# Insert cleanPublicUrl function after wa maybe before setTag
+html = html.replace(
+'''    function wa(msg){
+      const num = SUPPORT_WA.replace(/\\+/g,"");
       location.href = "https://wa.me/" + num + "?text=" + encodeURIComponent(msg);
     }
 
-    function setTag(tone, label){
-      const tag = $("statusTag");
-      tag.className = "tag " + (tone || "warn");
-      tag.textContent = label || "—";
+    function setTag(tone, label){''',
+'''    function wa(msg){
+      const num = SUPPORT_WA.replace(/\\+/g,"");
+      location.href = "https://wa.me/" + num + "?text=" + encodeURIComponent(msg);
     }
 
-    function setText(t){ $("waitText").textContent = t; }
-    function setDest(t){ $("destBox").textContent = t || "—"; }
+    function cleanPublicUrl(){
+      try{
+        const url = new URL(location.href);
+        let changed = false;
 
-    function setField(id, value){
-      const el = $(id);
-      if(el) el.textContent = value || "—";
+        [
+          "phone",
+          "tel",
+          "owner_phone",
+          "owner_id",
+          "slug",
+          "pay_slug",
+          "subscription_slug",
+          "business_phone",
+          "wave_phone",
+          "wallet_phone",
+          "pay_phone",
+          "return",
+          "redirect_url",
+          "url"
+        ].forEach(function(key){
+          if(url.searchParams.has(key)){
+            url.searchParams.delete(key);
+            changed = true;
+          }
+        });
+
+        if(changed){
+          history.replaceState({}, document.title, url.pathname + url.search + url.hash);
+        }
+      }catch(_){}
     }
 
-    function sleep(ms){
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    function setTag(tone, label){'''
+)
 
-    function safeRedirectUrl(url){
+# Harden safeRedirectUrl
+html = html.replace(
+'''    function safeRedirectUrl(url){
       try{
         if(!url) return "";
         const u = new URL(url, window.location.origin);
@@ -196,76 +141,44 @@
       }catch(_){
         return "";
       }
-    }
+    }''',
+'''    function safeRedirectUrl(url){
+      try{
+        if(!url) return "";
+        const u = new URL(url, window.location.origin);
+        const host = u.hostname.toLowerCase();
+        const sameOrigin = u.origin === window.location.origin;
+        const digiyHost = host === "digiylyfe.com" || host.endsWith(".digiylyfe.com");
 
-    function normalizeModule(raw){
-      const v = String(raw || "").trim().toUpperCase();
-      const alias = {
-        DRIVER: "DRIVER",
-        LOC: "LOC",
-        RESTO: "RESTO",
-        RESA: "RESTO_RESA",
-        RESA_TABLE: "RESTO_RESA",
-        RESTO_RESA: "RESTO_RESA",
-        POS: "POS_PRO",
-        POS_PRO: "POS_PRO",
-        CAISSE: "POS_PRO",
-        CAISSE_BOUTIQUE: "POS_PRO",
-        MON_COMMERCE: "POS_PRO",
-        PAY: "PAY",
-        MARKET: "MARKET",
-        BUILD: "BUILD",
-        MULTI_SERVICE: "BUILD",
-        EXPLORE: "EXPLORE",
-        FRET_PRO: "FRET_PRO",
-        FRET_CHAUF: "FRET_PRO",
-        FRET_CLIENT: "FRET_CLIENT_PRO",
-        FRET_CLIENT_PRO: "FRET_CLIENT_PRO"
-      };
-      return alias[v] || v || "";
-    }
+        if(!(u.protocol === "http:" || u.protocol === "https:")) return "";
+        if(!(sameOrigin || digiyHost)) return "";
 
-    function displayModule(raw, publicLabel){
-      const label = String(publicLabel || "").trim();
-      if(label) return label;
+        [
+          "phone",
+          "tel",
+          "owner_phone",
+          "owner_id",
+          "slug",
+          "pay_slug",
+          "subscription_slug",
+          "business_phone",
+          "wave_phone",
+          "wallet_phone",
+          "pay_phone"
+        ].forEach(function(key){
+          u.searchParams.delete(key);
+        });
 
-      const m = normalizeModule(raw);
-      const labels = {
-        DRIVER: "DRIVER AMBASSADEUR",
-        LOC: "LOC",
-        RESTO: "RESTO",
-        RESTO_RESA: "RÉSA MULTI-BUSINESS",
-        POS_PRO: "MON COMMERCE",
-        PAY: "MON ARGENT by DIGIY",
-        MARKET: "MARKET",
-        BUILD: "MULTI-SERVICE",
-        EXPLORE: "EXPLORE",
-        FRET_PRO: "FRET PRO",
-        FRET_CLIENT_PRO: "FRET CLIENT"
-      };
-      return labels[m] || m || "—";
-    }
+        return u.toString();
+      }catch(_){
+        return "";
+      }
+    }'''
+)
 
-    function normalizePhone(raw){
-      return String(raw || "").trim().replace(/[^\d]/g, "");
-    }
-
-    function displayPhone(raw){
-      const d = normalizePhone(raw);
-      if(!d) return "—";
-      return d.startsWith("221") ? "+" + d : d;
-    }
-
-    function normalizeSlug(raw){
-      return String(raw || "").trim().toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-").replace(/^-|-$/g, "");
-    }
-
-    function fmtFcfa(raw){
-      const n = Number(String(raw || "").replace(/[^\d]/g, "") || 0);
-      return n ? n.toLocaleString("fr-FR") + " FCFA" : "—";
-    }
-
-    function buildFallbackUrl(module, slug){
+# Remove fallback URL functions that add slug
+html = html.replace(
+'''    function buildFallbackUrl(module, slug){
       const m = normalizeModule(module);
       const s = normalizeSlug(slug);
       if(!m || !s) return "";
@@ -284,173 +197,65 @@
       }catch(_){
         return "";
       }
+    }''',
+'''    function buildFallbackUrl(){
+      return "";
     }
 
-    function readLocalPayload(){
-      try{
-        const byRef = localStorage.getItem(LOCAL_REF_PREFIX + ref) || sessionStorage.getItem(LOCAL_REF_PREFIX + ref);
-        if(byRef){
-          const parsed = JSON.parse(byRef);
-          if(parsed && typeof parsed === "object") return parsed;
-        }
-      }catch(_){}
+    function buildReturnUrl(returnUrl){
+      return safeRedirectUrl(returnUrl);
+    }'''
+)
 
-      try{
-        const raw = localStorage.getItem(LOCAL_KEY) || sessionStorage.getItem(LOCAL_KEY);
-        if(!raw) return null;
-        const parsed = JSON.parse(raw);
-        if(parsed && typeof parsed === "object" && String(parsed.ref || "").trim() === ref){
-          return parsed;
-        }
-      }catch(_){}
-
-      return null;
-    }
-
-    function getState(data){
-      const local = readLocalPayload() || {};
-
-      return {
-        ref: ref,
-        module: normalizeModule(data?.module || local.module || qp.get("module") || qp.get("base_module") || ""),
-        publicLabel: String(data?.public_label || local.public_label || qp.get("public_label") || "").trim(),
-        plan: String(data?.plan || local.plan || qp.get("plan") || "").trim(),
-        boost: String(data?.boost_code || local.boost_code || qp.get("boost_code") || qp.get("boost") || "").trim(),
-        phone: displayPhone(data?.phone || data?.pro_phone || local.phone || qp.get("phone") || ""),
+# getState no qp phone/slug/return. Use local/data only and hide in display.
+html = html.replace(
+'''        phone: displayPhone(data?.phone || data?.pro_phone || local.phone || qp.get("phone") || ""),
         slug: normalizeSlug(data?.slug || local.slug || qp.get("slug") || ""),
         amount: fmtFcfa(data?.amount || data?.amount_xof || local.amount || local.amount_xof || qp.get("amount") || ""),
         url: safeRedirectUrl(data?.url || data?.redirect_url || local.url || local.redirect_url || ""),
-        returnUrl: safeRedirectUrl(data?.return_url || local.return_url || qp.get("return") || ""),
-        status: String(data?.status || local.status || qp.get("status") || "").trim().toLowerCase()
-      };
-    }
+        returnUrl: safeRedirectUrl(data?.return_url || local.return_url || qp.get("return") || ""),''',
+'''        phone: data?.phone || data?.pro_phone || local.phone ? "Protégé" : "—",
+        slug: normalizeSlug(data?.slug || local.slug || "") ? "OK" : "—",
+        amount: fmtFcfa(data?.amount || data?.amount_xof || local.amount || local.amount_xof || qp.get("amount") || ""),
+        url: safeRedirectUrl(data?.url || data?.redirect_url || local.url || local.redirect_url || ""),
+        returnUrl: safeRedirectUrl(data?.return_url || local.return_url || ""),'''
+)
 
-    function resolveFinalUrl(st){
-      const directUrl = safeRedirectUrl(st.url || "");
-      if(directUrl) return directUrl;
-
-      const returnUrl = buildReturnUrl(st.returnUrl, st.slug);
+# resolveFinalUrl should not use slug for fallback
+html = html.replace(
+'''      const returnUrl = buildReturnUrl(st.returnUrl, st.slug);
       if(returnUrl) return returnUrl;
 
-      return buildFallbackUrl(st.module, st.slug);
-    }
+      return buildFallbackUrl(st.module, st.slug);''',
+'''      const returnUrl = buildReturnUrl(st.returnUrl);
+      if(returnUrl) return returnUrl;
 
-    function hydrateFromData(data){
-      const st = getState(data);
-      const modDisplay = displayModule(st.module, st.publicLabel);
-      const finalUrl = resolveFinalUrl(st);
+      return "";'''
+)
 
-      setField("refBox", st.ref || "—");
-      setField("moduleBox", modDisplay);
-      setField("planBox", st.plan || "—");
-      setField("boostBox", st.module === "PAY" ? "—" : (st.boost || "—"));
-      setField("phoneBox", st.phone || "—");
-      setField("slugBox", st.slug || "—");
-      setField("amountBox", st.amount || "—");
-      setField("urlBox", finalUrl || "—");
-      setDest((modDisplay || "—") + " / " + (st.slug || "—"));
+# hydrate: set display fields
+html = html.replace(
+'''      setField("phoneBox", st.phone || "—");
+      setField("slugBox", st.slug || "—");''',
+'''      setField("phoneBox", st.phone || "—");
+      setField("slugBox", st.slug || "—");'''
+)
 
-      return {
-        module: st.module,
-        displayModule: modDisplay,
-        plan: st.plan,
-        boost: st.boost,
-        phone: st.phone,
-        slug: st.slug,
-        amount: st.amount,
-        status: st.status,
-        finalUrl
-      };
-    }
+# But setDest currently includes slug
+html = html.replace(
+'''      setDest((modDisplay || "—") + " / " + (st.slug || "—"));''',
+'''      setDest(modDisplay || "—");'''
+)
 
-    function isConfirmedStatus(raw){
-      const s = String(raw || "").trim().toLowerCase();
-      return ["active","confirmed","validated","paid","approved","ok","success","posted"].includes(s);
-    }
+# urlBox final URL should not show raw URL maybe show "OK / —"
+html = html.replace(
+'''      setField("urlBox", finalUrl || "—");''',
+'''      setField("urlBox", finalUrl ? "Lien sécurisé prêt" : "Validation manuelle");'''
+)
 
-    function isRejectedStatus(raw){
-      const s = String(raw || "").trim().toLowerCase();
-      return ["rejected","failed","cancelled","canceled","denied","error"].includes(s);
-    }
-
-    function isPendingStatus(raw){
-      const s = String(raw || "").trim().toLowerCase();
-      return ["pending","processing","review","waiting","queued","hold","manual_review","pending_proof"].includes(s);
-    }
-
-    const SUPABASE_URL = (window.DIGIY_SUPABASE_URL || "").trim();
-    const SUPABASE_ANON_KEY =
-      (window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON || "").trim();
-
-    if(!ref){
-      $("refBox").textContent = "—";
-      setText("⚠️ Référence manquante. Ouvre la page avec ?ref=XXXX");
-      setTag("bad","REF MANQUANTE");
-      hydrateFromData({});
-      return;
-    }
-
-    hydrateFromData({});
-
-    if(!window.supabase){
-      setText("⚠️ Supabase-js non chargé.");
-      setTag("bad","ERREUR");
-      return;
-    }
-
-    if(!SUPABASE_URL || !SUPABASE_ANON_KEY){
-      setText("⚠️ Config Supabase manquante (URL / ANON KEY).");
-      setTag("bad","CONFIG");
-      return;
-    }
-
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth:{ persistSession:false, autoRefreshToken:false, detectSessionInUrl:false }
-    });
-
-    async function pollOnce(){
-      const { data, error } = await sb.rpc("digiy_pay_check_public_proof", { p_ref: ref });
-      if(error) throw error;
-      return data;
-    }
-
-    async function loop(){
-      if(running) return;
-      running = true;
-      stopRequested = false;
-      $("btnRetry").disabled = true;
-
-      const local = readLocalPayload();
-      if(local){
-        setText("🧾 Preuve reçue. Vérification backend en cours…");
-        setTag("gold","PREUVE");
-      } else {
-        setText("⏳ Validation en cours…");
-        setTag("warn","EN COURS");
-      }
-
-      try{
-        while(tries < MAX_TRIES && !stopRequested){
-          tries++;
-
-          try{
-            const data = await pollOnce();
-            const hydrated = hydrateFromData(data || {});
-            const status = String(data?.status || "").trim().toLowerCase();
-
-            if(!data?.ok){
-              const localPayload = readLocalPayload();
-              if(localPayload){
-                setText("🧾 Preuve reçue. Validation manuelle en attente… (" + tries + "/" + MAX_TRIES + ")");
-                setTag("gold","PREUVE");
-              } else {
-                setText("⏳ En attente… (" + tries + "/" + MAX_TRIES + ")");
-                setTag("warn","PENDING");
-              }
-            } else if(isConfirmedStatus(status || "confirmed")){
-              const finalUrl = hydrated.finalUrl;
-
-              if(finalUrl){
+# On confirmed, redirect only if finalUrl exists and is safe; otherwise ok text no bad
+html = html.replace(
+'''              if(finalUrl){
                 setField("urlBox", finalUrl);
                 setText("✅ Confirmé. Redirection…");
                 setTag("ok","CONFIRMÉ");
@@ -460,86 +265,49 @@
 
               setText("✅ Confirmé mais URL finale manquante. Contacte support.");
               setTag("bad","URL ?");
-              return;
-            } else if(isRejectedStatus(status)){
-              setText("❌ Paiement refusé. Contacte le support WhatsApp.");
-              setTag("bad","REFUSÉ");
-              return;
-            } else if(isPendingStatus(status) || !status){
-              const localPayload = readLocalPayload();
-              if(localPayload){
-                setText("🧾 Preuve reçue. Validation manuelle en attente… (" + tries + "/" + MAX_TRIES + ")");
-                setTag("gold","PREUVE");
-              } else {
-                setText("⏳ En attente… (" + tries + "/" + MAX_TRIES + ")");
-                setTag("warn","PENDING");
+              return;''',
+'''              if(finalUrl){
+                setField("urlBox", "Lien sécurisé prêt");
+                setText("✅ Confirmé. Redirection…");
+                setTag("ok","CONFIRMÉ");
+                location.href = finalUrl;
+                return;
               }
-            } else {
-              setText("⏳ Statut reçu : " + status + " (" + tries + "/" + MAX_TRIES + ")");
-              setTag("warn","EN ATTENTE");
-            }
 
-          } catch(e){
-            console.error("WAIT RPC error:", e);
+              setText("✅ Confirmé. Le professionnel peut maintenant traiter la preuve.");
+              setTag("ok","CONFIRMÉ");
+              return;'''
+)
 
-            const localPayload = readLocalPayload();
-            hydrateFromData({});
-
-            if(localPayload){
-              setText("🧾 Preuve reçue. Backend encore en attente… nouvelle tentative.");
-              setTag("gold","PREUVE");
-            } else if(tries <= 3){
-              setText("⏳ Vérification réseau… nouvelle tentative.");
-              setTag("warn","RETRY");
-            } else {
-              setText("⚠️ Toujours en attente. Nouvelle tentative…");
-              setTag("warn","RETRY");
-            }
-          }
-
-          await sleep(DELAY_MS);
-        }
-
-        if(!stopRequested){
-          const localPayload = readLocalPayload();
-          if(localPayload){
-            setText("🧾 Preuve reçue, mais validation toujours en attente. Contacte le support si besoin.");
-            setTag("gold","PREUVE");
-          } else {
-            setText("⏳ Toujours en attente. Contacte le support si besoin.");
-            setTag("warn","ATTENTE");
-          }
-        }
-
-      } finally {
-        running = false;
-        $("btnRetry").disabled = false;
-      }
-    }
-
-    $("btnRetry").addEventListener("click", async ()=>{
-      stopRequested = true;
-      await sleep(80);
-      tries = 0;
-      loop();
-    });
-
-    $("btnSupport").addEventListener("click", ()=>{
-      wa(
-        "DIGIY — Support validation\n\n" +
-        "Référence: " + $("refBox").textContent + "\n" +
-        "Module: " + $("moduleBox").textContent + "\n" +
-        "Plan: " + $("planBox").textContent + "\n" +
-        "Boost: " + $("boostBox").textContent + "\n" +
-        "Slug: " + $("slugBox").textContent + "\n" +
-        "Téléphone: " + $("phoneBox").textContent + "\n" +
-        "Montant: " + $("amountBox").textContent + "\n" +
+# Support message remove slug phone
+old = '''      wa(
+        "DIGIY — Support validation\\n\\n" +
+        "Référence: " + $("refBox").textContent + "\\n" +
+        "Module: " + $("moduleBox").textContent + "\\n" +
+        "Plan: " + $("planBox").textContent + "\\n" +
+        "Boost: " + $("boostBox").textContent + "\\n" +
+        "Slug: " + $("slugBox").textContent + "\\n" +
+        "Téléphone: " + $("phoneBox").textContent + "\\n" +
+        "Montant: " + $("amountBox").textContent + "\\n" +
         "Merci de vérifier et confirmer si OK."
-      );
-    });
+      );'''
+new = '''      wa(
+        "DIGIY — Support validation\\n\\n" +
+        "Référence: " + $("refBox").textContent + "\\n" +
+        "Module: " + $("moduleBox").textContent + "\\n" +
+        "Plan: " + $("planBox").textContent + "\\n" +
+        "Boost: " + $("boostBox").textContent + "\\n" +
+        "Montant: " + $("amountBox").textContent + "\\n" +
+        "Merci de vérifier cette preuve sans afficher les données sensibles."
+      );'''
+if old not in html:
+    raise RuntimeError("support message block not found")
+html = html.replace(old, new)
 
-    loop();
-  })();
-  </script>
-</body>
-</html>
+# Replace text "Téléphone" occurrences maybe already label but support
+html = html.replace("Slug:", "Référence:")
+html = html.replace("Téléphone:", "Contact:")
+
+out = Path("/mnt/data/wait-pay-public-securise.html")
+out.write_text(html, encoding="utf-8")
+print(f"Fichier créé : {out.name}")
