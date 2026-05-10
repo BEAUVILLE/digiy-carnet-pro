@@ -1,2027 +1,453 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>MON ARGENT — Espace financier</title>
-  <meta name="theme-color" content="#04110d">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>DIGIY PAY — Carnet financier numérique</title>
+  <meta name="theme-color" content="#f4ead2" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="digiy-build" content="pay-public-cockpit-gate-20260510-v1-carnet-audio" />
   <meta
     name="description"
-    content="MON ARGENT by DIGIY — cockpit financier sécurisé, QR de paiement, carte PNG, lien public et pilotage PAY sans exposer la session dans l’adresse."
-  >
-
-  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=1">
-  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png?v=1">
-  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png?v=1">
-  <link rel="manifest" href="./site.webmanifest?v=1">
-
-  <script>
-    window.DIGIY_SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-    window.DIGIY_SUPABASE_ANON_KEY = "sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3";
-    window.DIGIY_SUPABASE_ANON = window.DIGIY_SUPABASE_ANON_KEY;
-    window.DIGIY_MODULE = "PAY";
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+    content="DIGIY PAY — carnet financier numérique simple, providentiel et fonctionnant au clic. Le cockpit professionnel est réservé à PAY PRO."
+  />
 
   <style>
     :root{
-      --bg:#04110d;
-      --bg2:#071a13;
-      --card:#0b1f18;
-      --line:rgba(255,255,255,.08);
-      --line-strong:rgba(34,197,94,.28);
-      --text:#f3fff7;
-      --muted:rgba(243,255,247,.72);
-      --green:#22c55e;
-      --green2:#16a34a;
+      --bg:#f4ead2;
+      --bg2:#ead9b7;
+      --card:#fff7e6;
+      --line:rgba(83,58,26,.24);
+      --text:#1f2a1f;
+      --muted:#3d3324;
       --gold:#facc15;
-      --gold-soft:rgba(250,204,21,.10);
-      --danger:#f87171;
-      --danger-soft:rgba(248,113,113,.10);
-      --shadow:0 18px 50px rgba(0,0,0,.32);
-      --radius:24px;
-      --max:1120px;
+      --green:#16a34a;
+      --shadow:0 14px 34px rgba(77,52,22,.16);
+      --max:760px;
+      --ff:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
     }
 
-    *{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;padding:0}
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+
     body{
       min-height:100vh;
-      padding:14px;
-      background:
-        radial-gradient(circle at top left, rgba(34,197,94,.10), transparent 34%),
-        radial-gradient(circle at bottom right, rgba(250,204,21,.06), transparent 28%),
-        linear-gradient(180deg, var(--bg), #061710 55%, #04110d);
+      display:grid;
+      place-items:center;
+      padding:18px;
+      font-family:var(--ff);
       color:var(--text);
+      background:
+        radial-gradient(circle at 10% 0%,rgba(250,204,21,.22),transparent 34%),
+        radial-gradient(circle at 100% 100%,rgba(22,101,52,.10),transparent 30%),
+        linear-gradient(180deg,var(--bg),var(--bg2));
+      font-size:17px;
+      font-weight:850;
+      -webkit-font-smoothing:antialiased;
     }
-
-    body.modalOpen{overflow:hidden}
-
-    .site-back-float{
-      position:fixed;
-      top:calc(env(safe-area-inset-top, 0px) + 12px);
-      left:calc(env(safe-area-inset-left, 0px) + 12px);
-      z-index:9999;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      min-height:44px;
-      padding:10px 14px;
-      border-radius:999px;
-      text-decoration:none;
-      font-weight:950;
-      font-size:14px;
-      color:#e5e7eb;
-      background:rgba(4,17,13,.82);
-      border:1px solid rgba(255,255,255,.12);
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
-      box-shadow:0 14px 30px rgba(0,0,0,.28);
-      transition:transform .18s ease,background .18s ease,border-color .18s ease;
-    }
-    .site-back-float:hover{
-      transform:translateY(-1px);
-      background:rgba(8,24,18,.96);
-      border-color:rgba(250,204,21,.30);
-    }
-
-    .wrap{width:min(var(--max),100%);margin:0 auto;padding-top:62px}
 
     .card{
-      background:linear-gradient(180deg, rgba(11,31,24,.98), rgba(9,24,19,.98));
-      border:1px solid var(--line);
-      border-radius:22px;
-      padding:18px;
+      width:min(var(--max),100%);
+      border:2px solid var(--line);
+      border-radius:34px;
+      background:linear-gradient(160deg,rgba(255,250,238,.98),rgba(246,232,202,.96));
       box-shadow:var(--shadow);
+      overflow:hidden;
     }
 
     .top{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .topLeft{min-width:0}
-    h1{
-      font-weight:1000;
-      color:var(--gold);
-      letter-spacing:.03em;
-      line-height:1.05;
-    }
-    .sub{
-      margin-top:6px;
-      color:#e5e7eb;
-      font-weight:850;
-      line-height:1.45;
-    }
-    .pill{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      margin-top:10px;
-      padding:7px 12px;
-      border-radius:999px;
-      border:1px solid rgba(250,204,21,.35);
-      background:rgba(250,204,21,.10);
-      color:#fde68a;
-      font-weight:950;
-      font-size:13px;
+      padding:28px 22px 10px;
+      text-align:center;
     }
 
-    .topBtns{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
-    .nav-mini{
+    .mark{
+      width:78px;
+      height:78px;
+      margin:0 auto 15px;
+      border-radius:28px;
       display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:10px;
-      margin-top:14px;
-    }
-
-    .nav-card{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      padding:12px 12px;
-      border-radius:18px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-      text-decoration:none;
-      color:var(--text);
-      min-height:78px;
-      transition:transform .16s ease,border-color .16s ease,background .16s ease;
-    }
-    .nav-card:hover{
-      transform:translateY(-1px);
-      border-color:rgba(250,204,21,.24);
-      background:rgba(255,255,255,.04);
-    }
-    .nav-card strong{
-      font-size:13px;
-      font-weight:1000;
-      color:var(--gold);
-      line-height:1.2;
-    }
-    .nav-card span{
-      font-size:11px;
-      line-height:1.45;
-      color:var(--muted);
-      font-weight:850;
-    }
-
-    .sep{
-      height:1px;
-      background:rgba(255,255,255,.08);
-      margin:16px 0;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:14px;
-    }
-    @media(max-width:920px){
-      .grid{grid-template-columns:1fr}
-    }
-
-    .panel{
-      padding:14px;
-      border-radius:18px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.025);
-    }
-    .panel h2{
-      font-size:13px;
-      letter-spacing:.05em;
-      text-transform:uppercase;
-      color:#bbf7d0;
-      font-weight:950;
-    }
-
-    .formGrid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-top:12px;
-    }
-    @media(max-width:640px){
-      .formGrid{grid-template-columns:1fr}
-    }
-
-    label{
-      display:block;
-      font-size:12px;
-      color:#bbf7d0;
-      font-weight:950;
-      margin-bottom:6px;
-      letter-spacing:.03em;
-      text-transform:uppercase;
-    }
-
-    input{
-      width:100%;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-      color:#fff;
+      place-items:center;
+      background:linear-gradient(135deg,var(--green),#bbf7d0);
+      color:#052215;
+      font-size:39px;
       font-weight:900;
-      outline:none;
+      box-shadow:0 12px 28px rgba(77,52,22,.16);
     }
-    input::placeholder{color:#a8b3cf}
-    input[readonly]{opacity:.92;cursor:not-allowed}
 
-    .hint{
-      margin-top:6px;
+    .kicker{
+      margin:0 0 10px;
+      color:#6b4e09;
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+
+    h1{
+      margin:0;
+      color:#241a0d;
+      font-size:clamp(34px,7vw,54px);
+      line-height:1.02;
+      letter-spacing:-.045em;
+      font-weight:900;
+    }
+
+    .sub{
+      max-width:60ch;
+      margin:14px auto 0;
       color:var(--muted);
-      font-weight:850;
-      font-size:12px;
-      line-height:1.45;
+      font-size:17px;
+      line-height:1.56;
+      font-weight:900;
     }
 
-    .btnrow{
-      display:flex;
+    .signature{
+      margin:20px 22px 0;
+      padding:18px;
+      border-radius:24px;
+      border:2px solid rgba(121,83,12,.26);
+      background:
+        radial-gradient(circle at right top,rgba(250,204,21,.20),transparent 34%),
+        rgba(254,243,199,.90);
+      color:#4a3508;
+      text-align:center;
+      font-size:clamp(22px,4.8vw,34px);
+      line-height:1.12;
+      letter-spacing:-.03em;
+      font-weight:900;
+    }
+
+    .signature small{
+      display:block;
+      margin-top:10px;
+      color:#6b4e09;
+      font-size:15px;
+      line-height:1.45;
+      letter-spacing:0;
+      font-weight:900;
+    }
+
+    .notice{
+      margin:18px 22px 0;
+      padding:16px;
+      border-radius:22px;
+      border:2px solid rgba(22,101,52,.22);
+      background:rgba(220,252,231,.82);
+      color:#14532d;
+      font-size:16px;
+      line-height:1.55;
+      font-weight:900;
+      text-align:center;
+    }
+
+    .steps{
+      margin:16px 22px 0;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
       gap:10px;
+    }
+
+    .step{
+      border:1px solid rgba(83,58,26,.20);
+      border-radius:20px;
+      background:rgba(255,255,255,.66);
+      padding:14px;
+      display:grid;
+      gap:6px;
+    }
+
+    .step strong{
+      color:#241a0d;
+      font-size:16px;
+      line-height:1.2;
+      font-weight:900;
+    }
+
+    .step span{
+      color:#3d3324;
+      font-size:14px;
+      line-height:1.45;
+      font-weight:900;
+    }
+
+    .audio-panel{
+      margin:16px 22px 0;
+      padding:16px;
+      border-radius:22px;
+      border:2px solid rgba(22,101,52,.24);
+      background:
+        radial-gradient(circle at right top,rgba(34,197,94,.10),transparent 34%),
+        rgba(255,255,255,.62);
+      display:grid;
+      gap:10px;
+      text-align:center;
+    }
+
+    .audio-panel strong{
+      color:#14532d;
+      font-size:17px;
+      font-weight:900;
+    }
+
+    .audio-panel span{
+      color:#3d3324;
+      font-size:15px;
+      line-height:1.5;
+      font-weight:900;
+    }
+
+    .actions{
+      padding:20px 22px 6px;
+      display:flex;
       flex-wrap:wrap;
-      margin-top:14px;
+      justify-content:center;
+      gap:10px;
     }
 
     .btn{
-      flex:1;
-      min-width:160px;
-      padding:12px 14px;
+      min-height:54px;
       border-radius:999px;
-      font-weight:980;
-      display:flex;
-      justify-content:center;
+      border:1px solid rgba(83,58,26,.22);
+      background:rgba(255,255,255,.70);
+      color:#1f2a1f;
+      display:inline-flex;
       align-items:center;
-      border:1px solid rgba(34,197,94,.55);
-      background:rgba(34,197,94,.18);
-      color:#bbf7d0;
-      cursor:pointer;
-      user-select:none;
+      justify-content:center;
+      gap:8px;
+      padding:13px 17px;
       text-decoration:none;
-      transition:transform .16s ease,opacity .16s ease;
-    }
-    .btn:hover{transform:translateY(-1px)}
-    .btn:active{transform:translateY(0)}
-    .btn[disabled]{opacity:.6;cursor:not-allowed}
-    .btn.primary{
-      background:linear-gradient(135deg,#22c55e,#16a34a);
-      color:#022c22;
-      border:none;
-    }
-    .btn.ghost{
-      background:rgba(255,255,255,.02);
-      border:1px solid var(--line);
-      color:#e5e7eb;
-    }
-    .btn.warn{
-      background:rgba(250,204,21,.12);
-      border:1px solid rgba(250,204,21,.35);
-      color:#fde68a;
-    }
-    .btn.bad{
-      background:rgba(248,113,113,.10);
-      border:1px solid rgba(248,113,113,.35);
-      color:#fecaca;
-    }
-
-    .msg,.err,.okbox{
-      margin-top:12px;
-      padding:10px 12px;
-      border-radius:16px;
-      font-weight:950;
-      font-size:13px;
-      line-height:1.55;
-    }
-    .msg{
-      border:1px solid rgba(250,204,21,.35);
-      background:rgba(250,204,21,.08);
-      color:#fde68a;
-    }
-    .err{
-      border:1px solid rgba(248,113,113,.45);
-      background:rgba(248,113,113,.10);
-      color:#fecaca;
-    }
-    .okbox{
-      border:1px solid rgba(34,197,94,.45);
-      background:rgba(34,197,94,.10);
-      color:#dcfce7;
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-top:12px;
-    }
-    .stat{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-      border-radius:16px;
-      padding:12px;
-    }
-    .statLabel{
-      font-size:12px;
-      color:var(--muted);
+      font-size:15px;
       font-weight:900;
-      margin-bottom:6px;
-    }
-    .statValue{
-      font-size:16px;
-      font-weight:950;
-      word-break:break-word;
+      cursor:pointer;
+      font-family:inherit;
+      box-shadow:0 8px 18px rgba(77,52,22,.08);
     }
 
-    .switch{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-top:14px;
-      padding:12px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-    }
-    .switch input{
-      width:20px;
-      height:20px;
-      accent-color:#22c55e;
+    .btn.primary{
+      background:linear-gradient(135deg,#facc15,#fff3c4);
+      border-color:rgba(121,83,12,.28);
     }
 
-    .mini{
-      margin-top:10px;
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.45;
+    .btn.green{
+      background:linear-gradient(135deg,#16a34a,#bbf7d0);
+      border-color:rgba(22,101,52,.28);
     }
 
-    .mono{
-      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-    }
-
-    .cardMaker{
-      margin-top:12px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-      border-radius:18px;
-      padding:14px;
-    }
-
-    .canvasWrap{
-      margin-top:12px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      border:1px dashed rgba(255,255,255,.14);
-      border-radius:18px;
-      padding:12px;
-      overflow:auto;
-      background:rgba(255,255,255,.02);
-      min-height:260px;
-    }
-    #cardCanvas{
-      width:min(100%,420px);
-      height:auto;
-      border-radius:18px;
-      box-shadow:0 16px 40px rgba(0,0,0,.35);
-      background:#fff;
-    }
-
-    .qrBlock{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns:340px 1fr;
-      gap:14px;
-      align-items:start;
-    }
-    @media(max-width:920px){
-      .qrBlock{grid-template-columns:1fr}
-    }
-
-    .qrPreviewBox{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-      border-radius:18px;
-      padding:14px;
-    }
-
-    .qrCanvasWrap{
-      margin-top:10px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      min-height:260px;
-      border:1px dashed rgba(255,255,255,.14);
-      border-radius:18px;
-      padding:12px;
-      background:rgba(255,255,255,.02);
-    }
-    #qrCanvas{
-      width:min(100%,280px);
-      height:auto;
-      border-radius:18px;
-      background:#fff;
-      box-shadow:0 16px 40px rgba(0,0,0,.35);
-    }
-
-    .qrMeta{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-      border-radius:18px;
-      padding:14px;
-    }
-
-    .qrMetaLine{
-      margin-top:10px;
-      padding:12px;
-      border-radius:14px;
-      background:rgba(2,6,23,.52);
-      border:1px solid rgba(255,255,255,.08);
-      color:#e5e7eb;
+    .foot{
+      padding:18px 22px 24px;
+      color:#3d3324;
+      font-size:13px;
+      line-height:1.65;
       font-weight:850;
-      line-height:1.55;
-      word-break:break-word;
+      text-align:center;
     }
 
-    .previewModal{
-      position:fixed;
-      inset:0;
-      z-index:9999;
-      background:rgba(2,6,23,.92);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:14px;
-    }
-    .previewModal.open{display:flex}
-
-    .previewBox{
-      width:min(100%,560px);
-      max-height:100%;
-      background:#03140f;
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:24px;
-      padding:14px;
-      box-shadow:0 20px 60px rgba(0,0,0,.55);
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
-    .previewTop{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .previewTitle{
-      font-weight:950;
-      color:#dcfce7;
-      letter-spacing:.02em;
-    }
-
-    .previewHint{
-      font-size:12px;
-      color:#cbd5f5;
-      line-height:1.5;
-    }
-
-    .previewBody{
-      overflow:auto;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.04);
-      padding:10px;
-      display:flex;
-      justify-content:center;
-      align-items:flex-start;
-      min-height:220px;
-    }
-
-    .previewBody img{
-      width:min(100%,460px);
-      height:auto;
-      display:block;
-      border-radius:18px;
-      background:#fff;
-      box-shadow:0 16px 40px rgba(0,0,0,.35);
-    }
-
-    @media(max-width:700px){
-      .nav-mini{grid-template-columns:repeat(2,minmax(0,1fr))}
-    }
-
-    @media(max-width:640px){
+    @media(max-width:720px){
       body{padding:10px}
-      .wrap{padding-top:58px}
-      .topBtns .btn,
-      .btnrow .btn{
-        flex:1;
-      }
+      .steps{grid-template-columns:1fr}
+      .actions .btn{width:100%}
     }
   </style>
 </head>
+
 <body>
-  <a class="site-back-float" href="https://digiylyfe.com/" target="_blank" rel="noopener">
-    ← Retour au site
-  </a>
+  <main class="card" aria-label="DIGIY PAY cockpit réservé">
+    <section class="top">
+      <div class="mark">📒</div>
+      <p class="kicker">DIGIY PAY · cockpit réservé</p>
+      <h1>Le carnet financier du terrain.</h1>
+      <p class="sub">
+        Cette page publique protège l’accès au cockpit. Le vrai pilotage se fait dans PAY PRO,
+        avec des gestes simples, guidés, et compréhensibles au téléphone.
+      </p>
+    </section>
 
-  <div class="wrap">
-    <div class="card">
-      <div class="top">
-        <div class="topLeft">
-          <h1>MON ARGENT</h1>
-          <div class="sub">MON ARGENT ÉLECTRONIQUE by DIGIY • paiement direct via Wave</div>
-          <div class="pill">🔐 Espace financier sécurisé</div>
-        </div>
-
-        <div class="topBtns">
-          <a id="btnPublicTop" class="btn ghost" href="./index.html">💳 Page publique</a>
-          <a id="btnPinTop" class="btn ghost" href="./pin.html">🔐 Code</a>
-          <a id="btnAdminTop" class="btn ghost" href="./admin.html">🛠 Réglages PAY</a>
-          <a id="btnActivateTop" class="btn warn" href="https://commencer-a-payer.digiylyfe.com/?module=PAY">💳 Activer PAY</a>
-          <button id="btnLogout" class="btn bad" type="button">Déconnexion</button>
-        </div>
-      </div>
-
-      <div class="nav-mini">
-        <a id="navPublic" class="nav-card" href="./index.html">
-          <strong>Page publique</strong>
-          <span>Carte client du paiement direct</span>
-        </a>
-        <a id="navPin" class="nav-card" href="./pin.html">
-          <strong>Code PAY</strong>
-          <span>Entrée sécurisée</span>
-        </a>
-        <a id="navAdmin" class="nav-card" href="./admin.html">
-          <strong>Réglages PAY</strong>
-          <span>Réglages rapides et gestion légère</span>
-        </a>
-        <a class="nav-card" href="https://digiy-hub.digiylyfe.com/">
-          <strong>HUB</strong>
-          <span>Revenir à la maison DIGIY</span>
-        </a>
-        <a class="nav-card" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">
-          <strong>Tarifs</strong>
-          <span>Voir les offres officielles</span>
-        </a>
-        <a id="navActivate" class="nav-card" href="https://commencer-a-payer.digiylyfe.com/?module=PAY">
-          <strong>Activation</strong>
-          <span>Abonnement et renouvellement</span>
-        </a>
-      </div>
-
-      <div class="sep"></div>
-
-      <div class="grid">
-        <div class="panel">
-          <h2>Fiche pro</h2>
-
-          <div class="formGrid">
-            <div>
-              <label for="walletName">Nom affiché</label>
-              <input id="walletName" type="text" placeholder="Ex: JB BEAUVILLE">
-              <div class="hint">Nom visible sur MON ARGENT public.</div>
-            </div>
-
-            <div>
-              <label for="walletCode">Code pro</label>
-              <input id="walletCode" type="text" placeholder="Ex: JBBEAUVILLE">
-              <div class="hint">Utilisé dans le lien public <span class="mono">?pro=CODE</span>.</div>
-            </div>
-
-            <div>
-              <label for="walletPhone">Numéro de paiement</label>
-              <input id="walletPhone" type="tel" placeholder="Ex: 221771342889">
-              <div class="hint">Numéro direct sur lequel le client envoie son paiement.</div>
-            </div>
-
-            <div>
-              <label for="walletSlug">Référence protégée</label>
-              <input id="walletSlug" type="hidden" readonly>
-              <div class="stat" style="margin-top:0;">
-                <div class="statLabel">État référence</div>
-                <div class="statValue">Protégée</div>
-              </div>
-              <div class="hint">Rangée dans la session locale, non affichée dans l’adresse.</div>
-            </div>
-          </div>
-
-          <div class="switch">
-            <input id="walletActive" type="checkbox">
-            <div>
-              <div style="font-weight:950">Affichage public PAY actif</div>
-              <div class="mini">Si décoché, la page publique ne doit plus être considérée comme active.</div>
-            </div>
-          </div>
-
-          <div class="btnrow">
-            <button id="btnSave" class="btn primary" type="button">💾 Sauvegarder</button>
-            <button id="btnReload" class="btn ghost" type="button">🔄 Recharger</button>
-            <button id="btnCopyLink" class="btn warn" type="button">📋 Copier lien public</button>
-          </div>
-
-          <div id="infoBox" class="msg" style="display:none"></div>
-          <div id="errorBox" class="err" style="display:none"></div>
-          <div id="okBox" class="okbox" style="display:none"></div>
-        </div>
-
-        <div class="panel">
-          <h2>Vue rapide</h2>
-
-          <div class="stats">
-            <div class="stat">
-              <div class="statLabel">Session</div>
-              <div class="statValue mono" id="sessionPhone">—</div>
-            </div>
-            <div class="stat">
-              <div class="statLabel">Référence PAY</div>
-              <div class="statValue mono" id="sessionSlug">—</div>
-            </div>
-            <div class="stat">
-              <div class="statLabel">Numéro de paiement</div>
-              <div class="statValue mono" id="merchantWave">—</div>
-            </div>
-            <div class="stat">
-              <div class="statLabel">Statut</div>
-              <div class="statValue" id="publicStatus">—</div>
-            </div>
-            <div class="stat">
-              <div class="statLabel">Lien public</div>
-              <div class="statValue mono" id="publicLink">—</div>
-            </div>
-            <div class="stat">
-              <div class="statLabel">Code pro</div>
-              <div class="statValue mono" id="publicCode">—</div>
-            </div>
-          </div>
-
-          <div class="btnrow">
-            <a id="btnOpenPublic" class="btn" href="./index.html" target="_blank" rel="noopener">🌍 Ouvrir la page publique</a>
-            <button id="btnSupport" class="btn ghost" type="button">🛟 Support</button>
-          </div>
-
-          <div class="mini" style="margin-top:14px;">
-            DIGIY n'est pas une banque. Le paiement affiché dans MON ARGENT passe en direct vers le professionnel.
-          </div>
-        </div>
-      </div>
-
-      <div class="sep"></div>
-
-      <div class="panel">
-        <h2>Mon QR de paiement</h2>
-
-        <div class="qrBlock">
-          <div class="qrPreviewBox">
-            <div class="mini" style="margin-top:0;">
-              Ici tu génères le <b>QR seul</b> du code pro actif.
-            </div>
-
-            <div class="qrCanvasWrap">
-              <canvas id="qrCanvas" width="700" height="700"></canvas>
-            </div>
-
-            <div class="btnrow">
-              <button id="btnOpenQr" class="btn primary" type="button">🔎 Afficher mon QR</button>
-              <button id="btnDownloadQr" class="btn primary" type="button">📥 Télécharger / Enregistrer QR</button>
-              <button id="btnRenderQr" class="btn ghost" type="button">♻️ Régénérer le QR</button>
-            </div>
-          </div>
-
-          <div class="qrMeta">
-            <div class="mini" style="margin-top:0;">
-              Le QR suit toujours le <b>code pro actif</b> de cette page de paiement.
-            </div>
-
-            <div class="qrMetaLine">
-              <b>Code pro actif :</b><br>
-              <span id="qrActiveCode" class="mono">—</span>
-            </div>
-
-            <div class="qrMetaLine">
-              <b>Numéro de paiement actif :</b><br>
-              <span id="qrActiveWave" class="mono">—</span>
-            </div>
-
-            <div class="qrMetaLine">
-              <b>URL encodée dans le QR :</b><br>
-              <span id="qrActiveUrl" class="mono">—</span>
-            </div>
-
-            <div class="mini">
-              📱 <b>iPhone/iPad :</b> clique Télécharger → appui long sur l'image → Enregistrer dans Photos.<br>
-              🤖 <b>Android :</b> clique Télécharger → fichier dans Téléchargements.<br>
-              💻 <b>Mac/PC :</b> clique Télécharger → PNG dans Téléchargements.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sep"></div>
-
-      <div class="panel">
-        <h2>Ma carte de paiement</h2>
-
-        <div class="cardMaker">
-          <div class="mini" style="margin-top:0;">
-            La carte PNG est régénérée à chaque clic, sans garder l'ancienne identité d'un autre pro.
-          </div>
-
-          <div class="canvasWrap">
-            <canvas id="cardCanvas" width="900" height="1400"></canvas>
-          </div>
-
-          <div class="btnrow">
-            <button id="btnOpenCard" class="btn primary" type="button">🖼️ Ouvrir ma carte</button>
-            <button id="btnDownloadCard" class="btn primary" type="button">📥 Télécharger / Enregistrer carte</button>
-            <button id="btnRenderCard" class="btn ghost" type="button">🎨 Actualiser la carte</button>
-          </div>
-        </div>
-      </div>
+    <div class="signature">
+      Un carnet financier numérique simple,<br>
+      mais providentiel.
+      <small>Il fonctionne au clic : le pro choisit, DIGIY prépare, le terrain valide.</small>
     </div>
-  </div>
 
-  <div id="cardPreviewModal" class="previewModal" aria-hidden="true">
-    <div class="previewBox">
-      <div class="previewTop">
-        <div>
-          <div id="previewTitle" class="previewTitle">Aperçu</div>
-          <div id="previewHint" class="previewHint">Image prête.</div>
-        </div>
-        <button id="btnClosePreview" class="btn ghost" type="button" style="flex:0 0 auto;min-width:auto;">✕ Fermer</button>
-      </div>
-      <div class="previewBody">
-        <img id="cardPreviewImage" alt="Aperçu">
-      </div>
+    <div class="notice">
+      Ici, aucune session professionnelle, aucun téléphone, aucun slug et aucun réglage sensible
+      ne doivent apparaître. Le public paie et envoie sa preuve ; le professionnel gère dans PAY PRO.
     </div>
-  </div>
+
+    <section class="audio-panel" aria-label="Aide audio">
+      <strong>🎧 Comprendre le carnet PAY</strong>
+      <span>
+        Écoute DIGIY : le cockpit n’est pas une page publique, c’est le carnet financier du professionnel.
+      </span>
+      <button class="btn primary" id="audioBtn" type="button">🎧 Écouter DIGIY</button>
+    </section>
+
+    <section class="steps" aria-label="Orientation">
+      <div class="step">
+        <strong>1 · Client</strong>
+        <span>Il paie directement le professionnel et envoie sa preuve.</span>
+      </div>
+      <div class="step">
+        <strong>2 · Professionnel</strong>
+        <span>Il lit ses preuves, ses mouvements et son activité dans PAY PRO.</span>
+      </div>
+      <div class="step">
+        <strong>3 · DIGIY</strong>
+        <span>Il organise la trace sans toucher l’argent du pro.</span>
+      </div>
+    </section>
+
+    <nav class="actions" aria-label="Navigation">
+      <a class="btn green" href="https://pro-pay.digiylyfe.com/">🔐 Ouvrir PAY PRO</a>
+      <a class="btn" href="./index.html">💳 Retour carte PAY</a>
+      <a class="btn" href="./payer.html">📤 Envoyer une preuve</a>
+      <a class="btn" href="./wait.html">🧾 Voir attente preuve</a>
+      <a class="btn" href="https://digiylyfe.com/">🌍 Site DIGIYLYFE</a>
+      <a class="btn" href="https://digiy-hub.digiylyfe.com/">🧭 HUB</a>
+      <a class="btn primary" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
+    </nav>
+
+    <div class="foot">
+      DIGIY PAY public sert à payer directement et à transmettre une preuve.
+      PAY PRO sert à piloter le carnet financier numérique du professionnel.
+    </div>
+  </main>
 
   <script>
-    (function () {
+    (() => {
       "use strict";
 
-      function isIOS() {
-        return /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
-          (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-      }
+      const SENSITIVE_KEYS = [
+        "phone",
+        "tel",
+        "owner_phone",
+        "owner_id",
+        "slug",
+        "pay_slug",
+        "subscription_slug",
+        "business_phone",
+        "wave_phone",
+        "wallet_phone",
+        "pay_phone",
+        "access_note",
+        "keybox_code",
+        "keybox_location",
+        "return",
+        "redirect",
+        "redirect_url",
+        "url",
+        "from",
+        "v"
+      ];
 
-      function isAndroid() {
-        return /Android/i.test(navigator.userAgent);
-      }
-
-      const SUPABASE_URL =
-        window.DIGIY_SUPABASE_URL ||
-        "https://wesqmwjjtsefyjnluosj.supabase.co";
-
-      const SUPABASE_ANON_KEY =
-        window.DIGIY_SUPABASE_ANON_KEY ||
-        window.DIGIY_SUPABASE_ANON ||
-        "sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3";
-
-      const MODULE_CODE = "PAY";
-      const PUBLIC_BASE_URL = "https://pay.digiylyfe.com/";
-      const PIN_URL = "./pin.html";
-      const ADMIN_URL = "./admin.html";
-      const SUPPORT_WA = "+221771342889";
-      const ACTIVATE_BASE = "https://commencer-a-payer.digiylyfe.com/";
-
-      const LS_PHONE = "digiy_phone";
-      const LS_SLUG = "digiy_slug";
-      const LS_MODULE_SLUGS = "digiy_module_slugs";
-      const LS_PAY_PHONE = "digiy_pay_phone";
-      const LS_PAY_SLUG = "digiy_pay_slug";
-      const SESSION_KEY = "DIGIY_PAY_PRO_SESSION";
-      const MAX_SESSION_MS = 8 * 60 * 60 * 1000;
-
-      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-        auth: {
-          persistSession: false,
-          autoRefreshToken: false,
-          detectSessionInUrl: false,
-          storage: {
-            getItem: () => null,
-            setItem: () => {},
-            removeItem: () => {}
-          }
-        }
-      });
-
-      const $ = (id) => document.getElementById(id);
-
-      const walletName = $("walletName");
-      const walletCode = $("walletCode");
-      const walletPhone = $("walletPhone");
-      const walletSlug = $("walletSlug");
-      const walletActive = $("walletActive");
-
-      const sessionPhone = $("sessionPhone");
-      const sessionSlug = $("sessionSlug");
-      const merchantWave = $("merchantWave");
-      const publicLink = $("publicLink");
-      const publicCode = $("publicCode");
-      const publicStatus = $("publicStatus");
-      const btnOpenPublic = $("btnOpenPublic");
-
-      const btnPublicTop = $("btnPublicTop");
-      const btnPinTop = $("btnPinTop");
-      const btnAdminTop = $("btnAdminTop");
-      const btnActivateTop = $("btnActivateTop");
-
-      const navPublic = $("navPublic");
-      const navPin = $("navPin");
-      const navAdmin = $("navAdmin");
-      const navActivate = $("navActivate");
-
-      const qrActiveCode = $("qrActiveCode");
-      const qrActiveWave = $("qrActiveWave");
-      const qrActiveUrl = $("qrActiveUrl");
-
-      const btnSave = $("btnSave");
-      const btnReload = $("btnReload");
-      const btnCopyLink = $("btnCopyLink");
-      const btnLogout = $("btnLogout");
-      const btnSupport = $("btnSupport");
-
-      const btnOpenQr = $("btnOpenQr");
-      const btnDownloadQr = $("btnDownloadQr");
-      const btnRenderQr = $("btnRenderQr");
-
-      const btnOpenCard = $("btnOpenCard");
-      const btnDownloadCard = $("btnDownloadCard");
-      const btnRenderCard = $("btnRenderCard");
-
-      const infoBox = $("infoBox");
-      const errorBox = $("errorBox");
-      const okBox = $("okBox");
-
-      const qrCanvas = $("qrCanvas");
-      const qrCtx = qrCanvas.getContext("2d");
-
-      const cardCanvas = $("cardCanvas");
-      const cardCtx = cardCanvas.getContext("2d");
-
-      const cardPreviewModal = $("cardPreviewModal");
-      const cardPreviewImage = $("cardPreviewImage");
-      const btnClosePreview = $("btnClosePreview");
-      const previewTitle = $("previewTitle");
-      const previewHint = $("previewHint");
-
-      const qs = new URLSearchParams(location.search);
-
-      let currentPhone = "";
-      let currentSlug = "";
-      let currentCodeFromQuery = normalizeCode(qs.get("code") || "");
-      let loadedProfile = null;
-
-      cleanVisibleUrl();
-
-      let renderToken = 0;
-      let lastRenderFingerprint = "";
-      let lastCardDataUrl = "";
-
-      let qrRenderToken = 0;
-      let lastQrFingerprint = "";
-      let lastQrDataUrl = "";
-
-      function digitsOnly(v) {
-        return String(v || "").replace(/\D/g, "");
-      }
-
-      function normPhone(v) {
-        const raw = digitsOnly(v);
-        if (!raw) return "";
-        if (raw.startsWith("221") && raw.length >= 12) return "+" + raw;
-        if (raw.length === 9) return "+221" + raw;
-        if (String(v || "").trim().startsWith("+")) return "+" + raw;
-        return "+" + raw;
-      }
-
-      function phoneDigits(v) {
-        return digitsOnly(v);
-      }
-
-      function normSlug(v) {
-        return String(v || "")
-          .trim()
-          .toLowerCase()
-          .replace(/\s+/g, "-")
-          .replace(/[^a-z0-9-]/g, "")
-          .replace(/-+/g, "-")
-          .replace(/^-|-$/g, "");
-      }
-
-      function normalizeCode(v) {
-        return String(v || "")
-          .trim()
-          .toUpperCase()
-          .replace(/\s+/g, "")
-          .replace(/[^A-Z0-9_-]/g, "");
-      }
-
-      function cleanVisibleUrl() {
-        try {
-          const url = new URL(window.location.href);
+      function cleanVisibleUrl(){
+        try{
+          const url = new URL(location.href);
           let changed = false;
 
-          [
-            "phone",
-            "tel",
-            "owner_phone",
-            "owner_id",
-            "slug",
-            "pay_slug",
-            "subscription_slug",
-            "business_phone",
-            "wave_phone",
-            "wallet_phone",
-            "pay_phone",
-            "access_note",
-            "keybox_code",
-            "keybox_location"
-          ].forEach(function(key){
-            if (url.searchParams.has(key)) {
+          SENSITIVE_KEYS.forEach((key) => {
+            if(url.searchParams.has(key)){
               url.searchParams.delete(key);
               changed = true;
             }
           });
 
-          if (changed) {
+          if(changed){
             history.replaceState({}, document.title, url.pathname + url.search + url.hash);
           }
-        } catch (_) {}
+        }catch(_){}
       }
 
-      function show(el, on = true) {
-        if (!el) return;
-        el.style.display = on ? "" : "none";
-      }
+      function cleanLinks(){
+        try{
+          document.querySelectorAll("a[href]").forEach((link) => {
+            const href = link.getAttribute("href") || "";
+            if(!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) return;
 
-      function setBusy(btn, on) {
-        if (!btn) return;
-        btn.disabled = !!on;
-      }
+            const url = new URL(href, location.href);
+            if(url.origin !== location.origin) return;
 
-      function resetBoxes() {
-        show(infoBox, false);
-        show(errorBox, false);
-        show(okBox, false);
-        infoBox.textContent = "";
-        errorBox.textContent = "";
-        okBox.textContent = "";
-      }
-
-      function setInfo(msg) {
-        infoBox.textContent = msg;
-        show(infoBox, true);
-      }
-
-      function setError(msg) {
-        errorBox.textContent = msg;
-        show(errorBox, true);
-      }
-
-      function setOk(msg) {
-        okBox.textContent = msg;
-        show(okBox, true);
-      }
-
-      function readModuleSlugs() {
-        try {
-          const raw = localStorage.getItem(LS_MODULE_SLUGS);
-          const parsed = raw ? JSON.parse(raw) : {};
-          return parsed && typeof parsed === "object" ? parsed : {};
-        } catch (_) {
-          return {};
-        }
-      }
-
-      function saveQueryState(phone, slug, code) {
-        try {
-          const url = new URL(window.location.href);
-          const c = normalizeCode(code || "");
-
-          [
-            "phone",
-            "tel",
-            "owner_phone",
-            "owner_id",
-            "slug",
-            "pay_slug",
-            "subscription_slug",
-            "business_phone",
-            "wave_phone",
-            "wallet_phone",
-            "pay_phone"
-          ].forEach(function(key){
-            url.searchParams.delete(key);
+            SENSITIVE_KEYS.forEach((key) => url.searchParams.delete(key));
+            const file = url.pathname.split("/").pop() || "index.html";
+            link.setAttribute("href","./" + file + (url.search || "") + (url.hash || ""));
           });
-
-          if (c) url.searchParams.set("code", c);
-          else url.searchParams.delete("code");
-
-          history.replaceState({}, "", url.pathname + url.search + url.hash);
-        } catch (_) {}
+        }catch(_){}
       }
 
-
-      function readSession() {
-        let phone = "";
-        let slug = "";
-
-        try {
-          const raw = sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY);
-          const s = raw ? JSON.parse(raw) : null;
-
-          if (s?.ts && (Date.now() - Number(s.ts)) > MAX_SESSION_MS) {
-            return { phone:"", slug:"" };
-          }
-
-          if (s?.phone) phone = normPhone(s.phone);
-          if (s?.slug) slug = normSlug(s.slug);
-        } catch (_) {}
-
-        if (!phone) {
-          try { phone = normPhone(localStorage.getItem(LS_PAY_PHONE) || ""); } catch (_) {}
-        }
-        if (!slug) {
-          try { slug = normSlug(localStorage.getItem(LS_PAY_SLUG) || ""); } catch (_) {}
-        }
-
-        if (!slug) {
-          const map = readModuleSlugs();
-          if (map.PAY) slug = normSlug(map.PAY);
-        }
-
-        if (!phone) {
-          try { phone = normPhone(localStorage.getItem(LS_PHONE) || ""); } catch (_) {}
-        }
-        if (!slug) {
-          try { slug = normSlug(localStorage.getItem(LS_SLUG) || ""); } catch (_) {}
-        }
-
-        return { phone, slug };
+      function canSpeak(){
+        return "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
       }
 
-
-      function clearSession() {
-        try {
-          localStorage.removeItem(SESSION_KEY);
-          sessionStorage.removeItem(SESSION_KEY);
-          localStorage.removeItem(LS_PAY_PHONE);
-          localStorage.removeItem(LS_PAY_SLUG);
-
-          const map = readModuleSlugs();
-          delete map.PAY;
-          localStorage.setItem(LS_MODULE_SLUGS, JSON.stringify(map));
-        } catch (_) {}
-      }
-
-      function saveSession(phone, slug) {
-        const p = normPhone(phone || "");
-        const s = normSlug(slug || "");
-        try {
-          if (p) {
-            localStorage.setItem(LS_PHONE, p);
-            localStorage.setItem(LS_PAY_PHONE, p);
-          }
-          if (s) {
-            localStorage.setItem(LS_SLUG, s);
-            localStorage.setItem(LS_PAY_SLUG, s);
-          }
-
-          const map = readModuleSlugs();
-          if (s) {
-            map.PAY = s;
-            localStorage.setItem(LS_MODULE_SLUGS, JSON.stringify(map));
-          }
-
-          const payload = JSON.stringify({
-            phone: p,
-            slug: s,
-            module: MODULE_CODE,
-            access_ok: true,
-            ts: Date.now()
-          });
-
-          localStorage.setItem(SESSION_KEY, payload);
-          sessionStorage.setItem(SESSION_KEY, payload);
-        } catch (_) {}
-      }
-
-      function buildPublicUrl(code) {
-        const clean = normalizeCode(code);
-        const u = new URL(PUBLIC_BASE_URL);
-        if (clean) u.searchParams.set("pro", clean);
-        return u.toString();
-      }
-
-      function buildPinUrl() {
-        return PIN_URL;
-      }
-
-      function buildAdminUrl() {
-        return ADMIN_URL;
-      }
-
-      function buildActivateUrl() {
-        const u = new URL(ACTIVATE_BASE);
-        u.searchParams.set("module", "PAY");
-        return u.toString();
-      }
-
-
-      function syncNavLinks() {
-        const code = getEffectiveCode() || currentCodeFromQuery || "";
-        const publicHref = code ? buildPublicUrl(code) : PUBLIC_BASE_URL;
-        const pinHref = buildPinUrl();
-        const adminHref = buildAdminUrl();
-        const activateHref = buildActivateUrl();
-
-        btnPublicTop.href = publicHref;
-        navPublic.href = publicHref;
-        btnOpenPublic.href = publicHref;
-
-        btnPinTop.href = pinHref;
-        navPin.href = pinHref;
-
-        btnAdminTop.href = adminHref;
-        navAdmin.href = adminHref;
-
-        btnActivateTop.href = activateHref;
-        navActivate.href = activateHref;
-      }
-
-
-      function getEffectiveCode() {
-        return normalizeCode(walletCode.value || "");
-      }
-
-      function getEffectiveWave() {
-        return phoneDigits(walletPhone.value || "");
-      }
-
-      function getEffectivePublicUrl() {
-        return buildPublicUrl(getEffectiveCode());
-      }
-
-      async function resolvePhoneFromSlug(slug) {
-        const s = normSlug(slug);
-        if (!s) return "";
-
-        const { data, error } = await sb
-          .from("digiy_subscriptions_public")
-          .select("phone,slug,module")
-          .eq("slug", s)
-          .limit(1)
-          .maybeSingle();
-
-        if (error || !data?.phone) return "";
-        return normPhone(data.phone);
-      }
-
-      async function ensurePayProfile(phoneDigitsValue) {
-        if (!phoneDigitsValue) return;
-        try {
-          await sb.rpc("rpc_wallet_ensure", { p_phone: phoneDigitsValue });
-        } catch (_) {}
-      }
-
-      async function fetchByPhone(phoneDigitsValue) {
-        if (!phoneDigitsValue) return null;
-
-        let { data, error } = await sb
-          .from("digiy_pay_pro")
-          .select("business_name,business_code,wave_phone,is_active")
-          .eq("wave_phone", phoneDigitsValue)
-          .maybeSingle();
-
-        if (!error && data) return data;
-
-        ({ data, error } = await sb
-          .from("digiy_pay_pro")
-          .select("business_name,business_code,wave_phone,is_active")
-          .eq("wave_phone", "+" + phoneDigitsValue)
-          .maybeSingle());
-
-        if (!error && data) return data;
-
-        return null;
-      }
-
-      async function fetchByCode(code) {
-        const clean = normalizeCode(code);
-        if (!clean) return null;
-
-        const { data, error } = await sb
-          .from("digiy_pay_pro")
-          .select("business_name,business_code,wave_phone,is_active")
-          .eq("business_code", clean)
-          .maybeSingle();
-
-        if (error) return null;
-        return data || null;
-      }
-
-      function updatePreview() {
-        const code = getEffectiveCode();
-        const wave = getEffectiveWave();
-        const url = getEffectivePublicUrl();
-
-        sessionPhone.textContent = currentPhone ? "Ouverte" : "—";
-        sessionSlug.textContent = currentSlug ? "OK" : "—";
-        merchantWave.textContent = wave || "—";
-        publicLink.textContent = code ? url : "—";
-        publicCode.textContent = code || "—";
-        publicStatus.textContent = walletActive.checked ? "Actif" : "Inactif";
-
-        qrActiveCode.textContent = code || "—";
-        qrActiveWave.textContent = wave || "—";
-        qrActiveUrl.textContent = code ? url : "—";
-
-        saveQueryState("", "", code);
-        syncNavLinks();
-        void renderQrOnly();
-        void renderCard();
-      }
-
-
-      function fillForm(profile) {
-        walletName.value = profile?.business_name || "";
-        walletCode.value = normalizeCode(profile?.business_code || currentCodeFromQuery || "");
-        walletPhone.value = phoneDigits(profile?.wave_phone || currentPhone || "");
-        walletSlug.value = currentSlug || "";
-        walletActive.checked = profile?.is_active !== false;
-        loadedProfile = profile || null;
-        currentCodeFromQuery = normalizeCode(walletCode.value || currentCodeFromQuery || "");
-        updatePreview();
-      }
-
-      function autoCodeFromName() {
-        if (walletCode.value.trim()) return;
-        const raw = String(walletName.value || "")
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .toUpperCase()
-          .replace(/[^A-Z0-9]+/g, "");
-        walletCode.value = raw.slice(0, 24);
-        currentCodeFromQuery = normalizeCode(walletCode.value);
-        updatePreview();
-      }
-
-      async function loadProfile() {
-        resetBoxes();
-
-        const session = readSession();
-        currentPhone = normPhone(session.phone || "");
-        currentSlug = normSlug(session.slug || "");
-
-        if (!currentPhone && currentSlug) {
-          setInfo("Résolution de la session PAY…");
-          currentPhone = await resolvePhoneFromSlug(currentSlug);
-        }
-
-        if (!currentPhone) {
-          location.replace(PIN_URL);
-          return;
-        }
-
-        saveSession(currentPhone, currentSlug);
-
-        walletSlug.value = currentSlug || "";
-        sessionPhone.textContent = currentPhone ? "Ouverte" : "—";
-        sessionSlug.textContent = currentSlug ? "OK" : "—";
-        syncNavLinks();
-
-        setInfo("Chargement du profil PAY…");
-
-        const currentPhoneDigits = phoneDigits(currentPhone);
-        await ensurePayProfile(currentPhoneDigits);
-
-        let profile = await fetchByPhone(currentPhoneDigits);
-
-        if (!profile && currentCodeFromQuery) {
-          profile = await fetchByCode(currentCodeFromQuery);
-        }
-
-        fillForm(profile);
-        resetBoxes();
-
-        if (profile) {
-          setOk("Profil PAY chargé.");
-        } else {
-          walletPhone.value = currentPhoneDigits;
-          updatePreview();
-          setInfo("Aucune fiche publique trouvée. Tu peux la créer maintenant.");
+      function getFrenchVoice(){
+        try{
+          const voices = speechSynthesis.getVoices() || [];
+          return voices.find(v => /fr[-_]?fr/i.test(v.lang || "")) ||
+                 voices.find(v => /^fr/i.test(v.lang || "")) ||
+                 voices[0] ||
+                 null;
+        }catch(_){
+          return null;
         }
       }
 
-      async function saveProfile() {
-        resetBoxes();
+      function stopAudio(){
+        try{ if(canSpeak()) speechSynthesis.cancel(); }catch(_){}
+        const btn = document.getElementById("audioBtn");
+        if(btn) btn.textContent = "🎧 Écouter DIGIY";
+      }
 
-        const phoneDigitsValue = phoneDigits(walletPhone.value || currentPhone || "");
-        const code = normalizeCode(walletCode.value || "");
-        const name = String(walletName.value || "").trim();
-        const isActive = !!walletActive.checked;
+      function speakAudio(){
+        if(!canSpeak()) return;
 
-        if (!phoneDigitsValue) {
-          setError("Numéro de paiement obligatoire.");
-          walletPhone.focus();
-          return;
-        }
+        stopAudio();
 
-        if (!name) {
-          setError("Nom affiché obligatoire.");
-          walletName.focus();
-          return;
-        }
+        const text =
+          "Bienvenue dans DIGIY PAY. Ce cockpit est réservé au professionnel. On peut le voir comme un carnet financier numérique simple, mais providentiel. Il fonctionne au clic : le professionnel choisit une action, DIGIY prépare les mots, les catégories et la trace, puis le terrain valide avec sa vérité. Le client reste sur la carte publique pour payer directement et envoyer sa preuve. Le professionnel ouvre PAY PRO pour gérer les preuves, les mouvements, les réglages et la lecture de son activité. DIGIY ne touche pas l'argent. DIGIY organise la preuve, la mémoire et la confiance.";
 
-        if (!code) {
-          setError("Code pro obligatoire.");
-          walletCode.focus();
-          return;
-        }
+        const run = () => {
+          const u = new SpeechSynthesisUtterance(text);
+          const voice = getFrenchVoice();
+          if(voice) u.voice = voice;
+          u.lang = voice?.lang || "fr-FR";
+          u.rate = 0.86;
+          u.pitch = 1.04;
+          u.volume = 1;
 
-        setBusy(btnSave, true);
-        setInfo("Sauvegarde en cours…");
+          const btn = document.getElementById("audioBtn");
+          if(btn) btn.textContent = "⏹ Stop";
 
-        const payload = {
-          business_name: name,
-          business_code: code,
-          wave_phone: phoneDigitsValue,
-          is_active: isActive
+          u.onend = () => { if(btn) btn.textContent = "🎧 Écouter DIGIY"; };
+          u.onerror = () => { if(btn) btn.textContent = "🎧 Écouter DIGIY"; };
+
+          speechSynthesis.speak(u);
         };
 
-        try {
-          let updated = false;
-
-          if (loadedProfile?.business_code) {
-            const { error } = await sb
-              .from("digiy_pay_pro")
-              .update(payload)
-              .eq("business_code", normalizeCode(loadedProfile.business_code));
-
-            if (!error) updated = true;
-            else throw error;
-          } else {
-            if (currentPhone) {
-              const byPhoneDigits = await sb
-                .from("digiy_pay_pro")
-                .update(payload)
-                .eq("wave_phone", phoneDigits(currentPhone))
-                .select("business_code")
-                .limit(1);
-
-              if (!byPhoneDigits.error && Array.isArray(byPhoneDigits.data) && byPhoneDigits.data.length > 0) {
-                updated = true;
-              }
-
-              if (!updated) {
-                const byPhonePlus = await sb
-                  .from("digiy_pay_pro")
-                  .update(payload)
-                  .eq("wave_phone", normPhone(currentPhone))
-                  .select("business_code")
-                  .limit(1);
-
-                if (!byPhonePlus.error && Array.isArray(byPhonePlus.data) && byPhonePlus.data.length > 0) {
-                  updated = true;
-                }
-              }
-            }
-
-            if (!updated && code) {
-              const byCode = await sb
-                .from("digiy_pay_pro")
-                .update(payload)
-                .eq("business_code", code)
-                .select("business_code")
-                .limit(1);
-
-              if (!byCode.error && Array.isArray(byCode.data) && byCode.data.length > 0) {
-                updated = true;
-              }
-            }
-
-            if (!updated) {
-              const { error } = await sb
-                .from("digiy_pay_pro")
-                .insert(payload);
-
-              if (error) throw error;
-            }
-          }
-
-          loadedProfile = {
-            business_name: name,
-            business_code: code,
-            wave_phone: phoneDigitsValue,
-            is_active: isActive
-          };
-
-          currentPhone = normPhone(phoneDigitsValue);
-          currentCodeFromQuery = code;
-          saveSession(currentPhone, currentSlug);
-
-          fillForm(loadedProfile);
-          resetBoxes();
-          setOk("Fiche PAY sauvegardée.");
-        } catch (e) {
-          setError("Sauvegarde refusée ou bloquée par la base. Détail: " + String(e?.message || e));
-        } finally {
-          setBusy(btnSave, false);
+        const voices = speechSynthesis.getVoices();
+        if(voices && voices.length) run();
+        else{
+          speechSynthesis.onvoiceschanged = run;
+          setTimeout(run, 650);
         }
       }
 
-      function copyPublicLink() {
-        const code = getEffectiveCode();
-        if (!code) {
-          setError("Code pro manquant.");
-          walletCode.focus();
-          return;
-        }
+      cleanVisibleUrl();
 
-        const url = getEffectivePublicUrl();
-
-        if (navigator.clipboard?.writeText) {
-          navigator.clipboard.writeText(url).then(
-            () => setOk("Lien public copié."),
-            () => window.prompt("Copie ce lien :", url)
-          );
-        } else {
-          window.prompt("Copie ce lien :", url);
-        }
+      if(document.readyState === "loading"){
+        document.addEventListener("DOMContentLoaded", cleanLinks);
+      }else{
+        cleanLinks();
       }
 
-      function openSupport() {
-        let msg = "DIGIY — MON ARGENT PRO\n\n";
-        msg += "J'ai besoin d'aide pour MON ARGENT PRO.\n";
-        msg += "Je préfère ne pas envoyer mon numéro ou ma référence dans le lien.";
-        const num = SUPPORT_WA.replace(/\+/g, "");
-        location.href = "https://wa.me/" + num + "?text=" + encodeURIComponent(msg);
-      }
-
-
-      function roundedRect(ctx, x, y, w, h, r) {
-        ctx.beginPath();
-        ctx.moveTo(x + r, y);
-        ctx.lineTo(x + w - r, y);
-        ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-        ctx.lineTo(x + w, y + h - r);
-        ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-        ctx.lineTo(x + r, y + h);
-        ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-        ctx.lineTo(x, y + r);
-        ctx.quadraticCurveTo(x, y, x + r, y);
-        ctx.closePath();
-      }
-
-      function wipeCardState() {
-        renderToken += 1;
-        lastRenderFingerprint = "";
-        lastCardDataUrl = "";
-        cardCtx.clearRect(0, 0, cardCanvas.width, cardCanvas.height);
-      }
-
-      function wipeQrState() {
-        qrRenderToken += 1;
-        lastQrFingerprint = "";
-        lastQrDataUrl = "";
-        qrCtx.clearRect(0, 0, qrCanvas.width, qrCanvas.height);
-      }
-
-      function loadImage(src) {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.onload = () => resolve(img);
-          img.onerror = reject;
-          img.src = src;
-        });
-      }
-
-      function generateQrDataUrl(text, width = 420) {
-        return QRCode.toDataURL(text, {
-          errorCorrectionLevel: "H",
-          type: "image/png",
-          margin: 1,
-          width,
-          color: {
-            dark: "#0f172a",
-            light: "#ffffff"
-          }
-        });
-      }
-
-      function currentQrFingerprint() {
-        return [
-          getEffectiveCode(),
-          getEffectiveWave(),
-          getEffectivePublicUrl(),
-          walletActive.checked ? "1" : "0"
-        ].join("|");
-      }
-
-      async function renderQrOnly(force = false) {
-        const code = getEffectiveCode();
-        const publicUrl = getEffectivePublicUrl();
-        const fingerprint = currentQrFingerprint();
-
-        if (!force && fingerprint === lastQrFingerprint && lastQrDataUrl) {
-          return lastQrDataUrl;
-        }
-
-        const myToken = ++qrRenderToken;
-        const W = qrCanvas.width;
-        const H = qrCanvas.height;
-
-        qrCtx.clearRect(0, 0, W, H);
-        qrCtx.fillStyle = "#ffffff";
-        qrCtx.fillRect(0, 0, W, H);
-
-        qrCtx.fillStyle = "#111827";
-        qrCtx.font = "900 30px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        qrCtx.textAlign = "center";
-        qrCtx.fillText("MON ARGENT by DIGIY", W / 2, 60);
-
-        qrCtx.fillStyle = "#4b5563";
-        qrCtx.font = "700 18px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        qrCtx.fillText(code || "CODE PRO MANQUANT", W / 2, 94);
-
-        if (code) {
-          try {
-            const qrDataUrl = await generateQrDataUrl(publicUrl, 520);
-            if (myToken !== qrRenderToken) return "";
-
-            const qrImg = await loadImage(qrDataUrl);
-            if (myToken !== qrRenderToken) return "";
-
-            qrCtx.drawImage(qrImg, 90, 120, 520, 520);
-
-            qrCtx.fillStyle = "#6b7280";
-            qrCtx.font = "700 18px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-            qrCtx.fillText("Scanne pour ouvrir la page de paiement", W / 2, 675);
-          } catch (_) {
-            if (myToken !== qrRenderToken) return "";
-            qrCtx.fillStyle = "#f3f4f6";
-            qrCtx.fillRect(90, 120, 520, 520);
-            qrCtx.fillStyle = "#111827";
-            qrCtx.font = "700 24px system-ui, sans-serif";
-            qrCtx.fillText("QR indisponible", W / 2, 400);
-          }
-        } else {
-          qrCtx.fillStyle = "#f3f4f6";
-          qrCtx.fillRect(90, 120, 520, 520);
-          qrCtx.fillStyle = "#111827";
-          qrCtx.font = "700 24px system-ui, sans-serif";
-          qrCtx.fillText("Code pro requis", W / 2, 400);
-        }
-
-        if (myToken !== qrRenderToken) return "";
-
-        lastQrFingerprint = fingerprint;
-        lastQrDataUrl = qrCanvas.toDataURL("image/png");
-        return lastQrDataUrl;
-      }
-
-      function currentCardFingerprint() {
-        const name = String(walletName.value || "").trim();
-        const code = getEffectiveCode();
-        const wave = getEffectiveWave();
-        const active = walletActive.checked ? "1" : "0";
-        return [name, code, wave, active].join("|");
-      }
-
-      async function renderCard(force = false) {
-        const fingerprint = currentCardFingerprint();
-        if (!force && fingerprint === lastRenderFingerprint && lastCardDataUrl) {
-          return lastCardDataUrl;
-        }
-
-        const myToken = ++renderToken;
-        const ctx = cardCtx;
-        const W = cardCanvas.width;
-        const H = cardCanvas.height;
-
-        const name = String(walletName.value || "").trim() || "MON ARGENT";
-        const code = getEffectiveCode();
-        const wave = getEffectiveWave();
-        const publicUrl = getEffectivePublicUrl();
-
-        ctx.clearRect(0, 0, W, H);
-
-        const bg = ctx.createLinearGradient(0, 0, W, H);
-        bg.addColorStop(0, "#03150f");
-        bg.addColorStop(0.5, "#064e3b");
-        bg.addColorStop(1, "#02110b");
-        ctx.fillStyle = bg;
-        ctx.fillRect(0, 0, W, H);
-
-        ctx.fillStyle = "rgba(250,204,21,0.08)";
-        ctx.beginPath();
-        ctx.arc(120, 140, 180, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = "rgba(34,197,94,0.10)";
-        ctx.beginPath();
-        ctx.arc(760, 1160, 220, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = "#ffffff";
-        roundedRect(ctx, 36, 36, W - 72, H - 72, 38);
-        ctx.fill();
-
-        const headerGrad = ctx.createLinearGradient(0, 80, W, 280);
-        headerGrad.addColorStop(0, "#0b2f22");
-        headerGrad.addColorStop(1, "#0c5f3e");
-
-        ctx.save();
-        roundedRect(ctx, 60, 60, W - 120, 230, 28);
-        ctx.clip();
-        ctx.fillStyle = headerGrad;
-        ctx.fillRect(60, 60, W - 120, 230);
-        ctx.restore();
-
-        ctx.fillStyle = "#22c55e";
-        ctx.font = "900 30px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("MON ARGENT by DIGIY", 90, 120);
-
-        ctx.fillStyle = "#fef3c7";
-        ctx.font = "700 22px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("Carte de paiement", 90, 162);
-
-        ctx.fillStyle = "#dbeafe";
-        ctx.font = "600 18px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("Paiement direct vers le professionnel • 0% commission", 90, 200);
-
-        ctx.fillStyle = "rgba(255,255,255,.16)";
-        roundedRect(ctx, 640, 92, 170, 42, 16);
-        ctx.fill();
-
-        ctx.fillStyle = "#fde68a";
-        ctx.font = "900 18px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("QR ACTIF", 675, 120);
-
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "900 42px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText(name.slice(0, 28), 90, 360);
-
-        ctx.fillStyle = "#4b5563";
-        ctx.font = "800 22px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("Code pro", 90, 430);
-
-        ctx.fillStyle = "#111827";
-        ctx.font = "900 34px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
-        ctx.fillText(code || "À RENSEIGNER", 90, 472);
-
-        ctx.fillStyle = "#4b5563";
-        ctx.font = "800 22px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("Numéro de paiement", 90, 560);
-
-        ctx.fillStyle = "#111827";
-        ctx.font = "900 38px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
-        ctx.fillText(wave ? "+" + wave : "À RENSEIGNER", 90, 606);
-
-        ctx.fillStyle = "#4b5563";
-        ctx.font = "800 20px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("Scanne le QR ou utilise le code pro", 90, 700);
-
-        if (code) {
-          try {
-            const qrDataUrl = await generateQrDataUrl(publicUrl, 420);
-            if (myToken !== renderToken) return "";
-
-            const qrImg = await loadImage(qrDataUrl);
-            if (myToken !== renderToken) return "";
-
-            ctx.fillStyle = "#f9fafb";
-            roundedRect(ctx, 560, 420, 260, 260, 24);
-            ctx.fill();
-
-            ctx.drawImage(qrImg, 590, 450, 200, 200);
-
-            ctx.fillStyle = "#4b5563";
-            ctx.font = "800 14px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-            ctx.fillText("QR généré depuis le code actif", 575, 695);
-          } catch (_) {
-            if (myToken !== renderToken) return "";
-
-            ctx.fillStyle = "#e5e7eb";
-            roundedRect(ctx, 560, 420, 260, 260, 24);
-            ctx.fill();
-            ctx.fillStyle = "#111827";
-            ctx.font = "700 24px system-ui, sans-serif";
-            ctx.fillText("QR indisponible", 605, 555);
-          }
-        } else {
-          ctx.fillStyle = "#e5e7eb";
-          roundedRect(ctx, 560, 420, 260, 260, 24);
-          ctx.fill();
-          ctx.fillStyle = "#111827";
-          ctx.font = "700 22px system-ui, sans-serif";
-          ctx.fillText("Code pro requis", 610, 555);
-        }
-
-        ctx.fillStyle = "#111827";
-        ctx.font = "800 24px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("Comment payer ?", 90, 820);
-
-        ctx.fillStyle = "#374151";
-        ctx.font = "700 20px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("1. Ouvre ton moyen de paiement", 90, 868);
-        ctx.fillText("2. Choisis Payer", 90, 906);
-        ctx.fillText("3. Colle le numéro ou scanne le QR", 90, 944);
-
-        ctx.fillStyle = "#facc15";
-        roundedRect(ctx, 90, 1010, W - 180, 92, 22);
-        ctx.fill();
-
-        ctx.fillStyle = "#111827";
-        ctx.font = "900 26px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("DIGIY n'est pas une banque", 120, 1060);
-        ctx.font = "700 20px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("Le paiement affiché ici va directement vers le professionnel.", 120, 1092);
-
-        ctx.fillStyle = "#6b7280";
-        ctx.font = "700 17px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("Lien public : " + (code ? publicUrl : "—"), 90, 1185);
-
-        ctx.fillStyle = "#16a34a";
-        ctx.font = "900 22px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("MON ARGENT ELECTRONIQUE BY DIGIY", 90, 1260);
-
-        ctx.fillStyle = "#6b7280";
-        ctx.font = "700 17px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-        ctx.fillText("Carte générée depuis MON ARGENT PRO", 90, 1300);
-
-        if (myToken !== renderToken) return "";
-
-        lastRenderFingerprint = fingerprint;
-        lastCardDataUrl = cardCanvas.toDataURL("image/png");
-        return lastCardDataUrl;
-      }
-
-      function buildCardFilename() {
-        const code = getEffectiveCode();
-        const fallback = "ma-carte-mon-argent";
-        return (code ? ("mon-argent-" + code.toLowerCase()) : fallback) + ".png";
-      }
-
-      function buildQrFilename() {
-        const code = getEffectiveCode();
-        return "qr-paiement-" + (code ? code.toLowerCase() : "pay") + ".png";
-      }
-
-      async function ensureFreshCard() {
-        wipeCardState();
-        return renderCard(true);
-      }
-
-      async function ensureFreshQr() {
-        wipeQrState();
-        return renderQrOnly(true);
-      }
-
-      function openImagePage(dataUrl, filename, tipHtml) {
-        const html = [
-          "<!DOCTYPE html><html><head>",
-          "<meta charset='utf-8'>",
-          "<meta name='viewport' content='width=device-width,initial-scale=1'>",
-          "<title>", filename, "</title>",
-          "<style>",
-          "*{box-sizing:border-box;margin:0;padding:0}",
-          "body{background:#060f0a;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px 16px;gap:20px;font-family:system-ui,sans-serif;}",
-          ".tip{width:min(100%,560px);color:#fde68a;font-weight:900;font-size:16px;text-align:center;padding:18px 22px;line-height:1.75;background:rgba(250,204,21,.1);border:2px solid rgba(250,204,21,.45);border-radius:18px;}",
-          ".tip b{font-size:18px}",
-          ".tip .sub{margin-top:8px;color:#bbf7d0;font-size:14px;font-weight:800}",
-          "img{width:min(100%,560px);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.7);background:#fff;}",
-          "</style></head><body>",
-          "<div class='tip'>", tipHtml, "</div>",
-          "<img src='", dataUrl, "' alt='", filename, "'>",
-          "</body></html>"
-        ].join("");
-
-        const win = window.open("", "_blank");
-        if (win) {
-          win.document.write(html);
-          win.document.close();
-        } else {
-          setError("Pop-up bloquée. Autorise les pop-ups pour ce site puis réessaie.");
-        }
-      }
-
-      function smartDownload(dataUrl, filename) {
-        if (!dataUrl) {
-          setError("Image non disponible.");
-          return;
-        }
-
-        if (isIOS()) {
-          openImagePage(
-            dataUrl,
-            filename,
-            "📲 <b>Appui long sur l'image</b><br>→ Enregistrer dans Photos<br><span class='sub'>ou Ajouter à la photothèque</span>"
-          );
-          setOk("📲 Page ouverte — appui long sur l'image → Enregistrer dans Photos.");
-          return;
-        }
-
-        try {
-          const parts = dataUrl.split(",");
-          const byteStr = atob(parts[1]);
-          const ab = new Uint8Array(byteStr.length);
-          for (let i = 0; i < byteStr.length; i++) ab[i] = byteStr.charCodeAt(i);
-
-          const blob = new Blob([ab], { type: "image/png" });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = filename;
-          a.style.display = "none";
-          document.body.appendChild(a);
-          a.click();
-
-          setTimeout(() => {
-            a.remove();
-            URL.revokeObjectURL(url);
-          }, 3000);
-
-          setOk(isAndroid()
-            ? "📥 Téléchargé — vérifie ton dossier Téléchargements."
-            : "📥 Fichier dans Téléchargements — ouvre ton Finder 📂");
-        } catch (e) {
-          setError("Téléchargement impossible. " + String(e.message || e));
-        }
-      }
-
-      function openPreviewWithDataUrl(dataUrl, title, hint) {
-        if (!dataUrl) return;
-        cardPreviewImage.src = dataUrl;
-        previewTitle.textContent = title || "Aperçu";
-        previewHint.textContent = hint || "Image prête.";
-        cardPreviewModal.classList.add("open");
-        cardPreviewModal.setAttribute("aria-hidden", "false");
-        document.body.classList.add("modalOpen");
-      }
-
-      function closePreview() {
-        cardPreviewModal.classList.remove("open");
-        cardPreviewModal.setAttribute("aria-hidden", "true");
-        document.body.classList.remove("modalOpen");
-      }
-
-      async function openCardPreview() {
-        resetBoxes();
-        setBusy(btnOpenCard, true);
-
-        try {
-          const dataUrl = await ensureFreshCard();
-          if (!dataUrl) throw new Error("Carte vide");
-
-          openPreviewWithDataUrl(
-            dataUrl,
-            "Ma carte est prête",
-            "Sur téléphone, tu peux l'ouvrir en grand puis faire ta capture immédiatement."
-          );
-          setOk("Carte ouverte en grand.");
-        } catch (e) {
-          setError("Impossible d'ouvrir la carte. " + String(e.message || e));
-        } finally {
-          setBusy(btnOpenCard, false);
-        }
-      }
-
-      async function openQrPreview() {
-        resetBoxes();
-        setBusy(btnOpenQr, true);
-
-        try {
-          const dataUrl = await ensureFreshQr();
-          if (!dataUrl) throw new Error("QR vide");
-
-          openPreviewWithDataUrl(
-            dataUrl,
-            "Mon QR de paiement est prêt",
-            "Sur ordi, tu peux aussi le télécharger directement dans Téléchargements."
-          );
-          setOk("QR ouvert.");
-        } catch (e) {
-          setError("Impossible d'ouvrir le QR. " + String(e.message || e));
-        } finally {
-          setBusy(btnOpenQr, false);
-        }
-      }
-
-      async function downloadCard() {
-        resetBoxes();
-        setBusy(btnDownloadCard, true);
-        try {
-          const dataUrl = await ensureFreshCard();
-          smartDownload(dataUrl || lastCardDataUrl, buildCardFilename());
-        } catch (e) {
-          setError("Impossible de télécharger la carte. " + String(e.message || e));
-        } finally {
-          setBusy(btnDownloadCard, false);
-        }
-      }
-
-      async function downloadQr() {
-        resetBoxes();
-        setBusy(btnDownloadQr, true);
-        try {
-          const dataUrl = await ensureFreshQr();
-          smartDownload(dataUrl || lastQrDataUrl, buildQrFilename());
-        } catch (e) {
-          setError("Impossible de télécharger le QR. " + String(e.message || e));
-        } finally {
-          setBusy(btnDownloadQr, false);
-        }
-      }
-
-      btnReload.addEventListener("click", loadProfile);
-      btnSave.addEventListener("click", saveProfile);
-      btnCopyLink.addEventListener("click", copyPublicLink);
-      btnSupport.addEventListener("click", openSupport);
-
-      btnRenderQr.addEventListener("click", async () => {
-        resetBoxes();
-        setBusy(btnRenderQr, true);
-        try {
-          await ensureFreshQr();
-          setOk("QR régénéré proprement.");
-        } catch (e) {
-          setError("Impossible de régénérer le QR. " + String(e.message || e));
-        } finally {
-          setBusy(btnRenderQr, false);
-        }
+      document.getElementById("audioBtn")?.addEventListener("click", () => {
+        if(canSpeak() && speechSynthesis.speaking) stopAudio();
+        else speakAudio();
       });
 
-      btnOpenQr.addEventListener("click", openQrPreview);
-      btnDownloadQr.addEventListener("click", downloadQr);
-
-      btnRenderCard.addEventListener("click", async () => {
-        resetBoxes();
-        setBusy(btnRenderCard, true);
-        try {
-          await ensureFreshCard();
-          setOk("Carte régénérée proprement.");
-        } catch (e) {
-          setError("Impossible de régénérer la carte. " + String(e.message || e));
-        } finally {
-          setBusy(btnRenderCard, false);
-        }
+      window.addEventListener("pagehide", stopAudio);
+      document.addEventListener("visibilitychange", () => {
+        if(document.hidden) stopAudio();
       });
-
-      btnOpenCard.addEventListener("click", openCardPreview);
-      btnDownloadCard.addEventListener("click", downloadCard);
-
-      btnLogout.addEventListener("click", () => {
-        clearSession();
-        location.href = PIN_URL;
-      });
-
-      btnClosePreview.addEventListener("click", closePreview);
-      cardPreviewModal.addEventListener("click", (e) => {
-        if (e.target === cardPreviewModal) closePreview();
-      });
-
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && cardPreviewModal.classList.contains("open")) {
-          closePreview();
-        }
-      });
-
-      walletName.addEventListener("blur", () => {
-        autoCodeFromName();
-        void renderCard(true);
-      });
-
-      walletCode.addEventListener("input", () => {
-        walletCode.value = normalizeCode(walletCode.value);
-        currentCodeFromQuery = normalizeCode(walletCode.value);
-        updatePreview();
-      });
-
-      walletPhone.addEventListener("input", () => {
-        walletPhone.value = phoneDigits(walletPhone.value);
-        updatePreview();
-      });
-
-      walletActive.addEventListener("change", updatePreview);
-
-      void loadProfile();
     })();
   </script>
 </body>
 </html>
+
