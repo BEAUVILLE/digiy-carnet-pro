@@ -984,6 +984,40 @@
         🎧 Besoin d’être rassuré ? Écoute la voix DIGIY : elle explique à un novice ce que cette carte fait, et ce qu’elle ne fait pas.
       </div>
 
+      <div class="digiy-audio-public-panel" id="digiyAudioPanel">
+        <div class="digiy-audio-public-head">
+          <div>
+            <div class="digiy-audio-public-kicker">🎧 Voix DIGIY PAY</div>
+            <strong>Écouter avant de payer</strong>
+            <span>
+              Une voix simple explique que cette carte publique sert à vérifier le professionnel,
+              payer directement dans Wave, puis laisser une trace claire.
+            </span>
+          </div>
+          <div class="digiy-audio-public-badge">Public · paiement direct</div>
+        </div>
+
+        <div class="digiy-audio-public-controls" aria-label="Lecteur audio DIGIY PAY">
+          <button id="digiyAudioPlay" class="digiy-audio-action primary" type="button">▶️ Lecture</button>
+          <button id="digiyAudioStop" class="digiy-audio-action" type="button">⏹ Arrêt</button>
+          <a
+            class="digiy-audio-action soft"
+            href="https://wa.me/221771342889?text=Bonjour%20DIGIY%2C%20j%27ai%20besoin%20d%27aide%20pour%20payer%20un%20professionnel%20avec%20DIGIY%20PAY."
+            target="_blank"
+            rel="noopener noreferrer"
+          >💬 WhatsApp</a>
+          <a
+            class="digiy-audio-action soft"
+            href="sms:+221771342889?body=Bonjour%20DIGIY%2C%20j%27ai%20besoin%20d%27aide%20pour%20payer%20un%20professionnel%20avec%20DIGIY%20PAY."
+          >✉️ SMS</a>
+        </div>
+
+        <div class="digiy-audio-public-status" id="digiyAudioStatus">Prêt à lire.</div>
+        <div class="digiy-audio-public-progress" aria-hidden="true">
+          <span id="digiyAudioProgress"></span>
+        </div>
+      </div>
+
 
       <div class="public-guide" id="publicGuide">
         <div class="public-guide-title">🧭 Comment payer proprement ?</div>
@@ -1759,280 +1793,355 @@
     }
   </script>
 
-  <!-- ============================================================
-       DIGIY AUDIO — PAYER CE PROFESSIONNEL
+    <!-- ============================================================
+       DIGIY AUDIO — PAY PUBLIC · LECTURE / ARRÊT · DOCTRINE
        ============================================================ -->
 
-  <script>
-  window.DIGIY_AUDIO_CONFIG = {
-    label: "Écouter avant de payer",
-    stopLabel: "Arrêter",
-    text: "Bienvenue sur DIGIY PAY. Cette page sert à payer un professionnel sans se tromper. Elle ne remplace pas Wave, elle ne garde pas l’argent et elle ne prélève pas de commission. Elle t’aide seulement à vérifier le bon professionnel. Première étape : regarde le nom affiché. Deuxième étape : copie ou vérifie le numéro Wave public. Troisième étape : paie directement dans Wave. Quatrième étape : reviens ici et touche J’ai payé pour laisser une trace claire. Ce bouton ne prend pas ton argent. Il aide seulement le professionnel à savoir qu’un paiement a été fait et à mieux ranger son activité dans Mon Argent. Le bon réflexe : vérifie le nom, vérifie le numéro, paie en direct, puis confirme. DIGIY montre la route, le professionnel garde son argent.",
-    buttonBg: "linear-gradient(135deg,#d4af37,#b78b34)",
-    buttonColor: "#111827",
-    bottom: "24px",
-    right: "24px",
-    rate: 0.82,
-    pitch: 1,
-    volume: 1,
-    zIndex: 99999,
-    shadow: "0 10px 30px rgba(0,0,0,.26)"
-  };
-  </script>
-
   <style>
-  #digiy-audio-btn{
-  position:fixed;
-  display:inline-flex;
-  align-items:center;
-  gap:12px;
-  padding:16px 26px;
-  border:none;
-  border-radius:999px;
-  cursor:pointer;
-  font-family:'Outfit',Inter,sans-serif;
-  font-weight:900;
-  font-size:17px;
-  line-height:1;
-  -webkit-tap-highlight-color:transparent;
-  user-select:none;
-  transition:transform .18s ease,box-shadow .18s ease,opacity .18s ease;
-  }
-  #digiy-audio-btn:hover{transform:translateY(-2px)}
-  #digiy-audio-btn:active{transform:scale(.97)}
-  #digiy-audio-btn:disabled{opacity:.65;cursor:not-allowed}
-  #digiy-audio-btn .digiy-audio-ico{font-size:18px;line-height:1}
-  #digiy-audio-progress-wrap{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  height:3px;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .25s ease;
-  }
-  #digiy-audio-progress{
-  width:0%;
-  height:100%;
-  transition:width .18s linear;
-  }
-  @media (max-width:600px){
-    #digiy-audio-btn{
-      font-size:16px;
-      padding:15px 22px;
-      gap:11px;
-      bottom:84px !important;
-    }
-    #digiy-audio-btn .digiy-audio-ico{
-      font-size:17px;
-    }
-  }
-  </style>
-
-  <button id="digiy-audio-btn" type="button" aria-label="Écouter le paiement">
-    <span class="digiy-audio-ico">&#9654;</span>
-    <span class="digiy-audio-lbl">Écouter le paiement</span>
-  </button>
-
-  <div id="digiy-audio-progress-wrap" aria-hidden="true">
-    <div id="digiy-audio-progress"></div>
-  </div>
-
-  <script>
-  (function(){
-    var cfg = window.DIGIY_AUDIO_CONFIG || {};
-
-    var config = {
-      label: cfg.label || "Écouter DIGIY",
-      stopLabel: cfg.stopLabel || "Arrêter",
-      text: cfg.text || "Bienvenue sur DIGIYLYFE.",
-      buttonBg: cfg.buttonBg || "linear-gradient(135deg,#d4af37,#b78b34)",
-      buttonColor: cfg.buttonColor || "#111827",
-      bottom: cfg.bottom || "24px",
-      left: cfg.left || null,
-      right: cfg.right || "24px",
-      rate: typeof cfg.rate === "number" ? cfg.rate : 0.82,
-      pitch: typeof cfg.pitch === "number" ? cfg.pitch : 1,
-      volume: typeof cfg.volume === "number" ? cfg.volume : 1,
-      zIndex: cfg.zIndex || 99999,
-      shadow: cfg.shadow || "0 8px 28px rgba(0,0,0,.24)"
-    };
-
-    var btn = document.getElementById("digiy-audio-btn");
-    var lbl = btn ? btn.querySelector(".digiy-audio-lbl") : null;
-    var ico = btn ? btn.querySelector(".digiy-audio-ico") : null;
-    var progressWrap = document.getElementById("digiy-audio-progress-wrap");
-    var progressBar = document.getElementById("digiy-audio-progress");
-
-    if (!btn || !lbl || !ico || !progressWrap || !progressBar) return;
-
-    btn.style.bottom = config.bottom;
-    btn.style.left = config.left ? config.left : "auto";
-    btn.style.right = config.right ? config.right : "auto";
-    btn.style.zIndex = String(config.zIndex);
-    btn.style.background = config.buttonBg;
-    btn.style.color = config.buttonColor;
-    btn.style.boxShadow = config.shadow;
-
-    progressWrap.style.zIndex = String(config.zIndex - 1);
-    progressWrap.style.background = "rgba(212,175,55,.2)";
-    progressBar.style.background = "linear-gradient(90deg,#d4af37,#b78b34)";
-
-    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
-      btn.style.display = "none";
-      return;
+    .digiy-audio-public-panel{
+      margin:16px 18px 0;
+      padding:16px;
+      border-radius:22px;
+      border:2px solid rgba(121,83,12,.24);
+      background:
+        radial-gradient(circle at top left, rgba(250,204,21,.22), transparent 42%),
+        linear-gradient(160deg,rgba(255,250,238,.98),rgba(246,232,202,.96));
+      box-shadow:0 10px 24px rgba(77,52,22,.12);
+      color:#1f2a1f;
     }
 
-    var synth = window.speechSynthesis;
-    var utterance = null;
-    var playing = false;
-    var timer = null;
-    var launchId = 0;
-
-    function getFrenchVoice(){
-      var voices = synth.getVoices() || [];
-      if (!voices.length) return null;
-
-      return (
-        voices.find(function(v){ return /fr[-_]?FR/i.test(v.lang) && /google/i.test(v.name); }) ||
-        voices.find(function(v){ return /fr[-_]?FR/i.test(v.lang); }) ||
-        voices.find(function(v){ return /^fr/i.test(v.lang); }) ||
-        null
-      );
+    .digiy-audio-public-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
     }
 
-    function setIdle(){
-      playing = false;
-      ico.innerHTML = "&#9654;";
-      lbl.textContent = config.label;
-      btn.setAttribute("aria-label", config.label);
-      clearInterval(timer);
-      timer = null;
-      progressWrap.style.opacity = "0";
-      progressBar.style.width = "0%";
+    .digiy-audio-public-kicker{
+      color:#6b4e09;
+      font-size:13px;
+      font-weight:1000;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:6px;
     }
 
-    function setPlaying(){
-      playing = true;
-      ico.innerHTML = "&#9632;";
-      lbl.textContent = config.stopLabel;
-      btn.setAttribute("aria-label", config.stopLabel);
+    .digiy-audio-public-head strong{
+      display:block;
+      color:#241a0d;
+      font-size:22px;
+      font-weight:1000;
+      line-height:1.12;
+      margin-bottom:6px;
     }
 
-    function stop(){
-      clearInterval(timer);
-      timer = null;
-      try { synth.cancel(); } catch(e){}
-      utterance = null;
-      setIdle();
+    .digiy-audio-public-head span{
+      display:block;
+      color:#3d3324;
+      font-size:15px;
+      line-height:1.55;
+      font-weight:900;
+      max-width:58ch;
     }
 
-    function startProgress(text, currentId){
-      var words = (text.trim().match(/\S+/g) || []).length;
-      var estimatedDuration = Math.max(2500, words * 520);
-      var elapsed = 0;
-
-      clearInterval(timer);
-      progressBar.style.width = "0%";
-      progressWrap.style.opacity = "1";
-
-      timer = setInterval(function(){
-        if (!playing || currentId !== launchId) {
-          clearInterval(timer);
-          timer = null;
-          return;
-        }
-        elapsed += 150;
-        var pct = Math.min((elapsed / estimatedDuration) * 100, 97);
-        progressBar.style.width = pct + "%";
-      }, 150);
+    .digiy-audio-public-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:38px;
+      padding:9px 12px;
+      border-radius:999px;
+      background:rgba(22,163,74,.12);
+      border:1px solid rgba(22,101,52,.22);
+      color:#14532d;
+      font-size:12px;
+      font-weight:1000;
+      white-space:nowrap;
     }
 
-    function launch(){
-      launchId += 1;
-      var currentId = launchId;
-
-      try { synth.cancel(); } catch(e){}
-
-      utterance = new SpeechSynthesisUtterance(config.text);
-      utterance.lang = "fr-FR";
-      utterance.rate = config.rate;
-      utterance.pitch = config.pitch;
-      utterance.volume = config.volume;
-
-      var voice = getFrenchVoice();
-      if (voice) utterance.voice = voice;
-
-      utterance.onstart = function(){
-        if (currentId !== launchId) return;
-        setPlaying();
-        startProgress(config.text, currentId);
-      };
-
-      utterance.onend = function(){
-        if (currentId !== launchId) return;
-        clearInterval(timer);
-        timer = null;
-        progressBar.style.width = "100%";
-        setTimeout(function(){
-          if (currentId === launchId) setIdle();
-        }, 250);
-      };
-
-      utterance.onerror = function(){
-        if (currentId !== launchId) return;
-        stop();
-      };
-
-      synth.speak(utterance);
+    .digiy-audio-public-controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
     }
 
-    function play(){
-      if (playing) return;
+    .digiy-audio-action{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:48px;
+      padding:12px 16px;
+      border-radius:999px;
+      border:1px solid rgba(83,58,26,.22);
+      background:rgba(255,255,255,.72);
+      color:#1f2a1f;
+      text-decoration:none;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-size:14px;
+      font-weight:1000;
+      cursor:pointer;
+      transition:transform .16s ease, opacity .16s ease;
+    }
 
-      if (synth.speaking || synth.pending) {
-        try { synth.cancel(); } catch(e){}
+    .digiy-audio-action:hover{
+      transform:translateY(-1px);
+    }
+
+    .digiy-audio-action.primary{
+      border:none;
+      background:linear-gradient(135deg,#16a34a,#bbf7d0);
+      color:#052215;
+      box-shadow:0 10px 22px rgba(22,101,52,.14);
+    }
+
+    .digiy-audio-action.soft{
+      background:rgba(255,255,255,.64);
+    }
+
+    .digiy-audio-action[disabled]{
+      opacity:.62;
+      cursor:not-allowed;
+      transform:none;
+    }
+
+    .digiy-audio-public-status{
+      margin-top:12px;
+      color:#3d3324;
+      font-size:13px;
+      line-height:1.5;
+      font-weight:1000;
+    }
+
+    .digiy-audio-public-progress{
+      margin-top:10px;
+      height:7px;
+      border-radius:999px;
+      overflow:hidden;
+      background:rgba(83,58,26,.15);
+      border:1px solid rgba(83,58,26,.12);
+    }
+
+    .digiy-audio-public-progress span{
+      display:block;
+      width:0%;
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg,#facc15,#16a34a);
+      transition:width .18s linear;
+    }
+
+    @media(max-width:640px){
+      .digiy-audio-public-controls{
+        display:grid;
+        grid-template-columns:1fr 1fr;
       }
 
-      var voices = synth.getVoices();
-      if (voices && voices.length) {
-        launch();
+      .digiy-audio-action{
+        min-height:50px;
+        padding:12px;
+      }
+    }
+
+    @media(max-width:430px){
+      .digiy-audio-public-controls{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+
+  <script>
+    (function(){
+      "use strict";
+
+      var AUDIO_TEXT = ""
+        + "Bienvenue sur DIGIY PAY public. "
+        + "Cette page aide à payer un professionnel sans se tromper. "
+        + "Elle ne remplace pas Wave. Elle ne garde pas l’argent. Elle ne prélève pas de commission. "
+        + "Elle sert à vérifier le bon professionnel avant de payer. "
+        + "Première étape : regarde le nom affiché. "
+        + "Deuxième étape : copie ou vérifie le numéro Wave public. "
+        + "Troisième étape : paie directement dans Wave. "
+        + "Quatrième étape : reviens ici et touche J’ai payé pour laisser une trace claire. "
+        + "Ce bouton ne prend pas ton argent. Il aide seulement le professionnel à mieux ranger son activité dans Mon argent. "
+        + "Le bon réflexe : vérifie le nom, vérifie le numéro, paie en direct, puis confirme. "
+        + "DIGIY montre la route. Le professionnel garde son argent.";
+
+      var playBtn = document.getElementById("digiyAudioPlay");
+      var stopBtn = document.getElementById("digiyAudioStop");
+      var status = document.getElementById("digiyAudioStatus");
+      var progress = document.getElementById("digiyAudioProgress");
+
+      if(!playBtn || !stopBtn || !status || !progress) return;
+
+      if(!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)){
+        playBtn.disabled = true;
+        stopBtn.disabled = true;
+        status.textContent = "Lecture audio indisponible sur ce navigateur.";
         return;
       }
 
-      var launched = false;
+      var synth = window.speechSynthesis;
+      var utterance = null;
+      var playing = false;
+      var timer = null;
+      var launchId = 0;
 
-      function handleVoicesChanged(){
-        if (launched) return;
-        launched = true;
-        synth.removeEventListener("voiceschanged", handleVoicesChanged);
-        launch();
+      function prepareSpeechText(text){
+        return String(text || "")
+          .replace(/\bDIGIYLYFE\b/g, "diji i laïfe")
+          .replace(/\bDIGIY\b/g, "diji i")
+          .replace(/\bPAY\b/g, "paye")
+          .replace(/\bWave\b/g, "Ouève")
+          .replace(/\bQR\b/g, "Q R")
+          .replace(/\bSMS\b/g, "S M S")
+          .replace(/\bWhatsApp\b/g, "Ouatsap")
+          .replace(/0\s*%/g, "zéro pour cent");
       }
 
-      synth.addEventListener("voiceschanged", handleVoicesChanged);
+      function getFrenchVoice(){
+        var voices = synth.getVoices() || [];
+        if(!voices.length) return null;
 
-      setTimeout(function(){
-        if (launched) return;
-        launched = true;
-        synth.removeEventListener("voiceschanged", handleVoicesChanged);
-        launch();
-      }, 700);
-    }
+        return (
+          voices.find(function(v){ return /fr[-_]?FR/i.test(v.lang || "") && /google/i.test(v.name || ""); }) ||
+          voices.find(function(v){ return /fr[-_]?FR/i.test(v.lang || ""); }) ||
+          voices.find(function(v){ return /^fr/i.test(v.lang || ""); }) ||
+          null
+        );
+      }
 
-    btn.addEventListener("click", function(){
-      if (playing) stop();
-      else play();
-    });
+      function setIdle(){
+        playing = false;
+        playBtn.disabled = false;
+        stopBtn.disabled = false;
+        playBtn.textContent = "▶️ Lecture";
+        status.textContent = "Prêt à lire.";
+        clearInterval(timer);
+        timer = null;
+        progress.style.width = "0%";
+      }
 
-    window.addEventListener("beforeunload", stop);
+      function setPlaying(){
+        playing = true;
+        playBtn.textContent = "🔊 Lecture en cours";
+        status.textContent = "Lecture en cours…";
+      }
 
-    document.addEventListener("visibilitychange", function(){
-      if (document.hidden && playing) stop();
-    });
+      function stop(){
+        clearInterval(timer);
+        timer = null;
+        try{ synth.cancel(); }catch(_){}
+        utterance = null;
+        setIdle();
+      }
 
-    setIdle();
-  })();
+      function startProgress(text, currentId){
+        var words = (String(text).trim().match(/\S+/g) || []).length;
+        var estimatedDuration = Math.max(2600, words * 520);
+        var elapsed = 0;
+
+        clearInterval(timer);
+        progress.style.width = "0%";
+
+        timer = setInterval(function(){
+          if(!playing || currentId !== launchId){
+            clearInterval(timer);
+            timer = null;
+            return;
+          }
+          elapsed += 150;
+          progress.style.width = Math.min((elapsed / estimatedDuration) * 100, 97) + "%";
+        }, 150);
+      }
+
+      function launch(){
+        launchId += 1;
+        var currentId = launchId;
+        var speechText = prepareSpeechText(AUDIO_TEXT);
+
+        try{ synth.cancel(); }catch(_){}
+
+        utterance = new SpeechSynthesisUtterance(speechText);
+        utterance.lang = "fr-FR";
+        utterance.rate = 0.82;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+
+        var voice = getFrenchVoice();
+        if(voice) utterance.voice = voice;
+
+        utterance.onstart = function(){
+          if(currentId !== launchId) return;
+          setPlaying();
+          startProgress(speechText, currentId);
+        };
+
+        utterance.onend = function(){
+          if(currentId !== launchId) return;
+          clearInterval(timer);
+          timer = null;
+          progress.style.width = "100%";
+          setTimeout(function(){
+            if(currentId === launchId) setIdle();
+          }, 250);
+        };
+
+        utterance.onerror = function(){
+          if(currentId !== launchId) return;
+          status.textContent = "Lecture arrêtée.";
+          stop();
+        };
+
+        synth.speak(utterance);
+      }
+
+      function play(){
+        if(playing) return;
+
+        if(synth.speaking || synth.pending){
+          try{ synth.cancel(); }catch(_){}
+        }
+
+        var voices = synth.getVoices();
+        if(voices && voices.length){
+          launch();
+          return;
+        }
+
+        var launched = false;
+
+        function handleVoicesChanged(){
+          if(launched) return;
+          launched = true;
+          synth.removeEventListener("voiceschanged", handleVoicesChanged);
+          launch();
+        }
+
+        synth.addEventListener("voiceschanged", handleVoicesChanged);
+
+        setTimeout(function(){
+          if(launched) return;
+          launched = true;
+          synth.removeEventListener("voiceschanged", handleVoicesChanged);
+          launch();
+        }, 700);
+      }
+
+      playBtn.addEventListener("click", play);
+      stopBtn.addEventListener("click", stop);
+
+      window.addEventListener("beforeunload", stop);
+      document.addEventListener("visibilitychange", function(){
+        if(document.hidden && playing) stop();
+      });
+
+      setIdle();
+    })();
   </script>
+
 </body>
 </html>
+
