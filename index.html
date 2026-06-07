@@ -16,7 +16,7 @@
   <link rel="manifest" href="./site.webmanifest?v=1" />
 
 
-  <meta name="digiy-build" content="pay-public-inscription-link-20260529" />
+  <meta name="digiy-build" content="pay-public-lexique-wolof-20260607" />
 
   <script>
     window.DIGIY_SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
@@ -629,7 +629,7 @@
       width:min(var(--max), 100%);
       margin:0 auto;
       display:grid;
-      grid-template-columns:repeat(5,1fr);
+      grid-template-columns:repeat(6,1fr);
       gap:6px;
       background:rgba(10,24,18,.96);
       border:1px solid rgba(255,255,255,.08);
@@ -954,6 +954,7 @@
             <a class="hero-action-secondary" href="https://digiylyfe.com/">🌍 Site</a>
             <a class="hero-action-secondary" href="https://digiy-hub.digiylyfe.com/">🧭 HUB</a>
             <a class="hero-action-secondary" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
+            <a class="hero-action-secondary" href="https://pay.digiylyfe.com/lexique-pay.html?v=lexique-pay-v2-mobile-20260607">🇸🇳 Wolof PAY</a>
             <a class="hero-action-secondary" href="./inscription-pay.html">🚀 Inscription PAY</a>
           </div>
         </div>
@@ -985,6 +986,11 @@
         🎧 Besoin d’être rassuré ? Écoute la voix DIGIY : elle explique à un novice ce que cette carte fait, et ce qu’elle ne fait pas.
       </div>
 
+      <div class="trust-mini">
+        🇸🇳 Le lexique Wolof PAY aide à expliquer simplement : paiement reçu, preuve, facture, remboursement et abonnement actif.
+        <br><a class="btn ghost" href="https://pay.digiylyfe.com/lexique-pay.html?v=lexique-pay-v2-mobile-20260607" style="margin-top:10px">Ouvrir le lexique Wolof PAY</a>
+      </div>
+
       <div class="digiy-audio-public-panel" id="digiyAudioPanel">
         <div class="digiy-audio-public-head">
           <div>
@@ -1001,6 +1007,10 @@
         <div class="digiy-audio-public-controls" aria-label="Lecteur audio DIGIY PAY">
           <button id="digiyAudioPlay" class="digiy-audio-action primary" type="button">▶️ Lecture</button>
           <button id="digiyAudioStop" class="digiy-audio-action" type="button">⏹ Arrêt</button>
+          <a
+            class="digiy-audio-action soft"
+            href="https://pay.digiylyfe.com/lexique-pay.html?v=lexique-pay-v2-mobile-20260607"
+          >🇸🇳 Wolof PAY</a>
           <a
             class="digiy-audio-action soft"
             href="https://wa.me/221771342889?text=Bonjour%20DIGIY%2C%20j%27ai%20besoin%20d%27aide%20pour%20payer%20un%20professionnel%20avec%20DIGIY%20PAY."
@@ -1039,6 +1049,10 @@
             <strong>4 · Confirme</strong>
             <span>Après paiement, touche “J’ai payé” pour laisser une trace.</span>
           </div>
+          <a class="public-guide-card" href="https://pay.digiylyfe.com/lexique-pay.html?v=lexique-pay-v2-mobile-20260607">
+            <strong>🇸🇳 Wolof PAY</strong>
+            <span>Phrases utiles pour paiement, preuve, facture et abonnement.</span>
+          </a>
         </div>
       </div>
 
@@ -1110,12 +1124,14 @@
           <a class="btn ghost" href="https://digiylyfe.com/">🌍 Site DIGIYLYFE</a>
           <a class="btn primary" href="https://digiy-hub.digiylyfe.com/">🧭 HUB DIGIY</a>
           <a class="btn gold" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
+          <a class="btn ghost" href="https://pay.digiylyfe.com/lexique-pay.html?v=lexique-pay-v2-mobile-20260607">🇸🇳 Lexique Wolof PAY</a>
           <a class="btn primary" href="./inscription-pay.html">🚀 Inscription PAY</a>
         </div>
       </div>
 
       <div class="note">
         Le QR DIGIY ne remplace pas Wave : il montre clairement <b>qui reçoit</b>, <b>où payer</b>, puis aide le professionnel à garder une trace plus propre dans <b>Mon argent</b>.
+        Le lexique Wolof PAY aide aussi à expliquer la preuve, la facture, le paiement reçu ou l’abonnement actif.
       </div>
 
       <div class="foot">
@@ -1146,6 +1162,7 @@
       <a href="https://digiy-hub.digiylyfe.com/"><span class="ico">🧭</span><span>HUB</span></a>
       <a href="./inscription-pay.html"><span class="ico">🚀</span><span>Inscrire</span></a>
       <button id="btnBottomOpen" type="button"><span class="ico">🔎</span><span>Code</span></button>
+      <a href="https://pay.digiylyfe.com/lexique-pay.html?v=lexique-pay-v2-mobile-20260607"><span class="ico">🇸🇳</span><span>Wolof</span></a>
       <a class="active" id="btnBottomPaid" href="#"><span class="ico">✅</span><span>Payé</span></a>
     </div>
   </nav>
@@ -1961,6 +1978,7 @@
       var AUDIO_TEXT = ""
         + "Bienvenue sur DIGIY PAY public. "
         + "Cette page aide à payer un professionnel sans se tromper. "
+        + "Le lexique Wolof PAY peut aussi aider à expliquer paiement, preuve, facture et abonnement actif sur le terrain. "
         + "Elle ne remplace pas Wave. Elle ne garde pas l’argent. Elle ne prélève pas de commission. "
         + "Elle sert à vérifier le bon professionnel avant de payer. "
         + "Première étape : regarde le nom affiché. "
@@ -2147,4 +2165,6 @@
 <script src="https://pro-action-digiy.digiylyfe.com/assets/js/digiy-retour-voix.js?v=retour-voix-20260606-v4" defer></script>
 </body>
 </html>
+
+
 
