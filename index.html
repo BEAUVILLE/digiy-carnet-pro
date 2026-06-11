@@ -1,641 +1,705 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>DIGIY PAY — PRO / PERSO</title>
-  <meta name="theme-color" content="#07150f" />
-  <meta name="description" content="DIGIY PAY — lecture bancaire terrain : PRO, PERSO, solde en haut, mouvements, recherche, activités et admin caché." />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="theme-color" content="#12100f"/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <title>DIGIY PAY — Coffre PRO/PERSO · 0% commission</title>
+  <meta name="description" content="DIGIY PAY — coffre PRO/PERSO, saisie rapide, note vocale, bilan automatique. 0% commission. Tout pour le pro du terrain."/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Lora:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet"/>
+
   <style>
     :root{
-      --bg:#06140f;
-      --bg2:#0b2118;
-      --card:#f8efd9;
-      --card2:#fff8e8;
-      --ink:#172016;
-      --muted:#6b5a3b;
-      --line:rgba(78,56,25,.22);
-      --green:#167a46;
-      --green2:#22c55e;
-      --gold:#c4973f;
-      --gold2:#f4d27a;
-      --red:#c2410c;
-      --soft:#fffaf0;
-      --shadow:0 18px 48px rgba(0,0,0,.24);
-      --radius:26px;
-      --max:520px;
+      --bg:#12100f;--bg2:#1a1512;--card:#211c19;--card2:#2a231f;
+      --line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.16);
+      --text:#f8f1e8;--muted:#c8b8a7;
+      --gold:#d6a85f;--gold2:#f0d29a;
+      --green:#6fa27e;--cream:#f3e8d8;
+      --shadow:0 22px 64px rgba(0,0,0,.36);
+      --max:1100px;
+      --fontA:"Outfit",system-ui,-apple-system,sans-serif;
+      --fontB:"Lora",Georgia,serif;
     }
-
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;min-height:100%;}
+    html{scroll-behavior:smooth}
     body{
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      margin:0;color:var(--text);font-family:var(--fontA);
       background:
-        radial-gradient(circle at top left, rgba(244,210,122,.14), transparent 32%),
-        radial-gradient(circle at bottom right, rgba(34,197,94,.14), transparent 30%),
-        linear-gradient(180deg,var(--bg),#03100b 58%,#020806);
-      color:var(--card2);
-      font-weight:800;
-      -webkit-font-smoothing:antialiased;
+        radial-gradient(900px 560px at 10% -10%,rgba(214,168,95,.13),transparent 60%),
+        radial-gradient(800px 480px at 100% 4%,rgba(111,162,126,.10),transparent 58%),
+        linear-gradient(180deg,#17120f,var(--bg));
+      line-height:1.55;
+      padding-bottom:calc(60px + env(safe-area-inset-bottom,0px));
+    }
+    a{color:inherit;text-decoration:none}
+    button,input{font:inherit;cursor:pointer}
+
+    .wrap{width:min(var(--max),calc(100% - 28px));margin:0 auto}
+
+    /* TOPBAR */
+    .topbar{
+      position:sticky;top:0;z-index:30;
+      background:rgba(18,16,15,.88);
+      border-bottom:1px solid rgba(255,255,255,.07);
+      backdrop-filter:blur(16px);
+    }
+    .topbar-inner{
+      min-height:68px;display:flex;align-items:center;
+      justify-content:space-between;gap:14px;padding:10px 0;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand-badge{
+      width:44px;height:44px;border-radius:14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      color:#17120e;font-size:20px;font-weight:1000;
+      box-shadow:0 12px 28px rgba(214,168,95,.22);flex:0 0 auto;
+    }
+    .brand strong{display:block;font-weight:1000;font-size:15px;line-height:1.05}
+    .brand span{display:block;color:var(--muted);font-size:11px;font-weight:800;margin-top:2px}
+    .nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .nav a{
+      min-height:40px;padding:8px 14px;border-radius:999px;
+      border:1px solid transparent;color:var(--muted);font-size:13px;font-weight:850;
+      transition:all .18s;
+    }
+    .nav a:hover{color:var(--text);background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+    .nav .cta{
+      color:#17120e;background:linear-gradient(135deg,var(--gold),var(--gold2));
+      font-weight:1000;box-shadow:0 10px 24px rgba(214,168,95,.22);
     }
 
-    button,input,select,textarea{font:inherit}
-    button{cursor:pointer}
-    .app{width:min(var(--max),100%);margin:0 auto;min-height:100vh;padding:10px 10px 112px;}
+    /* BTNS */
+    .btn{
+      min-height:52px;border-radius:999px;border:1px solid transparent;
+      padding:0 22px;display:inline-flex;align-items:center;justify-content:center;
+      gap:10px;font-weight:1000;transition:transform .18s,box-shadow .18s;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#17120e;box-shadow:0 14px 36px rgba(214,168,95,.24)}
+    .btn-secondary{background:rgba(255,255,255,.055);color:var(--text);border-color:rgba(255,255,255,.11)}
+    .btn-green{background:linear-gradient(135deg,var(--green),#99c5a7);color:#101812;box-shadow:0 14px 32px rgba(111,162,126,.20)}
 
-    .phone-shell{
-      min-height:calc(100vh - 20px);
-      border:1px solid rgba(255,255,255,.08);
-      background:linear-gradient(180deg,rgba(7,21,15,.98),rgba(7,21,15,.84));
-      border-radius:34px;
-      overflow:hidden;
+    /* HERO */
+    .hero{padding:40px 0 24px}
+    .hero-grid{
+      display:grid;grid-template-columns:1fr 1fr;
+      gap:32px;align-items:center;
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 12px;border-radius:999px;
+      border:1px solid rgba(214,168,95,.25);background:rgba(214,168,95,.10);
+      color:#f5dca8;font-size:13px;font-weight:950;margin-bottom:16px;
+    }
+    h1{
+      margin:0;font-family:var(--fontB);
+      font-size:clamp(34px,5.5vw,62px);line-height:.97;
+      letter-spacing:-1.5px;font-weight:700;
+    }
+    h1 em{color:var(--gold);font-style:italic}
+    .lead{margin:16px 0 0;color:var(--muted);font-size:16px;line-height:1.72;max-width:640px;font-weight:700}
+    .hero-actions{margin-top:22px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+    /* CHIPS */
+    .chips{margin-top:22px;display:flex;flex-wrap:wrap;gap:9px}
+    .chip{
+      padding:9px 14px;border-radius:14px;
+      border:1px solid rgba(214,168,95,.22);
+      background:rgba(255,255,255,.055);
+      color:#f5e8d6;font-size:13px;font-weight:950;
+    }
+    .chip.gold{
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      color:#17120e;border-color:transparent;
+    }
+
+    /* ROI DEMO CARD */
+    .roi-card{
+      border-radius:32px;overflow:hidden;
+      border:1px solid rgba(255,255,255,.09);
+      background:radial-gradient(circle at top right,rgba(214,168,95,.12),transparent 40%),
+                 linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
+      box-shadow:var(--shadow);padding:24px;
+    }
+    .roi-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:1000;margin-bottom:8px}
+    .roi-amount{font-size:48px;font-weight:900;letter-spacing:-2px;color:var(--gold2);line-height:1}
+    .roi-sub{margin-top:8px;font-size:13px;color:var(--muted);font-weight:800}
+    .roi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+    .roi-pill{
+      padding:10px 12px;border-radius:14px;text-align:center;
+      font-size:12px;font-weight:950;
+    }
+    .roi-in{background:rgba(111,162,126,.14);color:#a8d5b5;border:1px solid rgba(111,162,126,.20)}
+    .roi-out{background:rgba(194,65,12,.10);color:#fca884;border:1px solid rgba(194,65,12,.18)}
+    .roi-flash{
+      margin-top:12px;padding:9px 12px;border-radius:12px;
+      background:rgba(214,168,95,.10);border:1px solid rgba(214,168,95,.20);
+      color:#f5dca8;font-size:12px;font-weight:950;text-align:center;
+    }
+
+    /* SECTIONS */
+    .section{padding:40px 0}
+    .section-title{text-align:center;margin-bottom:32px}
+    .section-title h2{
+      margin:0 0 10px;font-family:var(--fontB);
+      font-size:clamp(26px,4vw,44px);line-height:1.05;font-weight:700;
+    }
+    .section-title h2 em{color:var(--gold);font-style:italic}
+    .section-title p{margin:0;color:var(--muted);font-size:16px;font-weight:700;max-width:600px;margin:0 auto}
+
+    /* MODULE CARDS GRID */
+    .modules-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:14px;
+    }
+    .module-card{
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.09);
+      background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));
       box-shadow:var(--shadow);
-      position:relative;
+      padding:20px;
+      cursor:pointer;
+      transition:transform .2s,box-shadow .2s,border-color .2s;
+      position:relative;overflow:hidden;
     }
+    .module-card::before{
+      content:'';position:absolute;inset:0;border-radius:24px;
+      background:radial-gradient(circle at top right,rgba(214,168,95,.10),transparent 50%);
+      opacity:0;transition:opacity .3s;
+    }
+    .module-card:hover{transform:translateY(-3px);box-shadow:0 28px 72px rgba(0,0,0,.42);border-color:rgba(214,168,95,.22)}
+    .module-card:hover::before{opacity:1}
+    .mc-ico{
+      width:52px;height:52px;border-radius:18px;
+      display:grid;place-items:center;
+      background:rgba(214,168,95,.12);border:1px solid rgba(214,168,95,.20);
+      font-size:24px;margin-bottom:14px;
+    }
+    .mc-title{font-size:18px;font-weight:1000;margin-bottom:6px;color:#fff}
+    .mc-body{color:var(--muted);font-size:14px;line-height:1.6;font-weight:700;margin-bottom:14px}
+    .mc-open{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:8px 14px;border-radius:999px;
+      background:rgba(214,168,95,.12);border:1px solid rgba(214,168,95,.22);
+      color:#f5dca8;font-size:12px;font-weight:950;
+      transition:background .18s;
+    }
+    .module-card:hover .mc-open{background:rgba(214,168,95,.22)}
 
-    .top-bank{
-      position:sticky;
-      top:0;
-      z-index:20;
-      padding:14px 14px 16px;
-      background:
-        radial-gradient(circle at top left, rgba(244,210,122,.18), transparent 44%),
-        linear-gradient(180deg,rgba(7,21,15,.98),rgba(7,21,15,.92));
+    /* BIG CARDS DUO */
+    .duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .big-card{
+      border-radius:28px;border:1px solid rgba(255,255,255,.09);
+      background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));
+      box-shadow:var(--shadow);padding:24px;
+    }
+    .big-card h3{margin:0 0 10px;font-family:var(--fontB);font-size:24px;line-height:1.05;font-weight:700}
+    .big-card h3 em{color:var(--gold);font-style:italic}
+    .big-card p{margin:0 0 12px;color:var(--muted);font-weight:750;line-height:1.7;font-size:15px}
+    .big-card p:last-child{margin-bottom:0}
+
+    /* VOICE DEMO */
+    .voice-panel{
+      border-radius:28px;border:1px solid rgba(255,255,255,.09);
+      background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));
+      box-shadow:var(--shadow);padding:24px;
+    }
+    .voice-line{
+      display:flex;align-items:center;gap:12px;
+      padding:11px 0;border-bottom:1px solid rgba(255,255,255,.07);
+      font-size:15px;font-weight:900;
+    }
+    .voice-line:last-child{border-bottom:none}
+    .voice-ico{font-size:20px;flex:0 0 28px}
+    .voice-text{color:var(--gold2)}
+    .voice-parsed{color:var(--muted);font-size:12px;margin-left:auto;white-space:nowrap}
+
+    /* CTA BOX */
+    .cta-box{
+      border-radius:32px;
+      background:linear-gradient(135deg,rgba(214,168,95,.14),rgba(214,168,95,.06));
+      border:1px solid rgba(214,168,95,.24);
+      padding:32px 28px;text-align:center;
+      box-shadow:var(--shadow);
+    }
+    .cta-box h2{margin:0 0 10px;font-family:var(--fontB);font-size:clamp(24px,3.5vw,38px);font-weight:700}
+    .cta-box h2 em{color:var(--gold);font-style:italic}
+    .cta-box p{margin:0 0 22px;color:var(--muted);font-size:16px;font-weight:700;line-height:1.65}
+    .cta-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+
+    /* MODAL */
+    .modal-bg{
+      position:fixed;inset:0;z-index:60;
+      background:rgba(0,0,0,.70);
+      display:none;align-items:flex-end;justify-content:center;
+      padding:0;
+    }
+    .modal-bg.open{display:flex}
+    .modal{
+      width:100%;max-width:600px;
+      max-height:88vh;overflow-y:auto;
+      background:linear-gradient(180deg,#1e1814,#171210);
+      border-radius:32px 32px 0 0;
+      border:1px solid rgba(255,255,255,.10);
+      border-bottom:none;
+      box-shadow:0 -24px 64px rgba(0,0,0,.48);
+      animation:slideUp .3s cubic-bezier(.22,1,.36,1);
+    }
+    @keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+    .modal-head{
+      position:sticky;top:0;z-index:2;
+      padding:18px 20px 14px;
+      background:rgba(30,24,20,.96);backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(255,255,255,.08);
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+    }
+    .modal-head strong{font-family:var(--fontB);font-size:20px;font-weight:700;color:var(--gold2)}
+    .modal-close{
+      width:38px;height:38px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.07);color:var(--text);font-size:18px;
+    }
+    .modal-body{padding:20px}
+    .modal-section{margin-bottom:20px}
+    .modal-section h4{
+      margin:0 0 10px;font-size:13px;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--gold);font-weight:1000;
+    }
+    .modal-section p{margin:0;color:var(--muted);font-size:15px;line-height:1.7;font-weight:750}
+    .modal-feat{display:grid;gap:8px}
+    .modal-feat-item{
+      display:flex;align-items:flex-start;gap:10px;
+      padding:11px 13px;border-radius:16px;
+      background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);
+    }
+    .mfi-ico{font-size:18px;flex:0 0 24px;margin-top:1px}
+    .mfi-text{font-size:14px;color:var(--text);font-weight:850;line-height:1.5}
+    .mfi-text strong{color:var(--gold2)}
+    .modal-demo{
+      background:rgba(214,168,95,.08);border:1px solid rgba(214,168,95,.18);
+      border-radius:18px;padding:14px 16px;
+    }
+    .demo-row{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);
+      font-size:14px;font-weight:900;
+    }
+    .demo-row:last-child{border-bottom:none}
+    .demo-row .plus{color:#a8d5b5}
+    .demo-row .minus{color:#fca884}
+    .modal-cta{
+      width:100%;min-height:52px;border-radius:999px;border:none;
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      color:#17120e;font-size:15px;font-weight:1000;margin-top:6px;
+      box-shadow:0 12px 28px rgba(214,168,95,.24);
+    }
+    .modal-cta-link{
+      display:block;width:100%;min-height:52px;border-radius:999px;
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      color:#17120e;font-size:15px;font-weight:1000;margin-top:6px;
+      box-shadow:0 12px 28px rgba(214,168,95,.24);
+      display:flex;align-items:center;justify-content:center;gap:10px;
     }
 
-    .topline{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;}
-    .round-btn{
-      width:44px;height:44px;border-radius:16px;border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.06);color:#fff;display:grid;place-items:center;font-size:20px;font-weight:1000;
+    /* RESPONSIVE */
+    @media(max-width:700px){
+      .hero-grid{grid-template-columns:1fr}
+      .roi-card{display:none}
+      .duo{grid-template-columns:1fr}
+      .modules-grid{grid-template-columns:1fr 1fr}
+      .topbar-inner{padding:8px 0}
+      .nav .cta{display:none}
     }
-    .title-wrap{text-align:center;min-width:0;}
-    .kicker{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.58);font-weight:1000;}
-    .title{font-size:20px;line-height:1.1;color:var(--gold2);font-weight:1000;margin-top:2px;}
-
-    .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
-    .tab{
-      min-height:50px;border-radius:18px;border:1px solid rgba(255,255,255,.09);
-      background:rgba(255,255,255,.055);color:rgba(255,255,255,.72);font-weight:1000;
-      display:flex;align-items:center;justify-content:center;gap:8px;
-    }
-    .tab.active{background:linear-gradient(135deg,var(--gold2),#fff2bf);color:#142016;border-color:rgba(244,210,122,.5);}
-
-    .balance-card{
-      border-radius:28px;
-      padding:18px;
-      background:linear-gradient(135deg,#fff7df,#ead29a);
-      color:#162016;
-      box-shadow:0 14px 34px rgba(0,0,0,.22);
-      border:1px solid rgba(255,255,255,.32);
-    }
-    .balance-label{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#5d4a22;font-size:13px;font-weight:1000;}
-    .balance-number{margin-top:4px;font-size:42px;line-height:1.02;font-weight:1100;letter-spacing:-1px;color:#10190f;}
-    .balance-mini{margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#4d3e1e;font-size:13px;font-weight:950;}
-    .pill-mini{display:inline-flex;align-items:center;gap:5px;border:1px solid rgba(77,62,30,.18);background:rgba(255,255,255,.45);border-radius:999px;padding:7px 9px;white-space:nowrap;}
-
-    .quick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
-    .quick button{
-      min-height:54px;border-radius:18px;border:none;font-size:16px;font-weight:1100;
-      box-shadow:0 10px 22px rgba(0,0,0,.16);
-    }
-    .income{background:linear-gradient(135deg,var(--green2),#bbf7d0);color:#052215;}
-    .expense{background:linear-gradient(135deg,#fed7aa,#fff7ed);color:#5f220b;}
-
-    .content{padding:14px;}
-    .search-box{
-      display:grid;grid-template-columns:44px 1fr 44px;gap:8px;align-items:center;
-      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);border-radius:20px;padding:8px;margin-bottom:12px;
-    }
-    .search-box span{display:grid;place-items:center;font-size:19px;color:#fff;opacity:.92;}
-    .search-box input{height:42px;border:none;outline:none;background:transparent;color:#fff;font-weight:1000;font-size:16px;min-width:0;}
-    .search-box input::placeholder{color:rgba(255,255,255,.48)}
-    .search-box button{width:42px;height:42px;border-radius:14px;border:none;background:rgba(255,255,255,.10);color:#fff;font-weight:1000;}
-
-    .periods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 12px;}
-    .period{
-      border-radius:18px;padding:11px 9px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.09);
-      min-width:0;
-    }
-    .period small{display:block;color:rgba(255,255,255,.62);font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.06em;}
-    .period strong{display:block;margin-top:4px;font-size:17px;color:#fff;font-weight:1100;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-
-    .section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:16px 2px 10px;}
-    .section-head h2{margin:0;color:#fff;font-size:17px;font-weight:1100;}
-    .section-head button{border:none;border-radius:999px;background:rgba(244,210,122,.16);color:#fde68a;padding:8px 10px;font-size:12px;font-weight:1000;}
-
-    .activity-strip{display:flex;gap:8px;overflow:auto;padding:2px 0 4px;scrollbar-width:none;}
-    .activity-strip::-webkit-scrollbar{display:none}
-    .activity-card{
-      flex:0 0 auto;min-width:132px;border-radius:18px;padding:11px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.09);color:#fff;text-align:left;
-    }
-    .activity-card small{display:block;color:rgba(255,255,255,.62);font-size:11px;font-weight:1000;margin-bottom:3px;}
-    .activity-card strong{display:block;font-size:15px;line-height:1.1;font-weight:1100;max-width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .activity-card b{display:block;margin-top:8px;color:#bbf7d0;font-size:14px;}
-
-    .movements{display:grid;gap:8px;}
-    .movement{
-      display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
-      padding:13px 12px;border-radius:20px;background:linear-gradient(160deg,#fffaf0,#f1dfb8);color:var(--ink);border:1px solid rgba(78,56,25,.14);
-      box-shadow:0 6px 15px rgba(0,0,0,.08);
-    }
-    .left{min-width:0;}
-    .label{font-size:16px;font-weight:1100;line-height:1.15;color:#172016;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .meta{margin-top:4px;font-size:12px;color:#695738;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .amount{font-size:17px;font-weight:1100;white-space:nowrap;text-align:right;}
-    .amount.plus{color:#166534}.amount.minus{color:#9a3412}
-    .time{margin-top:3px;text-align:right;font-size:11px;font-weight:1000;color:#776748;}
-    .empty{padding:18px;border-radius:20px;text-align:center;color:rgba(255,255,255,.68);border:1px dashed rgba(255,255,255,.18);font-weight:1000;}
-    .more{width:100%;min-height:52px;margin-top:10px;border-radius:18px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);color:#fff;font-weight:1100;}
-
-    .bottom-nav{
-      position:fixed;left:0;right:0;bottom:0;z-index:30;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));
-      background:linear-gradient(180deg,rgba(2,8,6,0),rgba(2,8,6,.96) 35%);
-    }
-    .bottom-inner{width:min(var(--max),100%);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:rgba(7,21,15,.94);border:1px solid rgba(255,255,255,.10);border-radius:22px;padding:8px;box-shadow:0 12px 30px rgba(0,0,0,.25);}
-    .bottom-inner button{min-height:56px;border-radius:17px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.06);color:#fff;display:grid;place-items:center;align-content:center;gap:2px;font-size:11px;font-weight:1100;}
-    .bottom-inner button.main{background:linear-gradient(135deg,var(--green2),#bbf7d0);color:#052215;border:none;}
-    .bottom-inner .ico{font-size:20px;line-height:1}
-
-    .modal-backdrop{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.52);display:none;align-items:flex-end;justify-content:center;padding:12px;}
-    .modal-backdrop.open{display:flex;}
-    .modal{width:min(var(--max),100%);max-height:88vh;overflow:auto;border-radius:28px;background:linear-gradient(180deg,#fffaf0,#ead7aa);color:var(--ink);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.3);}
-    .modal-head{position:sticky;top:0;z-index:2;background:rgba(255,250,240,.95);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px;border-bottom:1px solid var(--line);}
-    .modal-head strong{font-size:20px;font-weight:1100;color:#172016;}
-    .modal-head button{width:40px;height:40px;border-radius:14px;border:1px solid var(--line);background:#fff;color:#172016;font-size:18px;font-weight:1000;}
-    .modal-body{padding:15px;}
-    .field{margin-bottom:12px;}
-    .field label{display:block;margin-bottom:6px;color:#4c3d22;font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:1100;}
-    .field input,.field select,.field textarea{width:100%;min-height:50px;border-radius:16px;border:1px solid rgba(78,56,25,.22);background:#fff;color:#172016;padding:12px;font-weight:1000;outline:none;}
-    .field textarea{min-height:86px;resize:vertical;}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-    .save{width:100%;min-height:54px;border-radius:18px;border:none;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;font-weight:1100;font-size:16px;margin-top:6px;}
-    .soft-btn{min-height:46px;border-radius:16px;border:1px solid rgba(78,56,25,.22);background:#fff7e6;color:#172016;font-weight:1100;padding:10px 12px;}
-    .danger-btn{background:#fff7ed;color:#9a3412;border-color:#fed7aa;}
-    .admin-list{display:grid;gap:8px;margin-top:8px;}
-    .admin-item{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:10px 12px;border-radius:16px;background:#fff;border:1px solid rgba(78,56,25,.14);font-weight:1000;}
-    .admin-item small{display:block;color:#6b5a3b;font-weight:1000;margin-top:2px;}
-    .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-    .menu-grid button{min-height:86px;border-radius:20px;border:1px solid rgba(78,56,25,.16);background:#fff;color:#172016;font-weight:1100;display:grid;place-items:center;align-content:center;gap:6px;}
-    .menu-grid .big-ico{font-size:25px;}
-    .notice{padding:12px;border-radius:18px;background:rgba(22,122,70,.10);border:1px solid rgba(22,122,70,.20);color:#14532d;font-size:13px;line-height:1.5;font-weight:1000;margin-bottom:12px;}
-    .tiny{font-size:12px;color:#6b5a3b;line-height:1.5;font-weight:950;}
-
-    @media(max-width:430px){
-      .app{padding:0 0 104px}.phone-shell{border-radius:0;border-left:none;border-right:none;min-height:100vh}.balance-number{font-size:38px}.content{padding:12px}.menu-grid{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}.periods{gap:7px}.period strong{font-size:15px}.modal-backdrop{padding:0}.modal{border-radius:26px 26px 0 0;max-height:92vh;}
+    @media(max-width:480px){
+      .modules-grid{grid-template-columns:1fr}
+      h1{font-size:32px}
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <section class="phone-shell" aria-label="DIGIY PAY">
-      <header class="top-bank">
-        <div class="topline">
-          <button class="round-btn" id="btnBack" type="button" aria-label="Retour">‹</button>
-          <div class="title-wrap">
-            <div class="kicker">DIGIY PAY</div>
-            <div class="title">Mon argent</div>
-          </div>
-          <button class="round-btn" id="btnMenu" type="button" aria-label="Menu activités">⠿</button>
-        </div>
 
-        <div class="tabs" role="tablist" aria-label="Choisir la poche">
-          <button class="tab active" id="tabPro" type="button" data-pocket="pro">💼 PRO</button>
-          <button class="tab" id="tabPerso" type="button" data-pocket="perso">🏠 PERSO</button>
-        </div>
-
-        <div class="balance-card">
-          <div class="balance-label">
-            <span id="walletName">Solde PRO</span>
-            <button class="pill-mini" id="btnEye" type="button" aria-label="Masquer ou afficher le solde">👁 Ouvert</button>
-          </div>
-          <div class="balance-number" id="balanceNumber">0 F</div>
-          <div class="balance-mini">
-            <span class="pill-mini" id="todayMini">Aujourd’hui 0 F</span>
-            <span class="pill-mini" id="movementMini">0 lignes</span>
-          </div>
-        </div>
-
-        <div class="quick">
-          <button class="income" id="btnAddIncome" type="button">+ Entrée</button>
-          <button class="expense" id="btnAddExpense" type="button">- Sortie</button>
-        </div>
-      </header>
-
-      <main class="content">
-        <div class="search-box">
-          <span>🔎</span>
-          <input id="searchInput" type="search" placeholder="Rechercher : gasoil, Astou, LOC, 7500…" autocomplete="off" />
-          <button id="btnClearSearch" type="button">×</button>
-        </div>
-
-        <div class="periods" aria-label="Résumé">
-          <div class="period"><small>Jour</small><strong id="sumDay">0 F</strong></div>
-          <div class="period"><small>Semaine</small><strong id="sumWeek">0 F</strong></div>
-          <div class="period"><small>Mois</small><strong id="sumMonth">0 F</strong></div>
-        </div>
-
-        <div class="section-head">
-          <h2>Activités</h2>
-          <button id="btnOpenActivities" type="button">Voir</button>
-        </div>
-        <div class="activity-strip" id="activityStrip" aria-label="Activités PAY"></div>
-
-        <div class="section-head">
-          <h2 id="movementTitle">Derniers mouvements</h2>
-          <button id="btnAdminSmall" type="button">Admin caché</button>
-        </div>
-        <div class="movements" id="movementList"></div>
-        <button class="more" id="btnMore" type="button">Voir 10 mouvements de plus</button>
-      </main>
-    </section>
-  </div>
-
-  <nav class="bottom-nav" aria-label="Navigation PAY">
-    <div class="bottom-inner">
-      <button id="navHome" type="button"><span class="ico">🏦</span><span>Accueil</span></button>
-      <button id="navActivities" type="button"><span class="ico">⠿</span><span>Activités</span></button>
-      <button id="navAdd" class="main" type="button"><span class="ico">＋</span><span>Ajouter</span></button>
-      <button id="navAdmin" type="button"><span class="ico">⚙</span><span>Admin</span></button>
-    </div>
-  </nav>
-
-  <div class="modal-backdrop" id="movementModal" role="dialog" aria-modal="true" aria-label="Ajouter un mouvement">
-    <div class="modal">
-      <div class="modal-head"><strong id="movementModalTitle">Ajouter un mouvement</strong><button type="button" data-close="movementModal">×</button></div>
-      <div class="modal-body">
-        <div class="notice">Geste simple : poche, entrée ou sortie, montant, libellé. DIGIY calcule derrière.</div>
-        <form id="movementForm">
-          <div class="grid2">
-            <div class="field">
-              <label>Poche</label>
-              <select id="movePocket"><option value="pro">PRO</option><option value="perso">PERSO</option></select>
-            </div>
-            <div class="field">
-              <label>Nature</label>
-              <select id="moveType"><option value="income">+ Entrée / Recette</option><option value="expense">- Sortie / Dépense</option></select>
-            </div>
-          </div>
-          <div class="field"><label>Montant en F</label><input id="moveAmount" type="number" inputmode="numeric" min="0" step="1" placeholder="Ex : 7500" required /></div>
-          <div class="field"><label>Libellé</label><input id="moveLabel" list="labelsList" type="text" placeholder="Ex : Recette, Gasoil, Personnel Ali…" required /><datalist id="labelsList"></datalist></div>
-          <div class="grid2">
-            <div class="field"><label>Activité</label><select id="moveActivity"></select></div>
-            <div class="field"><label>Personne</label><input id="movePerson" list="peopleList" type="text" placeholder="Astou, Ali…" /><datalist id="peopleList"></datalist></div>
-          </div>
-          <div class="field"><label>Note courte</label><textarea id="moveNote" placeholder="Ex : avance journée chantier, réservation chambre, achat ciment…"></textarea></div>
-          <button class="save" type="submit">Enregistrer le mouvement</button>
-        </form>
-        <p class="tiny">Façade : F seulement. Derrière, le système pourra garder XOF/FCFA proprement.</p>
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <div class="brand-badge">₣</div>
+      <div>
+        <strong>DIGIY PAY</strong>
+        <span>PRO · PERSO · 0% commission</span>
       </div>
     </div>
+    <nav class="nav">
+      <a href="#modules">Fonctions</a>
+      <a href="#voix">Note vocale</a>
+      <a href="https://tarifs.digiylyfe.com/" class="cta">💳 Tarifs</a>
+    </nav>
   </div>
+</header>
 
-  <div class="modal-backdrop" id="menuModal" role="dialog" aria-modal="true" aria-label="Menu PAY">
-    <div class="modal">
-      <div class="modal-head"><strong>Menu PAY</strong><button type="button" data-close="menuModal">×</button></div>
-      <div class="modal-body">
-        <div class="menu-grid">
-          <button id="menuActivities" type="button"><span class="big-ico">⠿</span><span>Activités</span></button>
-          <button id="menuAdmin" type="button"><span class="big-ico">⚙</span><span>Admin</span></button>
-          <button id="menuExport" type="button"><span class="big-ico">⬇</span><span>Exporter</span></button>
-          <button id="menuPro" type="button"><span class="big-ico">💼</span><span>PRO</span></button>
-          <button id="menuPerso" type="button"><span class="big-ico">🏠</span><span>PERSO</span></button>
-          <button id="menuReset" type="button"><span class="big-ico">♻</span><span>Démo</span></button>
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">💰 DIGIY PAY by DIGIYLYFE</div>
+        <h1>Ton argent.<br><em>Sous contrôle.</em><br>Terrain.</h1>
+        <p class="lead">
+          Coffre PRO et PERSO dans un seul outil. Saisie en 3 taps, note vocale,
+          bilan automatique, alerte solde bas. Le patron voit, retrouve, décide.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="./inscription-pay.html">📝 S'inscrire</a>
+          <a class="btn btn-secondary" href="https://tarifs.digiylyfe.com/">💳 Tarifs</a>
+          <a class="btn btn-green" href="./pin.html">🔐 Accès Pro</a>
         </div>
-        <p class="tiny" style="margin-top:12px">Un seul fichier peut servir d’accueil, de cockpit et d’admin caché. La façade reste simple, l’organisation reste derrière.</p>
+        <div class="chips">
+          <span class="chip gold">0% commission</span>
+          <span class="chip gold">Paiement direct</span>
+          <span class="chip">PRO + PERSO</span>
+          <span class="chip">Note vocale</span>
+          <span class="chip">Bilan auto</span>
+          <span class="chip">Alerte solde</span>
+          <span class="chip">Sauvegarde JSON</span>
+          <span class="chip">Wave · Cash · OM</span>
+        </div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-label">Solde PRO — aujourd'hui</div>
+        <div class="roi-amount">487 500 F</div>
+        <div class="roi-sub">Le chiffre roi · flash à chaque mouvement</div>
+        <div class="roi-row">
+          <div class="roi-pill roi-in">＋ Entrées 120 000 F</div>
+          <div class="roi-pill roi-out">− Sorties 35 000 F</div>
+        </div>
+        <div class="roi-flash">⚡ Solde mis à jour à chaque trace posée</div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="modal-backdrop" id="adminModal" role="dialog" aria-modal="true" aria-label="Admin caché PAY">
-    <div class="modal">
-      <div class="modal-head"><strong>Admin caché</strong><button type="button" data-close="adminModal">×</button></div>
-      <div class="modal-body">
-        <div class="notice">On pose la base. Le patron personnalise. Il est chez lui.</div>
-        <div class="grid2">
-          <div class="field"><label>Poche activité</label><select id="adminActivityPocket"><option value="pro">PRO</option><option value="perso">PERSO</option></select></div>
-          <div class="field"><label>Nouvelle activité</label><input id="adminActivityName" type="text" placeholder="Ex : Boutique Astou" /></div>
+  <!-- MODULES GRID -->
+  <section class="section" id="modules">
+    <div class="wrap">
+      <div class="section-title">
+        <h2>Tout ce que <em>PAY fait</em> pour toi</h2>
+        <p>Clique sur chaque module pour voir comment ça marche sur le terrain.</p>
+      </div>
+      <div class="modules-grid" id="modulesGrid"></div>
+    </div>
+  </section>
+
+  <!-- NOTE VOCALE -->
+  <section class="section" id="voix">
+    <div class="wrap duo">
+      <div class="big-card">
+        <h3>Tu parles.<br><em>PAY comprend.</em></h3>
+        <p>
+          Les mains occupées ? Dis le mouvement à voix haute.
+          PAY détecte le libellé, le montant et le mode de paiement.
+          Un tap pour confirmer.
+        </p>
+        <p>Disponible sur Chrome et Safari mobile. Aucune installation.</p>
+        <button class="btn btn-primary" style="margin-top:6px" onclick="openMod('voix')">Voir comment ça marche →</button>
+      </div>
+      <div class="voice-panel">
+        <div class="voice-line">
+          <span class="voice-ico">🗣</span>
+          <span class="voice-text">"Gasoil 15 000 Wave"</span>
+          <span class="voice-parsed">− 15 000 · Wave</span>
         </div>
-        <button class="soft-btn" id="btnAddActivity" type="button">Ajouter activité</button>
-        <div class="admin-list" id="adminActivities"></div>
-
-        <hr style="border:none;border-top:1px solid rgba(78,56,25,.18);margin:16px 0">
-        <div class="field"><label>Nouveau libellé</label><input id="adminLabelName" type="text" placeholder="Ex : Personnel Ali, Gasoil, Recette" /></div>
-        <button class="soft-btn" id="btnAddLabel" type="button">Ajouter libellé</button>
-        <div class="admin-list" id="adminLabels"></div>
-
-        <hr style="border:none;border-top:1px solid rgba(78,56,25,.18);margin:16px 0">
-        <div class="field"><label>Personne / équipe</label><input id="adminPersonName" type="text" placeholder="Astou, Maurice, Ali, Binta…" /></div>
-        <button class="soft-btn" id="btnAddPerson" type="button">Ajouter personne</button>
-        <div class="admin-list" id="adminPeople"></div>
+        <div class="voice-line">
+          <span class="voice-ico">🗣</span>
+          <span class="voice-text">"Entrée salaire 200 000"</span>
+          <span class="voice-parsed">＋ 200 000 · Wave</span>
+        </div>
+        <div class="voice-line">
+          <span class="voice-ico">🗣</span>
+          <span class="voice-text">"Retraite 350 000 Sendwave"</span>
+          <span class="voice-parsed">＋ 350 000 · Sendwave</span>
+        </div>
+        <div class="voice-line">
+          <span class="voice-ico">🗣</span>
+          <span class="voice-text">"École 25 000 cash"</span>
+          <span class="voice-parsed">− 25 000 · Cash</span>
+        </div>
+        <div class="voice-line">
+          <span class="voice-ico">🗣</span>
+          <span class="voice-text">"Senelec 8 500"</span>
+          <span class="voice-parsed">− 8 500 · Wave</span>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="modal-backdrop" id="activitiesModal" role="dialog" aria-modal="true" aria-label="Lecture par activité">
-    <div class="modal">
-      <div class="modal-head"><strong>Lecture activité</strong><button type="button" data-close="activitiesModal">×</button></div>
-      <div class="modal-body" id="activitiesBody"></div>
+  <!-- CTA FINAL -->
+  <section class="section">
+    <div class="wrap">
+      <div class="cta-box">
+        <h2>Pierre par pierre.<br><em>Le patron garde la main.</em></h2>
+        <p>
+          DIGIY PAY — abonnement fixe, 0% commission.<br>
+          Ton argent ne passe jamais par DIGIY. Il va direct au pro.
+        </p>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="./inscription-pay.html">📝 S'inscrire</a>
+          <a class="btn btn-secondary" href="https://tarifs.digiylyfe.com/">💳 Tarifs</a>
+          <a class="btn btn-green" href="./pin.html">🔐 Accès Pro</a>
+          <a class="btn btn-secondary" href="https://wa.me/221771342889?text=Bonjour%20DIGIY%2C%20je%20veux%20activer%20PAY" target="_blank">💬 WhatsApp</a>
+        </div>
+      </div>
     </div>
+  </section>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="modal-head">
+      <strong id="modTitle"></strong>
+      <button class="modal-close" type="button" onclick="closeMod()">×</button>
+    </div>
+    <div class="modal-body" id="modBody"></div>
   </div>
+</div>
 
-  <script>
-    (function(){
-      "use strict";
+<script>
+(function(){
+  'use strict';
 
-      const STORAGE_KEY = "digiy_pay_neuf_v1";
-      const now = new Date();
-      const todayISO = now.toISOString();
-      const yesterdayISO = new Date(Date.now() - 86400000).toISOString();
-      const weekISO = new Date(Date.now() - 3 * 86400000).toISOString();
-      const monthISO = new Date(Date.now() - 12 * 86400000).toISOString();
-
-      const defaults = {
-        settings:{pocket:"pro", eyeOpen:true, visibleCount:10},
-        activities:[
-          {id:"build", pocket:"pro", name:"BUILD"},
-          {id:"loc", pocket:"pro", name:"LOC"},
-          {id:"driver", pocket:"pro", name:"DRIVER"},
-          {id:"market", pocket:"pro", name:"MARKET"},
-          {id:"pos", pocket:"pro", name:"POS"},
-          {id:"resa", pocket:"pro", name:"RESA"},
-          {id:"personnel", pocket:"pro", name:"Personnel"},
-          {id:"maison", pocket:"perso", name:"Maison"},
-          {id:"ecole", pocket:"perso", name:"École"},
-          {id:"famille", pocket:"perso", name:"Famille"},
-          {id:"transport-perso", pocket:"perso", name:"Transport"},
-          {id:"telephone", pocket:"perso", name:"Téléphone"}
+  // ── DONNÉES MODULES ──
+  const MODULES = [
+    {
+      id:'solde',
+      ico:'💰',
+      title:'Solde ROI',
+      short:'Le chiffre devant. Flash à chaque mouvement.',
+      detail:{
+        desc:'À chaque trace posée, le solde PRO ou PERSO se met à jour immédiatement. Le chiffre flash — tu sais où tu en es sans chercher.',
+        feats:[
+          {ico:'⚡',text:'<strong>Flash instantané</strong> à chaque mouvement confirmé'},
+          {ico:'👁',text:'Mode discret : un tap pour <strong>masquer le solde</strong>'},
+          {ico:'💼',text:'<strong>PRO et PERSO séparés</strong> — deux poches, une vue'},
+          {ico:'📊',text:'Entrées jour, sorties jour, <strong>net calculé</strong> automatiquement'},
         ],
-        labels:["Recette","Client","Acompte","Matériel","Gasoil","Transport","Personnel","Stock","Maison","Nourriture","École","Santé","Famille","Téléphone","Aide","Tontine"],
-        people:["Astou","Maurice","Ali","Binta"],
-        movements:[
-          {id:"m1", pocket:"pro", type:"income", amount:35000, label:"Recette", activity:"LOC", person:"", note:"Réservation chambre 2 nuits", ts:todayISO},
-          {id:"m2", pocket:"pro", type:"expense", amount:7500, label:"Gasoil", activity:"DRIVER", person:"", note:"Trajet Saly", ts:todayISO},
-          {id:"m3", pocket:"pro", type:"income", amount:25000, label:"Recette", activity:"MARKET", person:"Astou", note:"Vente boutique Astou", ts:todayISO},
-          {id:"m4", pocket:"pro", type:"expense", amount:10000, label:"Personnel", activity:"Personnel", person:"Ali", note:"Avance journée chantier", ts:yesterdayISO},
-          {id:"m5", pocket:"pro", type:"income", amount:15000, label:"Acompte", activity:"BUILD", person:"", note:"Chantier plomberie", ts:weekISO},
-          {id:"m6", pocket:"pro", type:"expense", amount:12000, label:"Matériel", activity:"BUILD", person:"", note:"Achat ciment / raccords", ts:weekISO},
-          {id:"m7", pocket:"perso", type:"expense", amount:5000, label:"École", activity:"École", person:"Binta", note:"Frais école", ts:todayISO},
-          {id:"m8", pocket:"perso", type:"expense", amount:3000, label:"Famille", activity:"Famille", person:"", note:"Aide famille", ts:yesterdayISO},
-          {id:"m9", pocket:"perso", type:"income", amount:42000, label:"Entrée perso", activity:"Maison", person:"", note:"Argent maison", ts:monthISO}
+        demo:[
+          {label:'Solde PRO',val:'487 500 F',cls:'plus'},
+          {label:'Entrées jour',val:'＋ 120 000 F',cls:'plus'},
+          {label:'Sorties jour',val:'− 35 000 F',cls:'minus'},
+          {label:'Net jour',val:'＋ 85 000 F',cls:'plus'},
         ]
-      };
-
-      let state = loadState();
-
-      const $ = (id) => document.getElementById(id);
-      const els = {
-        tabPro:$("tabPro"), tabPerso:$("tabPerso"), walletName:$("walletName"), balanceNumber:$("balanceNumber"), btnEye:$("btnEye"), todayMini:$("todayMini"), movementMini:$("movementMini"),
-        searchInput:$("searchInput"), btnClearSearch:$("btnClearSearch"), sumDay:$("sumDay"), sumWeek:$("sumWeek"), sumMonth:$("sumMonth"), activityStrip:$("activityStrip"), movementTitle:$("movementTitle"), movementList:$("movementList"), btnMore:$("btnMore"),
-        movementModal:$("movementModal"), menuModal:$("menuModal"), adminModal:$("adminModal"), activitiesModal:$("activitiesModal"),
-        movePocket:$("movePocket"), moveType:$("moveType"), moveAmount:$("moveAmount"), moveLabel:$("moveLabel"), moveActivity:$("moveActivity"), movePerson:$("movePerson"), moveNote:$("moveNote"), movementForm:$("movementForm"), movementModalTitle:$("movementModalTitle"),
-        labelsList:$("labelsList"), peopleList:$("peopleList"),
-        adminActivityPocket:$("adminActivityPocket"), adminActivityName:$("adminActivityName"), btnAddActivity:$("btnAddActivity"), adminActivities:$("adminActivities"), adminLabelName:$("adminLabelName"), btnAddLabel:$("btnAddLabel"), adminLabels:$("adminLabels"), adminPersonName:$("adminPersonName"), btnAddPerson:$("btnAddPerson"), adminPeople:$("adminPeople"), activitiesBody:$("activitiesBody")
-      };
-
-      function clone(obj){return JSON.parse(JSON.stringify(obj));}
-      function loadState(){
-        try{
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if(!raw) return clone(defaults);
-          const parsed = JSON.parse(raw);
-          return Object.assign(clone(defaults), parsed, {settings:Object.assign(clone(defaults.settings), parsed.settings || {})});
-        }catch(_){return clone(defaults);}
       }
-      function save(){localStorage.setItem(STORAGE_KEY, JSON.stringify(state));}
-      function uid(prefix){return prefix + Math.random().toString(36).slice(2,9) + Date.now().toString(36).slice(-4);}
-      function fmt(n){
-        const value = Math.round(Number(n || 0));
-        return Math.abs(value).toLocaleString("fr-FR").replace(/\u202f/g," ") + " F";
+    },
+    {
+      id:'saisie',
+      ico:'⚡',
+      title:'Saisie rapide',
+      short:'3 taps. Zéro frappe. PAY range tout.',
+      detail:{
+        desc:'Un libellé parmi tes habituels, un mode de paiement, un montant. PAY classe automatiquement par source et par poche.',
+        feats:[
+          {ico:'🌊',text:'<strong>Wave · Cash · Orange Money · Carte · Sendwave</strong>'},
+          {ico:'💼',text:'Salaire · Business · Retraite · Don · Loyer · Vente et plus'},
+          {ico:'🔧',text:'Tu <strong>ajoutes tes propres libellés</strong> dans Réglages'},
+          {ico:'🗂',text:'Classement automatique <strong>par source d\'argent</strong>'},
+        ],
+        demo:[
+          {label:'⛽ Gasoil · Wave',val:'− 15 000 F',cls:'minus'},
+          {label:'💡 Senelec · Wave',val:'− 8 500 F',cls:'minus'},
+          {label:'💼 Salaire · Wave',val:'＋ 200 000 F',cls:'plus'},
+          {label:'🎒 École · Cash',val:'− 25 000 F',cls:'minus'},
+        ]
       }
-      function signedFmt(m){
-        const sign = m.type === "income" ? "+" : "-";
-        return sign + fmt(m.amount);
+    },
+    {
+      id:'voix',
+      ico:'🎙',
+      title:'Note vocale',
+      short:'Dis le mouvement. PAY l\'enregistre.',
+      detail:{
+        desc:'Tu parles, PAY analyse. Il détecte le libellé, le montant et le mode. Un tap pour confirmer. Sans ouvrir aucun formulaire.',
+        feats:[
+          {ico:'🗣',text:'<strong>"Gasoil 15000 Wave"</strong> → posé en 3 secondes'},
+          {ico:'🧠',text:'Détection automatique du <strong>type (entrée/sortie)</strong>'},
+          {ico:'📱',text:'Natif Chrome et Safari mobile — <strong>zéro installation</strong>'},
+          {ico:'✅',text:'Tu vérifies avant de confirmer — <strong>toujours toi qui valides</strong>'},
+        ],
+        demo:[
+          {label:'🗣 "Retraite 350 000 Sendwave"',val:'＋ 350 000 F',cls:'plus'},
+          {label:'🗣 "Ravitaillement 12 000 cash"',val:'− 12 000 F',cls:'minus'},
+          {label:'🗣 "Business 80 000"',val:'＋ 80 000 F',cls:'plus'},
+        ]
       }
-      function hiddenFmt(){return "••• F";}
-      function pocketLabel(p){return p === "perso" ? "PERSO" : "PRO";}
-      function activityId(name){return String(name || "").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"") || uid("act");}
-      function amountValue(m){return m.type === "income" ? Number(m.amount || 0) : -Number(m.amount || 0);}
-      function activePocket(){return state.settings.pocket || "pro";}
-      function isSameDay(a,b){return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();}
-      function startOfWeek(d){const x=new Date(d); const day=(x.getDay()+6)%7; x.setHours(0,0,0,0); x.setDate(x.getDate()-day); return x;}
-      function startOfMonth(d){return new Date(d.getFullYear(), d.getMonth(), 1);}
-      function inPeriod(ts, period){
-        const d = new Date(ts); const n = new Date();
-        if(period === "day") return isSameDay(d,n);
-        if(period === "week") return d >= startOfWeek(n);
-        if(period === "month") return d >= startOfMonth(n);
-        return true;
+    },
+    {
+      id:'bilan',
+      ico:'📊',
+      title:'Bilan automatique',
+      short:'À 20h, le résumé du jour s\'affiche seul.',
+      detail:{
+        desc:'Dès 20h, si tu as posé des mouvements dans la journée, PAY affiche automatiquement une bannière bilan. Tu ne cherches pas — il amène.',
+        feats:[
+          {ico:'🕗',text:'Déclenchement <strong>automatique après 20h</strong>'},
+          {ico:'📋',text:'Entrées · Sorties · <strong>Net du jour</strong> en un coup d\'œil'},
+          {ico:'✕',text:'Un tap pour fermer — <strong>une seule fois par jour</strong>'},
+          {ico:'🔔',text:'Aucune notification push — <strong>discret et local</strong>'},
+        ],
+        demo:[
+          {label:'Entrées du jour',val:'＋ 285 000 F',cls:'plus'},
+          {label:'Sorties du jour',val:'− 42 000 F',cls:'minus'},
+          {label:'Net du jour',val:'＋ 243 000 F',cls:'plus'},
+        ]
       }
-      function movementsForPocket(p){return state.movements.filter(m => m.pocket === p).sort((a,b)=>new Date(b.ts)-new Date(a.ts));}
-      function balance(p){return movementsForPocket(p).reduce((s,m)=>s+amountValue(m),0);}
-      function periodNet(p, period){return movementsForPocket(p).filter(m=>inPeriod(m.ts,period)).reduce((s,m)=>s+amountValue(m),0);}
-      function escapeHtml(v){return String(v||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+    },
+    {
+      id:'alerte',
+      ico:'⚠️',
+      title:'Alerte solde bas',
+      short:'Ton seuil. Tes règles. Le ROI passe en rouge.',
+      detail:{
+        desc:'Tu définis un seuil d\'alerte. Dès que le solde passe en dessous, le chiffre ROI vire en rouge et pulse. Pas de notification — juste le visuel.',
+        feats:[
+          {ico:'🎯',text:'<strong>Seuil personnalisé</strong> — tu décides du niveau'},
+          {ico:'🔴',text:'Chiffre ROI <strong>rouge et pulsant</strong> sous le seuil'},
+          {ico:'🔕',text:'<strong>Zéro notification push</strong> — discret, terrain'},
+          {ico:'⚙️',text:'Modifiable à tout moment — <strong>0 pour désactiver</strong>'},
+        ],
+        demo:[
+          {label:'Seuil configuré',val:'50 000 F',cls:''},
+          {label:'Solde actuel',val:'38 200 F',cls:'minus'},
+          {label:'Statut',val:'🔴 Alerte active',cls:'minus'},
+        ]
+      }
+    },
+    {
+      id:'sources',
+      ico:'⠿',
+      title:'Sources d\'argent',
+      short:'Chaque module DIGIY connecté à PAY.',
+      detail:{
+        desc:'DRIVER, LOC, RESA, BUILD, MARKET, ABOS, POS, RÉSEAU — chaque source apparaît dans PAY. Tu poses le montant, PAY range par module.',
+        feats:[
+          {ico:'🚗',text:'<strong>DRIVER · LOC · RESA · BUILD · MARKET</strong>'},
+          {ico:'💳',text:'<strong>ABOS · POS · RÉSEAU · NDIMBAL</strong>'},
+          {ico:'🏦',text:'Retraite · Sendwave · Virement · Retrait Wave'},
+          {ico:'＋',text:'<strong>Tu ajoutes tes propres sources</strong> en 3 secondes'},
+        ],
+        demo:[
+          {label:'DRIVER ce mois',val:'＋ 180 000 F',cls:'plus'},
+          {label:'LOC ce mois',val:'＋ 95 000 F',cls:'plus'},
+          {label:'ABOS ce mois',val:'＋ 45 000 F',cls:'plus'},
+          {label:'Retraite ce mois',val:'＋ 350 000 F',cls:'plus'},
+        ]
+      }
+    },
+    {
+      id:'historique',
+      ico:'🕘',
+      title:'Historique & recherche',
+      short:'Cherche, filtre, retrouve en 2 secondes.',
+      detail:{
+        desc:'Tous tes mouvements sont filtrables par type, recherchables par libellé, montant ou personne. Tu retrouves n\'importe quelle trace sans scroller.',
+        feats:[
+          {ico:'🔎',text:'<strong>Recherche libre</strong> : libellé, montant, mode, personne'},
+          {ico:'📅',text:'Filtre <strong>Entrées · Sorties · Tout</strong> en un tap'},
+          {ico:'✏️',text:'<strong>Modifier ou dupliquer</strong> un mouvement existant'},
+          {ico:'🗑',text:'Supprimer avec confirmation — <strong>sécurisé</strong>'},
+        ],
+        demo:[
+          {label:'Recherche "Wave"',val:'14 résultats',cls:''},
+          {label:'Total filtré',val:'＋ 340 000 F',cls:'plus'},
+          {label:'Dernier résultat',val:'Gasoil · hier',cls:''},
+        ]
+      }
+    },
+    {
+      id:'sauvegarde',
+      ico:'💾',
+      title:'Sauvegarde JSON',
+      short:'Export en un tap. Import si besoin.',
+      detail:{
+        desc:'Toutes tes données PAY — mouvements, modules, répertoire — exportables en JSON à tout moment. Tu importes sur un autre appareil en collant le fichier.',
+        feats:[
+          {ico:'⬇️',text:'<strong>Télécharger JSON</strong> ou copier dans le presse-papiers'},
+          {ico:'📂',text:'<strong>Importer un fichier</strong> ou coller directement'},
+          {ico:'🔄',text:'Sauvegarde avant restauration automatique — <strong>zéro perte</strong>'},
+          {ico:'📱',text:'Fonctionne <strong>hors connexion</strong> — tout est local'},
+        ],
+        demo:[
+          {label:'Mouvements exportés',val:'247 traces',cls:''},
+          {label:'Modules inclus',val:'12 sources',cls:''},
+          {label:'Contacts inclus',val:'8 abonnés',cls:''},
+        ]
+      }
+    },
+  ];
 
-      function openModal(id){$(id).classList.add("open");}
-      function closeModal(id){$(id).classList.remove("open");}
-      document.addEventListener("click", (e)=>{
-        const close = e.target.closest("[data-close]");
-        if(close) closeModal(close.getAttribute("data-close"));
-        if(e.target.classList.contains("modal-backdrop")) e.target.classList.remove("open");
+  // ── RENDER MODULES GRID ──
+  const grid = document.getElementById('modulesGrid');
+  MODULES.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'module-card';
+    card.onclick = () => openMod(m.id);
+    card.innerHTML = `
+      <div class="mc-ico">${m.ico}</div>
+      <div class="mc-title">${m.title}</div>
+      <div class="mc-body">${m.short}</div>
+      <span class="mc-open">Voir comment ça marche →</span>
+    `;
+    grid.appendChild(card);
+  });
+
+  // ── MODAL ──
+  const modalBg = document.getElementById('modalBg');
+  const modTitle = document.getElementById('modTitle');
+  const modBody  = document.getElementById('modBody');
+
+  window.openMod = function(id){
+    const m = MODULES.find(x=>x.id===id);
+    if(!m) return;
+    modTitle.textContent = m.ico + ' ' + m.title;
+    const d = m.detail;
+    let html = `<div class="modal-section"><p>${d.desc}</p></div>`;
+    html += `<div class="modal-section"><h4>Ce que ça fait</h4><div class="modal-feat">`;
+    d.feats.forEach(f => {
+      html += `<div class="modal-feat-item"><span class="mfi-ico">${f.ico}</span><div class="mfi-text">${f.text}</div></div>`;
+    });
+    html += `</div></div>`;
+    if(d.demo && d.demo.length){
+      html += `<div class="modal-section"><h4>Exemple terrain</h4><div class="modal-demo">`;
+      d.demo.forEach(r => {
+        html += `<div class="demo-row"><span>${r.label}</span><span class="${r.cls}">${r.val}</span></div>`;
       });
+      html += `</div></div>`;
+    }
+    html += `<a href="./inscription-pay.html" class="modal-cta-link">📝 S'inscrire à DIGIY PAY →</a>`;
+    modBody.innerHTML = html;
+    modalBg.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
 
-      function setPocket(p){
-        state.settings.pocket = p;
-        state.settings.visibleCount = 10;
-        save(); render();
-      }
+  window.closeMod = function(){
+    modalBg.classList.remove('open');
+    document.body.style.overflow = '';
+  };
 
-      function render(){
-        const p = activePocket();
-        els.tabPro.classList.toggle("active", p === "pro");
-        els.tabPerso.classList.toggle("active", p === "perso");
-        const bal = balance(p);
-        els.walletName.textContent = "Solde " + pocketLabel(p);
-        els.balanceNumber.textContent = state.settings.eyeOpen ? fmt(bal) : hiddenFmt();
-        els.btnEye.textContent = state.settings.eyeOpen ? "👁 Ouvert" : "🙈 Fermé";
-        els.todayMini.textContent = "Aujourd’hui " + (state.settings.eyeOpen ? fmt(periodNet(p,"day")) : hiddenFmt());
-        const all = movementsForPocket(p);
-        els.movementMini.textContent = all.length + " lignes";
-        els.sumDay.textContent = state.settings.eyeOpen ? fmt(periodNet(p,"day")) : hiddenFmt();
-        els.sumWeek.textContent = state.settings.eyeOpen ? fmt(periodNet(p,"week")) : hiddenFmt();
-        els.sumMonth.textContent = state.settings.eyeOpen ? fmt(periodNet(p,"month")) : hiddenFmt();
-        renderDatalists(); renderActivities(); renderMovements(); renderAdmin();
-      }
+  modalBg.addEventListener('click', e => {
+    if(e.target === modalBg) closeMod();
+  });
 
-      function renderDatalists(){
-        els.labelsList.innerHTML = state.labels.map(x=>`<option value="${escapeHtml(x)}"></option>`).join("");
-        els.peopleList.innerHTML = state.people.map(x=>`<option value="${escapeHtml(x)}"></option>`).join("");
-        renderActivitySelect();
-      }
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape') closeMod();
+  });
 
-      function renderActivitySelect(){
-        const p = els.movePocket.value || activePocket();
-        const acts = state.activities.filter(a => a.pocket === p);
-        els.moveActivity.innerHTML = acts.map(a => `<option value="${escapeHtml(a.name)}">${escapeHtml(a.name)}</option>`).join("");
-      }
-
-      function renderActivities(){
-        const p = activePocket();
-        const acts = state.activities.filter(a => a.pocket === p);
-        els.activityStrip.innerHTML = acts.map(a=>{
-          const total = movementsForPocket(p).filter(m=>m.activity === a.name).reduce((s,m)=>s+amountValue(m),0);
-          const amount = state.settings.eyeOpen ? fmt(total) : hiddenFmt();
-          return `<button class="activity-card" type="button" data-activity="${escapeHtml(a.name)}"><small>${pocketLabel(p)}</small><strong>${escapeHtml(a.name)}</strong><b>${amount}</b></button>`;
-        }).join("");
-      }
-
-      function filteredMovements(){
-        const p = activePocket();
-        const q = String(els.searchInput.value || "").trim().toLowerCase();
-        let list = movementsForPocket(p);
-        if(q){
-          list = list.filter(m => [m.label,m.activity,m.person,m.note,String(m.amount)].join(" ").toLowerCase().includes(q));
-        }
-        return list;
-      }
-
-      function renderMovements(){
-        const list = filteredMovements();
-        const limit = state.settings.visibleCount || 10;
-        els.movementTitle.textContent = els.searchInput.value ? "Résultats" : "Derniers mouvements";
-        const shown = list.slice(0, limit);
-        els.btnMore.style.display = list.length > limit ? "block" : "none";
-        if(!shown.length){
-          els.movementList.innerHTML = `<div class="empty">Aucun mouvement trouvé. Ajoute une entrée ou une sortie.</div>`;
-          return;
-        }
-        els.movementList.innerHTML = shown.map(m=>{
-          const plus = m.type === "income";
-          const metaParts = [m.activity, m.person, m.note].filter(Boolean);
-          const d = new Date(m.ts);
-          const time = d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});
-          return `<article class="movement">
-            <div class="left"><div class="label">${escapeHtml(m.label)}</div><div class="meta">${escapeHtml(metaParts.join(" · "))}</div></div>
-            <div><div class="amount ${plus ? "plus" : "minus"}">${state.settings.eyeOpen ? signedFmt(m) : hiddenFmt()}</div><div class="time">${time}</div></div>
-          </article>`;
-        }).join("");
-      }
-
-      function renderAdmin(){
-        els.adminActivities.innerHTML = state.activities.map(a=>`<div class="admin-item"><span>${escapeHtml(a.name)}<small>${pocketLabel(a.pocket)}</small></span><button class="soft-btn danger-btn" data-del-activity="${escapeHtml(a.id)}" type="button">Supprimer</button></div>`).join("");
-        els.adminLabels.innerHTML = state.labels.map(name=>`<div class="admin-item"><span>${escapeHtml(name)}</span><button class="soft-btn danger-btn" data-del-label="${escapeHtml(name)}" type="button">Supprimer</button></div>`).join("");
-        els.adminPeople.innerHTML = state.people.map(name=>`<div class="admin-item"><span>${escapeHtml(name)}</span><button class="soft-btn danger-btn" data-del-person="${escapeHtml(name)}" type="button">Supprimer</button></div>`).join("");
-      }
-
-      function renderActivitiesModal(){
-        const p = activePocket();
-        const acts = state.activities.filter(a=>a.pocket === p);
-        els.activitiesBody.innerHTML = `<div class="notice">${pocketLabel(p)} : recettes, sorties et net par activité. Jour, semaine, mois.</div>` + acts.map(a=>{
-          const list = movementsForPocket(p).filter(m=>m.activity === a.name);
-          const recDay = list.filter(m=>m.type === "income" && inPeriod(m.ts,"day")).reduce((s,m)=>s+Number(m.amount||0),0);
-          const outDay = list.filter(m=>m.type === "expense" && inPeriod(m.ts,"day")).reduce((s,m)=>s+Number(m.amount||0),0);
-          const week = list.filter(m=>inPeriod(m.ts,"week")).reduce((s,m)=>s+amountValue(m),0);
-          const month = list.filter(m=>inPeriod(m.ts,"month")).reduce((s,m)=>s+amountValue(m),0);
-          return `<div class="admin-item" style="display:block">
-            <strong>${escapeHtml(a.name)}</strong>
-            <small>Jour : Recettes ${fmt(recDay)} · Sorties ${fmt(outDay)}</small>
-            <small>Semaine net : ${fmt(week)} · Mois net : ${fmt(month)}</small>
-          </div>`;
-        }).join("");
-      }
-
-      function openMovement(type){
-        els.movementForm.reset();
-        els.movePocket.value = activePocket();
-        els.moveType.value = type || "income";
-        els.movementModalTitle.textContent = type === "expense" ? "Ajouter une sortie" : "Ajouter une entrée";
-        renderActivitySelect();
-        openModal("movementModal");
-        setTimeout(()=>els.moveAmount.focus(),120);
-      }
-
-      els.tabPro.addEventListener("click",()=>setPocket("pro"));
-      els.tabPerso.addEventListener("click",()=>setPocket("perso"));
-      els.btnEye.addEventListener("click",()=>{state.settings.eyeOpen=!state.settings.eyeOpen; save(); render();});
-      $("btnAddIncome").addEventListener("click",()=>openMovement("income"));
-      $("btnAddExpense").addEventListener("click",()=>openMovement("expense"));
-      $("navAdd").addEventListener("click",()=>openMovement("income"));
-      $("navHome").addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
-      $("btnMenu").addEventListener("click",()=>openModal("menuModal"));
-      $("navAdmin").addEventListener("click",()=>openModal("adminModal"));
-      $("btnAdminSmall").addEventListener("click",()=>openModal("adminModal"));
-      $("navActivities").addEventListener("click",()=>{renderActivitiesModal(); openModal("activitiesModal");});
-      $("btnOpenActivities").addEventListener("click",()=>{renderActivitiesModal(); openModal("activitiesModal");});
-      els.movePocket.addEventListener("change",renderActivitySelect);
-      els.searchInput.addEventListener("input",()=>{state.settings.visibleCount=10; renderMovements();});
-      els.btnClearSearch.addEventListener("click",()=>{els.searchInput.value=""; state.settings.visibleCount=10; renderMovements();});
-      els.btnMore.addEventListener("click",()=>{state.settings.visibleCount = (state.settings.visibleCount || 10) + 10; save(); renderMovements();});
-      $("btnBack").addEventListener("click",()=>{ if(history.length>1) history.back(); else window.scrollTo({top:0,behavior:"smooth"}); });
-
-      els.activityStrip.addEventListener("click",(e)=>{
-        const card = e.target.closest("[data-activity]");
-        if(!card) return;
-        els.searchInput.value = card.getAttribute("data-activity");
-        state.settings.visibleCount = 10;
-        renderMovements();
-      });
-
-      els.movementForm.addEventListener("submit",(e)=>{
-        e.preventDefault();
-        const amount = Math.round(Number(els.moveAmount.value || 0));
-        if(amount <= 0) return alert("Entre un montant propre.");
-        const label = String(els.moveLabel.value || "").trim();
-        const activity = String(els.moveActivity.value || "").trim();
-        const person = String(els.movePerson.value || "").trim();
-        if(label && !state.labels.includes(label)) state.labels.push(label);
-        if(person && !state.people.includes(person)) state.people.push(person);
-        state.movements.push({id:uid("m"), pocket:els.movePocket.value, type:els.moveType.value, amount, label, activity, person, note:String(els.moveNote.value||"").trim(), ts:new Date().toISOString()});
-        state.settings.pocket = els.movePocket.value;
-        state.settings.visibleCount = 10;
-        save(); closeModal("movementModal"); render();
-      });
-
-      els.btnAddActivity.addEventListener("click",()=>{
-        const name = String(els.adminActivityName.value || "").trim();
-        const pocket = els.adminActivityPocket.value;
-        if(!name) return;
-        state.activities.push({id:activityId(name) + "-" + uid(""), pocket, name});
-        els.adminActivityName.value = ""; save(); render();
-      });
-      els.btnAddLabel.addEventListener("click",()=>{
-        const name = String(els.adminLabelName.value || "").trim();
-        if(!name) return;
-        if(!state.labels.includes(name)) state.labels.push(name);
-        els.adminLabelName.value = ""; save(); render();
-      });
-      els.btnAddPerson.addEventListener("click",()=>{
-        const name = String(els.adminPersonName.value || "").trim();
-        if(!name) return;
-        if(!state.people.includes(name)) state.people.push(name);
-        els.adminPersonName.value = ""; save(); render();
-      });
-
-      els.adminModal.addEventListener("click",(e)=>{
-        const act = e.target.closest("[data-del-activity]");
-        const lab = e.target.closest("[data-del-label]");
-        const per = e.target.closest("[data-del-person]");
-        if(act){ state.activities = state.activities.filter(a=>a.id !== act.getAttribute("data-del-activity")); save(); render(); }
-        if(lab){ state.labels = state.labels.filter(x=>x !== lab.getAttribute("data-del-label")); save(); render(); }
-        if(per){ state.people = state.people.filter(x=>x !== per.getAttribute("data-del-person")); save(); render(); }
-      });
-
-      $("menuActivities").addEventListener("click",()=>{closeModal("menuModal"); renderActivitiesModal(); openModal("activitiesModal");});
-      $("menuAdmin").addEventListener("click",()=>{closeModal("menuModal"); openModal("adminModal");});
-      $("menuPro").addEventListener("click",()=>{closeModal("menuModal"); setPocket("pro");});
-      $("menuPerso").addEventListener("click",()=>{closeModal("menuModal"); setPocket("perso");});
-      $("menuReset").addEventListener("click",()=>{ if(confirm("Réinitialiser la démo PAY ?")){ state = clone(defaults); save(); closeModal("menuModal"); render(); }});
-      $("menuExport").addEventListener("click",()=>{
-        const blob = new Blob([JSON.stringify(state,null,2)], {type:"application/json"});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a"); a.href = url; a.download = "digiy-pay-export.json"; a.click(); URL.revokeObjectURL(url);
-      });
-
-      render();
-    })();
-  </script>
+})();
+</script>
 </body>
 </html>
 
