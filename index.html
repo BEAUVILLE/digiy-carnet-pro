@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <meta name="theme-color" content="#12100f"/>
   <meta name="robots" content="index,follow"/>
-  <meta name="digiy-fix-lang" content="pay-fr-en-retour-fr-natif-inscription-url-pro-pin-20260630"/>
-  <title>DIGIY PAY — Ton argent sous contrôle · 0% commission</title>
-  <meta name="description" content="DIGIY PAY — coffre PRO/PERSO, saisie rapide, note vocale, bilan automatique. 0% commission. Tout pour le pro du terrain."/>
+  <meta name="digiy-fix-lang" content="pay-public-fr-en-demande-sans-engagement-activation-payante-20260707"/>
+  <title>DIGIY PAY — Ton argent sous contrôle · demande sans engagement</title>
+  <meta name="description" content="DIGIY PAY — coffre PRO/PERSO, saisie rapide, note vocale, bilan automatique. Demande PAY sans engagement, activation PAY payante, 0% commission. Tout pour le pro du terrain."/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -153,6 +153,85 @@
       background:rgba(214,168,95,.10);border:1px solid rgba(214,168,95,.20);
       color:#f5dca8;font-size:12px;font-weight:950;text-align:center;
     }
+
+
+    /* DIGIY PAY — doctrine commerciale protégée */
+    .payDoctrine{
+      margin:20px 0 0;
+      border:2px solid rgba(214,168,95,.34);
+      border-radius:32px;
+      background:
+        radial-gradient(circle at top right,rgba(214,168,95,.18),transparent 40%),
+        linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.028));
+      box-shadow:var(--shadow);
+      padding:24px;
+    }
+    .payDoctrineTag{
+      display:inline-flex;
+      width:max-content;
+      max-width:100%;
+      min-height:34px;
+      align-items:center;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid rgba(214,168,95,.30);
+      background:rgba(214,168,95,.10);
+      color:#f5dca8;
+      font-size:12px;
+      font-weight:1000;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+    .payDoctrine h2{
+      margin:13px 0 10px;
+      font-family:var(--fontB);
+      font-size:clamp(25px,3.8vw,42px);
+      line-height:1.05;
+      font-weight:700;
+    }
+    .payDoctrine h2 em{
+      color:var(--gold);
+      font-style:italic;
+    }
+    .payDoctrine p{
+      margin:0;
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.72;
+      font-weight:750;
+      max-width:920px;
+    }
+    .payDoctrineGrid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:10px;
+      margin-top:14px;
+    }
+    .payDoctrineGrid span{
+      border:1px solid rgba(255,255,255,.09);
+      background:rgba(255,255,255,.052);
+      border-radius:18px;
+      padding:12px;
+      color:#f8f1e8;
+      font-size:13px;
+      line-height:1.38;
+      font-weight:950;
+    }
+    .payDoctrineQuote{
+      margin-top:14px!important;
+      padding:13px 15px;
+      border-left:4px solid var(--gold);
+      border-radius:18px;
+      background:rgba(214,168,95,.10);
+      color:#f5dca8!important;
+      font-weight:1000!important;
+    }
+    .goldGlow{
+      border-color:rgba(214,168,95,.42)!important;
+      background:linear-gradient(135deg,rgba(214,168,95,.18),rgba(240,210,154,.08))!important;
+      color:#f5dca8!important;
+    }
+
 
     /* SECTIONS */
     .section{padding:40px 0}
@@ -355,7 +434,7 @@
     @media(max-width:700px){
       .hero-grid{grid-template-columns:1fr}
       .roi-card{display:none}
-      .duo{grid-template-columns:1fr}
+      .duo,.payDoctrineGrid{grid-template-columns:1fr}
       .modules-grid{grid-template-columns:1fr 1fr}
       .topbar-inner{padding:8px 0}
       .nav .cta{display:none}
@@ -425,8 +504,9 @@
     </div>
     <nav class="nav">
       <a href="#modules">Fonctions</a>
+      <a href="#doctrine-pay">Doctrine PAY</a>
       <a href="#voix">Note vocale</a>
-      <a href="https://pay.digiylyfe.com/inscription-pay.html" class="signup">📝 Inscription PAY</a>
+      <a href="https://pay.digiylyfe.com/inscription-pay.html" class="signup">📝 Demande PAY</a>
       <a href="https://tarifs.digiylyfe.com/" class="cta">💳 Tarifs</a>
       <a href="https://pro-pay.digiylyfe.com/pin.html" class="procta">🔐 Ouvrir PAY PRO</a>
       <span class="langSwitch" aria-label="Choisir la langue">
@@ -444,13 +524,14 @@
     <div class="wrap hero-grid">
       <div>
         <div class="eyebrow">💰 DIGIY PAY by DIGIYLYFE</div>
-        <h1>Ton argent.<br><em>Sous contrôle.</em><br>Terrain.</h1>
+        <h1>Ton argent.<br><em>Sous contrôle.</em><br>Sans détour.</h1>
         <p class="lead">
           Coffre PRO et PERSO dans un seul outil. Saisie en 3 taps, note vocale,
-          bilan automatique, alerte solde bas. Le patron voit, retrouve, décide.
+          bilan automatique, alerte solde bas. La demande PAY est sans engagement ;
+          l’activation devient payante seulement si le pro valide son choix.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="https://pay.digiylyfe.com/inscription-pay.html">📝 S'inscrire</a>
+          <a class="btn btn-primary" href="https://pay.digiylyfe.com/inscription-pay.html">📝 Demande PAY</a>
           <a class="btn btn-secondary" href="https://tarifs.digiylyfe.com/">💳 Tarifs</a>
           <a class="btn btn-green" href="https://pro-pay.digiylyfe.com/pin.html">🔐 Ouvrir PAY PRO</a>
         </div>
@@ -474,6 +555,24 @@
           <div class="roi-pill roi-out">− Sorties 35 000 F</div>
         </div>
         <div class="roi-flash">⚡ Solde mis à jour à chaque trace posée</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOCTRINE PAY -->
+  <section class="section" id="doctrine-pay">
+    <div class="wrap">
+      <div class="payDoctrine">
+        <span class="payDoctrineTag" data-fr="Demande PAY sans engagement · Activation PAY payante · 0% commission" data-en="No-commitment PAY request · Paid PAY activation · 0% commission">Demande PAY sans engagement · Activation PAY payante · 0% commission</span>
+        <h2 data-fr="PAY aide le pro à lire son argent. <em>DIGIY ne garde pas la caisse.</em>" data-en="PAY helps the pro read their money. <em>DIGIY does not hold the cashbox.</em>">PAY aide le pro à lire son argent. <em>DIGIY ne garde pas la caisse.</em></h2>
+        <p data-fr="DIGIY PAY n’est pas une banque. DIGIY PAY n’encaisse pas à la place du pro et ne prend aucune commission sur ses recettes. La demande initiale est sans engagement : le paiement concerne seulement l’activation d’une présence PAY, d’un accès métier, d’un QR, d’une mise en valeur ou d’un pack visibilité." data-en="DIGIY PAY is not a bank. DIGIY PAY does not collect money instead of the pro and takes no commission on their revenue. The initial request is without commitment: payment only concerns the activation of a PAY presence, trade access, QR, highlighting or visibility pack.">DIGIY PAY n’est pas une banque. DIGIY PAY n’encaisse pas à la place du pro et ne prend aucune commission sur ses recettes. La demande initiale est sans engagement : le paiement concerne seulement l’activation d’une présence PAY, d’un accès métier, d’un QR, d’une mise en valeur ou d’un pack visibilité.</p>
+        <div class="payDoctrineGrid">
+          <span data-fr="✅ Demande initiale sans engagement" data-en="✅ Initial request with no commitment">✅ Demande initiale sans engagement</span>
+          <span data-fr="💳 Activation PAY payante" data-en="💳 Paid PAY activation">💳 Activation PAY payante</span>
+          <span data-fr="🤝 Paiement et recettes directs" data-en="🤝 Direct payment and revenue">🤝 Paiement et recettes directs</span>
+          <span class="goldGlow" data-fr="🇫🇷 France / diaspora : Sendwave possible" data-en="🇫🇷 France / diaspora: Sendwave possible">🇫🇷 France / diaspora : Sendwave possible</span>
+        </div>
+        <p class="payDoctrineQuote" data-fr="DIGIY PAY aide le pro à voir clair. DIGIY ne garde ni la caisse, ni le client, ni la valeur du terrain." data-en="DIGIY PAY helps the pro see clearly. DIGIY keeps neither the cashbox, nor the client, nor the field value.">DIGIY PAY aide le pro à voir clair. DIGIY ne garde ni la caisse, ni le client, ni la valeur du terrain.</p>
       </div>
     </div>
   </section>
@@ -538,11 +637,11 @@
       <div class="cta-box">
         <h2>Pierre par pierre.<br><em>Le patron garde la main.</em></h2>
         <p>
-          DIGIY PAY — abonnement fixe, 0% commission.<br>
+          DIGIY PAY — demande sans engagement, activation PAY payante, 0% commission.<br>
           Ton argent ne passe jamais par DIGIY. Il va direct au pro.
         </p>
         <div class="cta-actions">
-          <a class="btn btn-primary" href="https://pay.digiylyfe.com/inscription-pay.html">📝 S'inscrire</a>
+          <a class="btn btn-primary" href="https://pay.digiylyfe.com/inscription-pay.html">📝 Demande PAY</a>
           <a class="btn btn-secondary" href="https://tarifs.digiylyfe.com/">💳 Tarifs</a>
           <a class="btn btn-green" href="https://pro-pay.digiylyfe.com/pin.html">🔐 Ouvrir PAY PRO</a>
           <a class="btn btn-secondary" href="https://wa.me/221771342889?text=Bonjour%20DIGIY%2C%20je%20veux%20activer%20PAY" target="_blank">💬 WhatsApp</a>
@@ -558,7 +657,7 @@
 <!-- DIGIY PAY — dock sécurisé bas de page : inscription publique + PRO par PIN -->
 <nav class="pay-pro-secure-dock" aria-label="Accès PAY sécurisé">
   <div class="pay-pro-secure-inner">
-    <a class="signup" href="https://pay.digiylyfe.com/inscription-pay.html">📝 Inscription PAY</a>
+    <a class="signup" href="https://pay.digiylyfe.com/inscription-pay.html">📝 Demande PAY</a>
     <a class="pro" href="https://pro-pay.digiylyfe.com/pin.html">🔐 Ouvrir PAY PRO</a>
   </div>
 </nav>
@@ -626,7 +725,7 @@
     cardOpen: IS_EN ? "See how it works →" : "Voir comment ça marche →",
     modalFeatures: IS_EN ? "What it does" : "Ce que ça fait",
     modalExample: IS_EN ? "Field example" : "Exemple terrain",
-    modalCta: IS_EN ? "📝 Sign up for DIGIY PAY →" : "📝 S'inscrire à DIGIY PAY →"
+    modalCta: IS_EN ? "📝 Sign up for DIGIY PAY →" : "📝 Demande PAY à DIGIY PAY →"
   };
 
   const EN_MODULES = {"solde": {"title": "King Balance", "short": "The number in front. Flash at every movement.", "detail": {"desc": "Every time a trace is added, the PRO or PERSONAL balance updates immediately. The number flashes — you know where you stand without searching.", "feats": [{"ico": "⚡", "text": "<strong>Instant flash</strong> after every confirmed movement"}, {"ico": "👁", "text": "Discreet mode: one tap to <strong>hide the balance</strong>"}, {"ico": "💼", "text": "<strong>PRO and PERSONAL separated</strong> — two pockets, one view"}, {"ico": "📊", "text": "Daily income, daily expenses and <strong>net total calculated</strong> automatically"}], "demo": [{"label": "PRO balance", "val": "487,500 F", "cls": "plus"}, {"label": "Daily income", "val": "＋ 120,000 F", "cls": "plus"}, {"label": "Daily expenses", "val": "− 35,000 F", "cls": "minus"}, {"label": "Daily net", "val": "＋ 85,000 F", "cls": "plus"}]}}, "saisie": {"title": "Quick entry", "short": "3 taps. No typing. PAY files it.", "detail": {"desc": "Pick a usual label, a payment method and an amount. PAY automatically sorts it by source and pocket.", "feats": [{"ico": "🌊", "text": "<strong>Wave · Cash · Orange Money · Card · Sendwave</strong>"}, {"ico": "💼", "text": "Salary · Business · Pension · Gift · Rent · Sale and more"}, {"ico": "🔧", "text": "You <strong>add your own labels</strong> in Settings"}, {"ico": "🗂", "text": "Automatic sorting <strong>by money source</strong>"}], "demo": [{"label": "⛽ Fuel · Wave", "val": "− 15,000 F", "cls": "minus"}, {"label": "💡 Electricity · Wave", "val": "− 8,500 F", "cls": "minus"}, {"label": "💼 Salary · Wave", "val": "＋ 200,000 F", "cls": "plus"}, {"label": "🎒 School · Cash", "val": "− 25,000 F", "cls": "minus"}]}}, "voix": {"title": "Voice note", "short": "Say the movement. PAY records it.", "detail": {"desc": "You speak, PAY analyzes. It detects the label, the amount and the payment method. One tap to confirm. No form to open.", "feats": [{"ico": "🗣", "text": "<strong>\"Fuel 15000 Wave\"</strong> → recorded in 3 seconds"}, {"ico": "🧠", "text": "Automatic detection of <strong>type (income/expense)</strong>"}, {"ico": "📱", "text": "Native on Chrome and mobile Safari — <strong>zero installation</strong>"}, {"ico": "✅", "text": "You check before confirming — <strong>you always validate</strong>"}], "demo": [{"label": "🗣 \"Pension 350,000 Sendwave\"", "val": "＋ 350,000 F", "cls": "plus"}, {"label": "🗣 \"Stock refill 12,000 cash\"", "val": "− 12,000 F", "cls": "minus"}, {"label": "🗣 \"Business 80,000\"", "val": "＋ 80,000 F", "cls": "plus"}]}}, "bilan": {"title": "Automatic recap", "short": "At 8 PM, the day summary appears by itself.", "detail": {"desc": "After 8 PM, if movements were added during the day, PAY automatically displays a recap banner. You do not search — it brings it to you.", "feats": [{"ico": "🕗", "text": "<strong>Automatic trigger after 8 PM</strong>"}, {"ico": "📋", "text": "Income · Expenses · <strong>Daily net</strong> at a glance"}, {"ico": "✕", "text": "One tap to close — <strong>once per day</strong>"}, {"ico": "🔔", "text": "No push notification — <strong>discreet and local</strong>"}], "demo": [{"label": "Daily income", "val": "＋ 285,000 F", "cls": "plus"}, {"label": "Daily expenses", "val": "− 42,000 F", "cls": "minus"}, {"label": "Daily net", "val": "＋ 243,000 F", "cls": "plus"}]}}, "alerte": {"title": "Low balance alert", "short": "Your threshold. Your rules. The king number turns red.", "detail": {"desc": "You set an alert threshold. When the balance goes below it, the king number turns red and pulses. No notification — just a clear visual signal.", "feats": [{"ico": "🎯", "text": "<strong>Custom threshold</strong> — you decide the level"}, {"ico": "🔴", "text": "King balance <strong>red and pulsing</strong> below the threshold"}, {"ico": "🔕", "text": "<strong>Zero push notification</strong> — discreet, field-first"}, {"ico": "⚙️", "text": "Editable anytime — <strong>set 0 to disable</strong>"}], "demo": [{"label": "Configured threshold", "val": "50,000 F", "cls": ""}, {"label": "Current balance", "val": "38,200 F", "cls": "minus"}, {"label": "Status", "val": "🔴 Alert active", "cls": "minus"}]}}, "sources": {"title": "Money sources", "short": "Every DIGIY source connected to PAY.", "detail": {"desc": "DRIVER, LOC, RESA, BUILD, MARKET, SUBS, POS, NETWORK — each source appears in PAY. You enter the amount, PAY sorts it by source.", "feats": [{"ico": "🚗", "text": "<strong>DRIVER · LOC · RESA · BUILD · MARKET</strong>"}, {"ico": "💳", "text": "<strong>SUBS · POS · NETWORK · NDIMBAL</strong>"}, {"ico": "🏦", "text": "Pension · Sendwave · Bank transfer · Wave cash-out"}, {"ico": "＋", "text": "<strong>You add your own sources</strong> in seconds"}], "demo": [{"label": "DRIVER this month", "val": "＋ 180,000 F", "cls": "plus"}, {"label": "LOC this month", "val": "＋ 95,000 F", "cls": "plus"}, {"label": "SUBS this month", "val": "＋ 45,000 F", "cls": "plus"}, {"label": "Pension this month", "val": "＋ 350,000 F", "cls": "plus"}]}}, "historique": {"title": "History & search", "short": "Search, filter, find it in 2 seconds.", "detail": {"desc": "All your movements can be filtered by type and searched by label, amount or person. You find any trace without endless scrolling.", "feats": [{"ico": "🔎", "text": "<strong>Free search</strong>: label, amount, method, person"}, {"ico": "📅", "text": "Filter <strong>Income · Expenses · All</strong> in one tap"}, {"ico": "✏️", "text": "<strong>Edit or duplicate</strong> an existing movement"}, {"ico": "🗑", "text": "Delete with confirmation — <strong>secure</strong>"}], "demo": [{"label": "Search \"Wave\"", "val": "14 results", "cls": ""}, {"label": "Filtered total", "val": "＋ 340,000 F", "cls": "plus"}, {"label": "Last result", "val": "Fuel · yesterday", "cls": ""}]}}, "sauvegarde": {"title": "JSON backup", "short": "Export in one tap. Import when needed.", "detail": {"desc": "All your PAY data — movements, modules, directory — can be exported as JSON anytime. You import it on another device by pasting the file.", "feats": [{"ico": "⬇️", "text": "<strong>Download JSON</strong> or copy to clipboard"}, {"ico": "📂", "text": "<strong>Import a file</strong> or paste directly"}, {"ico": "🔄", "text": "Automatic backup before restore — <strong>zero loss</strong>"}, {"ico": "📱", "text": "Works <strong>offline</strong> — everything is local"}], "demo": [{"label": "Exported movements", "val": "247 traces", "cls": ""}, {"label": "Modules included", "val": "12 sources", "cls": ""}, {"label": "Contacts included", "val": "8 subscribers", "cls": ""}]}}};
@@ -648,24 +747,32 @@
     document.querySelectorAll("[data-lang-btn]").forEach(btn => {
       btn.classList.toggle("active", btn.getAttribute("data-lang-btn") === PAY_LANG);
     });
+    document.querySelectorAll("[data-fr]").forEach(el => {
+      el.innerHTML = el.getAttribute("data-fr") || el.innerHTML;
+    });
     if(!IS_EN) return;
 
-    document.title = "DIGIY PAY — Your money under control · 0% commission";
+    document.querySelectorAll("[data-en]").forEach(el => {
+      el.innerHTML = el.getAttribute("data-en") || el.innerHTML;
+    });
+
+    document.title = "DIGIY PAY — Your money under control · no-commitment request";
     const meta = document.querySelector('meta[name="description"]');
-    if(meta) meta.setAttribute("content", "DIGIY PAY — PRO/PERSONAL wallet, quick entry, voice note, automatic recap. 0% commission. Everything for the field professional.");
+    if(meta) meta.setAttribute("content", "DIGIY PAY — PRO/PERSONAL wallet, quick entry, voice note, automatic recap. No-commitment PAY request, paid PAY activation, 0% commission. Everything for the field professional.");
 
     setTxt(".brand span", "PRO · PERSONAL · 0% commission");
     setTxt('.nav a[href="#modules"]', "Features");
+    setTxt('a[href="#doctrine-pay"]', "PAY doctrine");
     setTxt('.nav a[href="#voix"]', "Voice note");
-    setTxt(".nav .signup", "📝 Sign up");
+    setTxt(".nav .signup", "📝 PAY request");
     setTxt(".nav .cta", "💳 Pricing");
     setTxt(".nav .procta", "🔐 Open PAY PRO");
 
     setTxt(".eyebrow", "💰 DIGIY PAY by DIGIYLYFE");
-    setHtml(".hero h1", "Your money.<br><em>Under control.</em><br>On the field.");
-    setTxt(".lead", "PRO and PERSONAL pockets in one tool. 3-tap entry, voice note, automatic recap, low-balance alert. The owner sees, finds and decides.");
+    setHtml(".hero h1", "Your money.<br><em>Under control.</em><br>No detour.");
+    setTxt(".lead", "PRO and PERSONAL pockets in one tool. 3-tap entry, voice note, automatic recap, low-balance alert. The PAY request is without commitment; activation becomes paid only if the pro validates their choice.");
     const heroBtns = document.querySelectorAll(".hero-actions .btn");
-    if(heroBtns[0]) heroBtns[0].textContent = "📝 Sign up";
+    if(heroBtns[0]) heroBtns[0].textContent = "📝 PAY request";
     if(heroBtns[1]) heroBtns[1].textContent = "💳 Pricing";
     if(heroBtns[2]) heroBtns[2].textContent = "🔐 Open PAY PRO";
     const chips = document.querySelectorAll(".chips .chip");
@@ -706,9 +813,9 @@
     });
 
     setHtml(".cta-box h2", "Step by step.<br><em>The owner keeps control.</em>");
-    setHtml(".cta-box p", "DIGIY PAY — fixed subscription, 0% commission.<br>Your money never goes through DIGIY. It goes directly to the pro.");
+    setHtml(".cta-box p", "DIGIY PAY — no-commitment request, paid PAY activation, 0% commission.<br>Your money never goes through DIGIY. It goes directly to the pro.");
     const ctaBtns = document.querySelectorAll(".cta-actions .btn");
-    if(ctaBtns[0]) ctaBtns[0].textContent = "📝 Sign up";
+    if(ctaBtns[0]) ctaBtns[0].textContent = "📝 PAY request";
     if(ctaBtns[1]) ctaBtns[1].textContent = "💳 Pricing";
     if(ctaBtns[2]) ctaBtns[2].textContent = "🔐 Open PAY PRO";
     if(ctaBtns[3]) ctaBtns[3].textContent = "💬 WhatsApp";
@@ -955,6 +1062,28 @@
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
