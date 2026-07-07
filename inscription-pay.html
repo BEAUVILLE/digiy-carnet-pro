@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#f4ead2">
-  <meta name="digiy-version" content="pay-inscription-france-senegal-sendwave-grille-pays-20260629">
-  <title>Inscription PAY — France · Sénégal · DIGIY</title>
+  <meta name="digiy-version" content="pay-demande-sans-engagement-activation-payante-sendwave-dore-20260707">
+  <title>Demande PAY — Activation pro · France · Sénégal · DIGIY</title>
 
   <style>
     :root{
@@ -471,6 +471,85 @@
 
     .payBadge{margin-top:10px;}
 
+    .gold-emphasis{
+      border-color:rgba(250,204,21,.78)!important;
+      background:linear-gradient(135deg,rgba(250,204,21,.30),rgba(245,158,11,.16))!important;
+      color:#7a4d00!important;
+      box-shadow:0 12px 28px rgba(250,204,21,.15)!important;
+    }
+
+    .payDoctrine{
+      margin-top:14px;
+      border:2px solid rgba(250,204,21,.55);
+      border-radius:24px;
+      background:
+        radial-gradient(circle at top right,rgba(250,204,21,.24),transparent 38%),
+        linear-gradient(145deg,rgba(255,255,255,.72),rgba(255,247,223,.86));
+      box-shadow:var(--shadow);
+      padding:18px;
+      display:grid;
+      gap:12px;
+    }
+
+    .payDoctrineTag{
+      display:inline-flex;
+      width:max-content;
+      max-width:100%;
+      align-items:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid rgba(22,101,52,.22);
+      background:rgba(22,101,52,.08);
+      color:var(--green);
+      font-size:12px;
+      font-weight:1000;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+
+    .payDoctrine h2{
+      margin:0;
+      color:var(--green);
+      font-size:clamp(28px,4.8vw,46px);
+      line-height:1;
+      letter-spacing:-.04em;
+      font-weight:1000;
+    }
+
+    .payDoctrine p{
+      margin:0;
+      color:#465444;
+      line-height:1.62;
+      font-weight:850;
+    }
+
+    .payDoctrineList{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:9px;
+    }
+
+    .payDoctrineList span{
+      border:1px solid rgba(83,58,26,.18);
+      background:rgba(255,255,255,.70);
+      border-radius:17px;
+      padding:11px;
+      color:var(--ink);
+      font-size:13px;
+      line-height:1.35;
+      font-weight:1000;
+    }
+
+    .payDoctrineQuote{
+      border-left:4px solid var(--gold2);
+      background:rgba(250,204,21,.12);
+      border-radius:16px;
+      padding:12px 14px;
+      color:#7a4d00!important;
+      font-weight:1000!important;
+    }
+
     @media(max-width:850px){
       .hero,
       .grid{grid-template-columns:1fr}
@@ -482,7 +561,8 @@
 
       .prices,
       .actions,
-      .proGrid{grid-template-columns:1fr}
+      .proGrid,
+      .payDoctrineList{grid-template-columns:1fr}
 
       .payLine{
         display:grid;
@@ -495,7 +575,7 @@
 <body>
   <header class="top">
     <div class="wrap">
-      <div class="brand">💳 DIGIY PAY · inscription</div>
+      <div class="brand">💳 DIGIY PAY · demande</div>
       <nav class="nav">
         <a class="btn" href="./index.html">← PAY public</a>
         <a class="btn" href="https://digiy-hub.digiylyfe.com/">🧭 HUB</a>
@@ -510,7 +590,7 @@
         <p>
           PAY n’est pas une banque. PAY aide le pro à suivre recettes, dépenses,
           dettes clients, preuves, réserve et reste à recevoir.
-          Aucun tarif n’est précoché.
+          La demande initiale est sans engagement : aucun tarif n’est précoché, et l’activation PAY devient payante seulement si le pro valide son choix.
         </p>
       </div>
 
@@ -519,14 +599,33 @@
           <small>Paiement Wave / Sendwave</small>
           <strong>JB BEAUVILLE · +221 77 134 28 89</strong>
         </div>
-        <p>Sénégal : paiement Wave direct. France : Sendwave vers Wave Sénégal. Après paiement, envoie la preuve sur WhatsApp.</p>
+        <p>Sénégal : paiement Wave direct. <strong class="gold-emphasis" style="display:inline-flex;padding:2px 8px;border-radius:999px;">France : Sendwave vers Wave Sénégal</strong>. Après paiement, envoie la preuve sur WhatsApp.</p>
       </div>
+    </section>
+
+    <section class="payDoctrine" aria-label="Doctrine commerciale PAY">
+      <span class="payDoctrineTag">Demande PAY sans engagement · Activation PAY payante · 0% commission</span>
+      <h2>Le pro garde son argent clair. DIGIY organise la lecture, pas la banque.</h2>
+      <p>
+        DIGIY PAY ne remplace pas une banque et ne prend aucune commission sur les recettes du professionnel.
+        La demande initiale / orientation est sans engagement : le paiement concerne seulement l’activation
+        d’une présence PAY, d’un accès métier, d’un QR, d’une mise en valeur ou d’un pack visibilité.
+      </p>
+      <div class="payDoctrineList">
+        <span>✅ Demande initiale sans engagement</span>
+        <span>💳 Activation PAY payante</span>
+        <span>🤝 Recettes et paiement directs</span>
+        <span class="gold-emphasis">🇫🇷 France / diaspora : Sendwave possible</span>
+      </div>
+      <p class="payDoctrineQuote">
+        DIGIY PAY aide le pro à lire son argent. DIGIY ne garde ni la caisse, ni le client, ni la valeur du terrain.
+      </p>
     </section>
 
     <section class="grid">
       <article class="card">
-        <h2>Tarif PAY</h2>
-        <p>Clique un ou plusieurs choix. Si tu te trompes, efface.</p>
+        <h2>Activation PAY</h2>
+        <p>Clique un ou plusieurs choix seulement si tu veux activer PAY. Si tu te trompes, efface.</p>
 
         <div class="countryBox" aria-label="Choix pays PAY">
           <div class="countryTitle">🌍 Choisir le pays de règlement</div>
@@ -535,7 +634,7 @@
               <strong>🇸🇳 Sénégal</strong>
               <span>Tarifs FCFA · Wave direct</span>
             </button>
-            <button class="countryBtn" type="button" data-country="france">
+            <button class="countryBtn gold-emphasis" type="button" data-country="france">
               <strong>🇫🇷 France</strong>
               <span>Tarifs EUR · Sendwave vers Wave Sénégal</span>
             </button>
@@ -545,7 +644,7 @@
           </div>
         </div>
 
-        <div class="sectionTitle">💳 Abonnement PAY</div>
+        <div class="sectionTitle">💳 Activation PAY</div>
         <div class="prices" id="options"></div>
 
         <div class="sectionTitle">📣 RÉSEAU abonné / FIRST non-abonné</div>
@@ -553,11 +652,11 @@
       </article>
 
       <aside class="card summary" id="summary">
-        <h2>Ce que l’abonnement m’apporte</h2>
+        <h2>Ce que mon activation PAY m’apporte</h2>
 
         <div class="selected" id="selectedBox">
           <strong>Aucun choix sélectionné</strong><br>
-          <span>Choisis au moins un tarif.</span>
+          <span>Rien n’est précoché.</span>
         </div>
 
         <div id="choiceList"></div>
@@ -566,7 +665,7 @@
           <h3>Infos pro pour le paiement</h3>
           <p>
             Ces informations servent seulement à identifier la demande PAY dans le message WhatsApp/SMS.
-            La fiche complète se construit ailleurs dans DIGIY.
+            La demande initiale est sans engagement ; l’activation PAY se fait ensuite selon le choix validé.
           </p>
 
           <div class="proGrid">
@@ -625,10 +724,10 @@
 
           <div class="proof">
             Après paiement Wave, envoie la capture ou la preuve par WhatsApp.
-            DIGIY vérifie puis accompagne l’ouverture / visibilité PAY.
+            DIGIY vérifie puis accompagne l’activation de la présence / visibilité PAY.
           </div>
 
-          <div class="payBadge" id="payBadge">
+          <div class="payBadge gold-emphasis" id="payBadge">
             🇸🇳 Sénégal : règlement Wave direct. 🇫🇷 France : règlement Sendwave vers Wave Sénégal.
           </div>
         </div>
@@ -648,12 +747,12 @@
         </div>
 
         <div class="actions">
-          <button class="btn" id="btnCopyWave" type="button">📋 Copier Wave</button>
+          <button class="btn" id="btnCopyWave" type="button">📋 Copier paiement</button>
           <a class="btn gold" id="btnProof">📸 Envoyer preuve</a>
           <a class="btn gold" href="https://pro-pay.digiylyfe.com/">🔐 Espace pro</a>
         </div>
 
-        <p>Message avec date, choix, sous-total, total et preuve Wave.</p>
+        <p>Message avec date, choix, sous-total, total, demande sans engagement et preuve de paiement.</p>
       </aside>
     </section>
   </main>
@@ -738,7 +837,7 @@
 
       const COMMON = [
         "Carte de visite complète",
-        "Logiciel Mon argent",
+        "Lecture Mon argent",
         "Lecture recettes / dépenses / dettes / preuves",
         "Voix DIGIY",
         "Textes prêts",
@@ -903,6 +1002,10 @@
           `Date de demande : ${date()}
 ` +
           `Pays / règlement : ${countryLabel()}
+` +
+          `Demande initiale : sans engagement avant activation PAY
+` +
+          `Doctrine : 0% commission sur les recettes du pro
 
 ` +
           `Infos pro :
@@ -927,6 +1030,7 @@ ${choiceLines()}
 
 ` +
           `Important : les tarifs France et Sénégal sont une grille pays, pas une conversion au taux de change.
+Important : DIGIY PAY prend 0% commission sur les recettes du pro. Le paiement concerne l’activation choisie.
 
 ` +
           `Après paiement, je vous envoie la preuve ici.
@@ -945,6 +1049,10 @@ ${choiceLines()}
           `Date de demande : ${date()}
 ` +
           `Pays / règlement : ${countryLabel()}
+` +
+          `Demande initiale : sans engagement avant activation PAY
+` +
+          `Doctrine : 0% commission sur les recettes du pro
 
 ` +
           `Infos pro :
@@ -1002,7 +1110,7 @@ ${choiceLines()}
         if(proof){
           proof.textContent = country === "france"
             ? "Depuis la France, règle par Sendwave vers le Wave Sénégal de JB BEAUVILLE, puis envoie la preuve par WhatsApp."
-            : "Après paiement Wave, envoie la capture ou la preuve par WhatsApp. DIGIY vérifie puis accompagne l’ouverture / visibilité PAY.";
+            : "Après paiement Wave, envoie la capture ou la preuve par WhatsApp. DIGIY vérifie puis accompagne l’activation de la présence / visibilité PAY.";
         }
 
         $("benefits").innerHTML = (items.length ? [...COMMON, ...items.flatMap(p => p.bonus)] : [])
@@ -1083,5 +1191,7 @@ ${choiceLines()}
   </script>
 </body>
 </html>
+
+
 
 
