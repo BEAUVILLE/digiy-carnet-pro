@@ -41,15 +41,14 @@
 
   function removeLegacyCtas(){
     document.querySelectorAll('a').forEach(function(a){
-      var raw=a.getAttribute('href')||'';
-      var h=raw.toLowerCase();
+      var h=(a.getAttribute('href')||'').toLowerCase();
       if(h.indexOf('https://tarifs.digiylyfe.com/')===0 ||
          h.indexOf('https://pro-carnet.digiylyfe.com/pin.html')===0){
         a.remove();
       }
     });
     document.querySelectorAll('.pay-pro-secure-inner').forEach(function(box){
-      if(box.children.length===1) box.style.gridTemplateColumns='1fr';
+      if(box.children.length<=1) box.style.gridTemplateColumns='1fr';
     });
   }
 
@@ -86,14 +85,22 @@
     var lang=active();
     wrap.innerHTML='';
     wrap.setAttribute('aria-label','Choisir la langue');
+    wrap.style.display='flex';
+    wrap.style.flexWrap='wrap';
+    wrap.style.gap='6px';
+    wrap.style.maxWidth='100%';
+    wrap.style.borderRadius='18px';
+    wrap.style.alignItems='center';
     LANGS.forEach(function(code){
       var b=document.createElement('button');
       b.type='button';
       b.className='langBtn'+(code===lang?' active':'');
       b.setAttribute('data-lang-btn',code);
+      b.setAttribute('aria-label','Langue '+code.toUpperCase());
       b.textContent=FLAGS[code];
       b.addEventListener('click',function(ev){
         ev.preventDefault();
+        ev.stopPropagation();
         setLang(code);
       });
       wrap.appendChild(b);
