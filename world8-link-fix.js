@@ -3,18 +3,28 @@
   'use strict';
 
   var HOME='https://digiylyfe.com/';
-  var CARNET_REQUEST='https://wa.me/221771342889?text=Bonjour%20DIGIY%2C%20je%20souhaite%20m%27abonner%20%C3%A0%20PRO%20CARNET';
+  var CARNET_REQUEST='https://digiylyfe.com/tarifs-adherents-1.html?country=sn&product=carnet-pro';
   var LANGS=['fr','en','es','pt','de','it','nl','ar'];
   var FLAGS={fr:'🇫🇷 FR',en:'🇬🇧 EN',es:'🇪🇸 ES',pt:'🇵🇹 PT',de:'🇩🇪 DE',it:'🇮🇹 IT',nl:'🇳🇱 NL',ar:'🌙 AR'};
   var CARNET_LABEL={
-    fr:'📝 DEMANDER CARNET PRO',
-    en:'📝 REQUEST CARNET PRO',
-    es:'📝 SOLICITAR CARNET PRO',
-    pt:'📝 PEDIR CARNET PRO',
-    de:'📝 CARNET PRO ANFRAGEN',
-    it:'📝 RICHIEDI CARNET PRO',
-    nl:'📝 CARNET PRO AANVRAGEN',
-    ar:'📝 طلب CARNET PRO'
+    fr:'📒 S’ABONNER À CARNET PRO',
+    en:'📒 SUBSCRIBE TO CARNET PRO',
+    es:'📒 SUSCRIBIRSE A CARNET PRO',
+    pt:'📒 ASSINAR CARNET PRO',
+    de:'📒 CARNET PRO ABONNIEREN',
+    it:'📒 ABBONATI A CARNET PRO',
+    nl:'📒 ABONNEREN OP CARNET PRO',
+    ar:'📒 الاشتراك في CARNET PRO'
+  };
+  var PRICE_LABEL={
+    fr:'ABONNEMENT CARNET PRO · 13 000 FCFA / mois · 20 € / mois',
+    en:'CARNET PRO SUBSCRIPTION · 13,000 FCFA / month · €20 / month',
+    es:'SUSCRIPCIÓN CARNET PRO · 13 000 FCFA / mes · 20 € / mes',
+    pt:'ASSINATURA CARNET PRO · 13 000 FCFA / mês · 20 € / mês',
+    de:'CARNET PRO ABONNEMENT · 13.000 FCFA / Monat · 20 € / Monat',
+    it:'ABBONAMENTO CARNET PRO · 13.000 FCFA / mese · 20 € / mese',
+    nl:'CARNET PRO ABONNEMENT · 13.000 FCFA / maand · € 20 / maand',
+    ar:'اشتراك CARNET PRO · 13 000 FCFA شهريًا · 20 € شهريًا'
   };
 
   function active(){
@@ -60,6 +70,21 @@
       a.removeAttribute('data-digiy-carnet-adhesion');
       a.textContent=CARNET_LABEL[lang]||CARNET_LABEL.fr;
     });
+  }
+
+  function installPrice(){
+    var hero=document.querySelector('.hero-actions');
+    if(!hero) return;
+    var badge=document.querySelector('[data-digiy-carnet-public-price]');
+    if(!badge){
+      badge=document.createElement('div');
+      badge.setAttribute('data-digiy-carnet-public-price','1');
+      badge.style.cssText='margin:14px 0 6px;padding:12px 14px;border-radius:18px;border:1px solid rgba(214,168,95,.58);background:linear-gradient(135deg,rgba(214,168,95,.16),rgba(168,213,181,.10));color:#f8e7c3;font-size:clamp(14px,2.4vw,18px);font-weight:1000;line-height:1.35;text-align:center';
+      hero.parentNode.insertBefore(badge,hero);
+    }
+    var l=active();
+    badge.textContent=PRICE_LABEL[l]||PRICE_LABEL.fr;
+    badge.dir=l==='ar'?'rtl':'ltr';
   }
 
   function repairHome(){
@@ -111,6 +136,7 @@
   function run(){
     removeLegacyCtas();
     repairCarnetRequest();
+    installPrice();
     repairHome();
     installWorld8Switch();
   }
