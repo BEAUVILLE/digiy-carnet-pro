@@ -2,6 +2,17 @@
 (function(){
   'use strict';
   var HOME='https://digiylyfe.com/';
+  var ADHESION='https://digiylyfe.com/tarifs-adherents-1.html?country=sn';
+  var ADHESION_LABEL={
+    fr:'📝 DEMANDER L’ADHÉSION',
+    en:'📝 REQUEST MEMBERSHIP',
+    es:'📝 SOLICITAR ADHESIÓN',
+    pt:'📝 PEDIR ADESÃO',
+    it:'📝 RICHIEDI ADESIONE',
+    de:'📝 MITGLIEDSCHAFT BEANTRAGEN',
+    nl:'📝 LIDMAATSCHAP AANVRAGEN',
+    ar:'📝 طلب العضوية'
+  };
   function active(){
     try{
       var x=(new URLSearchParams(location.search).get('lang')||localStorage.getItem('digiy-lang')||localStorage.getItem('digiy_lang')||'fr').slice(0,2).toLowerCase();
@@ -10,8 +21,10 @@
   }
   function run(){
     var l=active();
-    document.querySelectorAll('a[href*="inscription-pay.html"]').forEach(function(a){
-      a.href='./inscription-world8.html?lang='+encodeURIComponent(l);
+    document.querySelectorAll('a[href*="inscription-pay.html"],a[href*="inscription-world8.html"],a[data-digiy-carnet-adhesion]').forEach(function(a){
+      a.href=ADHESION;
+      a.setAttribute('data-digiy-carnet-adhesion','1');
+      a.textContent=ADHESION_LABEL[l]||ADHESION_LABEL.fr;
     });
     document.querySelectorAll('a').forEach(function(a){
       var h=a.getAttribute('href')||'';
@@ -30,5 +43,5 @@
     }
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true}); else run();
-  new MutationObserver(run).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['href']});
+  new MutationObserver(run).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['href','lang','dir']});
 })();
