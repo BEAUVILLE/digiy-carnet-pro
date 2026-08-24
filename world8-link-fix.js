@@ -3,18 +3,18 @@
   'use strict';
 
   var HOME='https://digiylyfe.com/';
-  var ADHESION='https://digiylyfe.com/tarifs-adherents-1.html?country=sn';
+  var CARNET_REQUEST='https://wa.me/221771342889?text=Bonjour%20DIGIY%2C%20je%20souhaite%20m%27abonner%20%C3%A0%20PRO%20CARNET';
   var LANGS=['fr','en','es','pt','de','it','nl','ar'];
   var FLAGS={fr:'🇫🇷 FR',en:'🇬🇧 EN',es:'🇪🇸 ES',pt:'🇵🇹 PT',de:'🇩🇪 DE',it:'🇮🇹 IT',nl:'🇳🇱 NL',ar:'🌙 AR'};
-  var ADHESION_LABEL={
-    fr:'📝 DEMANDER L’ADHÉSION',
-    en:'📝 REQUEST MEMBERSHIP',
-    es:'📝 SOLICITAR ADHESIÓN',
-    pt:'📝 PEDIR ADESÃO',
-    de:'📝 MITGLIEDSCHAFT BEANTRAGEN',
-    it:'📝 RICHIEDI ADESIONE',
-    nl:'📝 LIDMAATSCHAP AANVRAGEN',
-    ar:'📝 طلب العضوية'
+  var CARNET_LABEL={
+    fr:'📝 DEMANDER CARNET PRO',
+    en:'📝 REQUEST CARNET PRO',
+    es:'📝 SOLICITAR CARNET PRO',
+    pt:'📝 PEDIR CARNET PRO',
+    de:'📝 CARNET PRO ANFRAGEN',
+    it:'📝 RICHIEDI CARNET PRO',
+    nl:'📝 CARNET PRO AANVRAGEN',
+    ar:'📝 طلب CARNET PRO'
   };
 
   function active(){
@@ -52,12 +52,13 @@
     });
   }
 
-  function repairAdhesion(){
+  function repairCarnetRequest(){
     var lang=active();
-    document.querySelectorAll('a[href*="inscription-pay.html"],a[href*="inscription-world8.html"],a[data-digiy-carnet-adhesion]').forEach(function(a){
-      a.href=ADHESION;
-      a.setAttribute('data-digiy-carnet-adhesion','1');
-      a.textContent=ADHESION_LABEL[lang]||ADHESION_LABEL.fr;
+    document.querySelectorAll('a[href*="inscription-pay.html"],a[href*="inscription-world8.html"],a[data-digiy-carnet-adhesion],a[data-digiy-carnet-request]').forEach(function(a){
+      a.href=CARNET_REQUEST;
+      a.setAttribute('data-digiy-carnet-request','1');
+      a.removeAttribute('data-digiy-carnet-adhesion');
+      a.textContent=CARNET_LABEL[lang]||CARNET_LABEL.fr;
     });
   }
 
@@ -109,7 +110,7 @@
 
   function run(){
     removeLegacyCtas();
-    repairAdhesion();
+    repairCarnetRequest();
     repairHome();
     installWorld8Switch();
   }
