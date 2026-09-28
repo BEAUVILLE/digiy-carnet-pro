@@ -21,11 +21,7 @@ const {data:{user},error:ue}=await sb.auth.getUser();
 if(ue||!user){fail("Lien invalide ou expiré. Demandez un nouveau magic-link.");return}
 const {data:allowed,error}=await sb.rpc("digiy_carnet_owner_has_access");
 if(error||allowed!==true){await sb.auth.signOut();fail("Cet e-mail ne possède pas encore un accès CARNET PRO activé.");return}
-try{
-  localStorage.setItem("digiy_pay_baptiste_validated_at",String(Date.now()));
-  localStorage.setItem("DIGIY_CARNET_OWNER_EMAIL",user.email||"");
-}catch(_){}
-location.replace("./cockpit.html");
+location.replace("https://pro-carnet.digiylyfe.com/pin.html");
 })().catch(()=>{const e=document.getElementById("msg");e.textContent="Accès indisponible. Recommencez depuis la page CARNET PRO.";document.getElementById("back").hidden=false});
 </script>
 </body>
