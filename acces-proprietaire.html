@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#12100f">
+<title>DIGIY CARNET PRO · Accès propriétaire</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0"></script>
+<style>
+:root{--bg:#12100f;--card:#211c19;--line:rgba(255,255,255,.12);--ink:#f8f1e8;--muted:#c8b8a7;--gold:#d6a85f;--gold2:#f0d29a;--green:#6fa27e}
+*{box-sizing:border-box}html,body{margin:0}body{min-height:100vh;display:grid;place-items:center;padding:16px;background:linear-gradient(180deg,#17120f,var(--bg));font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink)}
+.card{width:min(100%,450px);padding:22px;border:1px solid var(--line);border-radius:26px;background:var(--card);box-shadow:0 24px 64px rgba(0,0,0,.34)}
+.brand{font-weight:1000;color:var(--gold2);font-size:21px}.langs{display:flex;gap:5px;flex-wrap:wrap;margin:14px 0}.langs button{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:6px 8px;font-size:10px;font-weight:900}.langs button.active{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#17120e}
+h1{font-size:28px;margin:10px 0 6px}.lead{color:var(--muted);font-size:13px;line-height:1.5}input{width:100%;margin-top:14px;padding:14px;border-radius:14px;border:1px solid var(--line);background:#17120f;color:var(--ink);font:inherit}.send,.back{width:100%;min-height:52px;margin-top:12px;border-radius:999px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:1000;text-decoration:none}.send{border:0;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#17120e}.back{border:1px solid var(--line);color:var(--ink);background:rgba(255,255,255,.04)}.msg{display:none;margin-top:12px;padding:11px;border-radius:14px;font-size:12px;line-height:1.45}.msg.show{display:block}.ok{background:rgba(111,162,126,.13);color:#d8f4df}.bad{background:rgba(220,80,80,.12);color:#ffd0d0}
+html[dir="rtl"] body{direction:rtl}
+</style>
+</head>
+<body>
+<main class="card">
+<div class="brand">📒 DIGIY CARNET PRO</div>
+<div class="langs">
+<button data-lang="fr">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button><button data-lang="pt">PT</button><button data-lang="it">IT</button><button data-lang="de">DE</button><button data-lang="nl">NL</button><button data-lang="ar">AR</button>
+</div>
+<h1 data-i18n="title">Accès propriétaire</h1>
+<p class="lead" data-i18n="lead">Saisissez l’e-mail utilisé pour votre adhésion CARNET PRO. Vous recevrez un lien unique de connexion.</p>
+<input id="email" type="email" autocomplete="email" placeholder="email@exemple.com">
+<button class="send" id="send" type="button" data-i18n="send">Envoyer le magic-link</button>
+<div id="msg" class="msg"></div>
+<a class="back" href="./" data-i18n="back">← Retour à CARNET PRO</a>
+</main>
+<script>
+(()=>{
+const sb=window.supabase.createClient("https://wesqmwjjtsefyjnluosj.supabase.co","sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const T={
+fr:{title:"Accès propriétaire",lead:"Saisissez l’e-mail utilisé pour votre adhésion CARNET PRO. Vous recevrez un lien unique de connexion.",send:"Envoyer le magic-link",back:"← Retour à CARNET PRO",sent:"Lien envoyé. Vérifiez votre e-mail.",email:"E-mail requis."},
+en:{title:"Owner access",lead:"Enter the email used for your CARNET PRO membership. You will receive a one-time sign-in link.",send:"Send magic link",back:"← Back to CARNET PRO",sent:"Link sent. Check your email.",email:"Email required."},
+es:{title:"Acceso propietario",lead:"Introduzca el email utilizado para su adhesión CARNET PRO. Recibirá un enlace único.",send:"Enviar magic-link",back:"← Volver a CARNET PRO",sent:"Enlace enviado. Revise su email.",email:"Email obligatorio."},
+pt:{title:"Acesso do proprietário",lead:"Introduza o e-mail usado na adesão CARNET PRO. Receberá um link único.",send:"Enviar magic-link",back:"← Voltar ao CARNET PRO",sent:"Link enviado. Verifique o e-mail.",email:"E-mail obrigatório."},
+it:{title:"Accesso proprietario",lead:"Inserisci l’e-mail usata per l’adesione CARNET PRO. Riceverai un link unico.",send:"Invia magic-link",back:"← Torna a CARNET PRO",sent:"Link inviato. Controlla l’e-mail.",email:"E-mail richiesta."},
+de:{title:"Inhaberzugang",lead:"Geben Sie die E-Mail Ihrer CARNET-PRO-Mitgliedschaft ein. Sie erhalten einen einmaligen Login-Link.",send:"Magic-Link senden",back:"← Zurück zu CARNET PRO",sent:"Link gesendet. E-Mail prüfen.",email:"E-Mail erforderlich."},
+nl:{title:"Eigenaartoegang",lead:"Voer het e-mailadres van uw CARNET PRO-lidmaatschap in. U ontvangt een eenmalige inloglink.",send:"Magic-link sturen",back:"← Terug naar CARNET PRO",sent:"Link verzonden. Controleer uw e-mail.",email:"E-mail verplicht."},
+ar:{title:"دخول المالك",lead:"أدخل البريد الإلكتروني المستخدم لاشتراك CARNET PRO. سيصلك رابط دخول لمرة واحدة.",send:"إرسال رابط الدخول",back:"العودة إلى CARNET PRO ←",sent:"تم إرسال الرابط. تحقق من بريدك الإلكتروني.",email:"البريد الإلكتروني مطلوب."}
+};
+let lang=(new URLSearchParams(location.search).get("lang")||localStorage.getItem("digiy_lang")||"fr").slice(0,2).toLowerCase();if(!T[lang])lang="fr";
+const $=id=>document.getElementById(id),tr=k=>T[lang][k]||T.fr[k]||k;
+function apply(){document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=tr(el.dataset.i18n));document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang));localStorage.setItem("digiy_lang",lang)}
+document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;apply()});
+function msg(t,type="bad"){const e=$("msg");e.textContent=t;e.className="msg show "+type}
+$("send").onclick=async()=>{const email=$("email").value.trim();if(!email){msg(tr("email"));return}$("send").disabled=true;const redirect=new URL("./proprietaire-entree.html",location.href);redirect.searchParams.set("lang",lang);const {error}=await sb.auth.signInWithOtp({email,options:{shouldCreateUser:true,emailRedirectTo:redirect.href}});$("send").disabled=false;if(error){msg(error.message);return}msg(tr("sent"),"ok")};apply();
+})();
+</script>
+</body>
+</html>
