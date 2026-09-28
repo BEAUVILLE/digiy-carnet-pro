@@ -47,7 +47,7 @@ const $=id=>document.getElementById(id),tr=k=>T[lang][k]||T.fr[k]||k;
 function apply(){document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=tr(el.dataset.i18n));document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang));localStorage.setItem("digiy_lang",lang)}
 document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;apply()});
 function msg(t,type="bad"){const e=$("msg");e.textContent=t;e.className="msg show "+type}
-$("send").onclick=async()=>{const email=$("email").value.trim();if(!email){msg(tr("email"));return}$("send").disabled=true;const redirect=new URL("./proprietaire-entree.html",location.href);redirect.searchParams.set("lang",lang);const {error}=await sb.auth.signInWithOtp({email,options:{shouldCreateUser:true,emailRedirectTo:redirect.href}});$("send").disabled=false;if(error){msg(error.message);return}msg(tr("sent"),"ok")};apply();
+$("send").onclick=async()=>{const email=$("email").value.trim();if(!email){msg(tr("email"));return}$("send").disabled=true;const redirect=new URL("./proprietaire-entree.html",location.href);const {error}=await sb.auth.signInWithOtp({email,options:{shouldCreateUser:true,emailRedirectTo:redirect.href}});$("send").disabled=false;if(error){msg(error.message);return}msg(tr("sent"),"ok")};apply();
 })();
 </script>
 </body>
