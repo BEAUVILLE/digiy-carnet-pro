@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#12100f">
+<title>DIGIY CARNET PRO · Vérification propriétaire</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0"></script>
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px;background:#12100f;color:#f8f1e8;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center}.box{width:min(440px,100%);padding:24px;border:1px solid #ffffff1f;border-radius:24px;background:#211c19}.mark{font-size:38px}.msg{margin-top:12px;color:#c8b8a7;font-weight:850;line-height:1.5}.back{display:inline-flex;margin-top:16px;padding:11px 16px;border-radius:999px;border:1px solid #ffffff26;color:#f8f1e8;text-decoration:none;font-weight:950}</style>
+</head>
+<body>
+<main class="box"><div class="mark">🔐</div><h1>Accès propriétaire CARNET PRO</h1><div class="msg" id="msg">Vérification sécurisée…</div><a class="back" id="back" href="./acces-proprietaire.html" hidden>Retour à l’accès propriétaire</a></main>
+<script>
+(async()=>{
+const sb=window.supabase.createClient("https://wesqmwjjtsefyjnluosj.supabase.co","sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const msg=document.getElementById("msg"),back=document.getElementById("back");
+const fail=t=>{msg.textContent=t;back.hidden=false};
+for(let i=0;i<12;i++){const {data}=await sb.auth.getSession();if(data&&data.session)break;await new Promise(r=>setTimeout(r,250))}
+const {data:{user},error:ue}=await sb.auth.getUser();
+if(ue||!user){fail("Lien invalide ou expiré. Demandez un nouveau magic-link.");return}
+const {data:allowed,error}=await sb.rpc("digiy_carnet_owner_has_access");
+if(error||allowed!==true){await sb.auth.signOut();fail("Cet e-mail ne possède pas encore un accès CARNET PRO activé.");return}
+try{
+  localStorage.setItem("digiy_pay_baptiste_validated_at",String(Date.now()));
+  localStorage.setItem("DIGIY_CARNET_OWNER_EMAIL",user.email||"");
+}catch(_){}
+location.replace("./cockpit.html");
+})().catch(()=>{const e=document.getElementById("msg");e.textContent="Accès indisponible. Recommencez depuis la page CARNET PRO.";document.getElementById("back").hidden=false});
+</script>
+</body>
+</html>
