@@ -445,6 +445,75 @@
     }
 
 
+    /* DIGIY CARNET PRO — CORRECTIF MOBILE 2026-10-30.
+       Réduit l'en-tête, garde l'accès aux 8 langues sans élargir la page,
+       et protège la présentation des docks et CTA superposés. */
+    @media(max-width:700px){
+      html,body{max-width:100%}
+      .topbar{position:relative;top:auto;z-index:20;backdrop-filter:none}
+      .topbar-inner{
+        display:flex;flex-direction:column;align-items:stretch;
+        justify-content:flex-start;gap:9px;min-height:0;padding:10px 0 9px;
+      }
+      .brand{min-width:0;gap:10px}
+      .brand-badge{width:42px;height:42px;border-radius:12px}
+      .brand strong{font-size:17px;line-height:1.1}
+      .brand span{font-size:10px;line-height:1.3}
+      .topbar .nav{
+        display:flex;flex-direction:row;align-items:center;
+        flex-wrap:nowrap;width:100%;min-width:0;max-width:100%;gap:7px;
+        justify-content:flex-start;overflow:hidden;
+      }
+      /* Les autres raccourcis restent dans la page ; l'accueil et la langue suffisent en tête. */
+      .topbar .nav > a:not([data-digiy-home-return]){display:none!important}
+      .topbar .nav > a[data-digiy-home-return]{
+        order:0;display:inline-flex;align-items:center;justify-content:center;
+        flex:0 0 auto;min-height:38px;max-width:36%;padding:7px 9px;
+        border:1px solid rgba(214,168,95,.34);font-size:11px;
+        line-height:1.2;white-space:nowrap;
+      }
+      .topbar .nav .langSwitch{
+        order:1;display:flex;flex:1 1 auto;width:0;min-width:0;
+        max-width:100%;overflow-x:auto;overflow-y:hidden;
+        flex-wrap:nowrap!important;white-space:nowrap;gap:5px;
+        padding:4px;margin:0;scrollbar-width:thin;
+        -webkit-overflow-scrolling:touch;touch-action:pan-x;
+      }
+      .topbar .nav .langSwitch .langBtn{
+        flex:0 0 auto;min-height:34px;padding:0 9px;
+        font-size:11px;white-space:nowrap;
+      }
+      .hero{padding:22px 0 22px}
+      .hero-grid{grid-template-columns:minmax(0,1fr);gap:16px}
+      .hero-grid > *{min-width:0}
+      .hero .eyebrow{max-width:100%;font-size:11px;line-height:1.3}
+      .hero h1{font-size:clamp(31px,8vw,42px);line-height:1.08;letter-spacing:-.035em}
+      .hero .lead{font-size:14px;line-height:1.6;margin-top:13px}
+      .hero-actions{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-top:16px}
+      .hero-actions .btn{
+        display:flex;width:100%;max-width:100%;min-width:0;min-height:48px;
+        padding:10px 14px;white-space:normal;text-align:center;
+        overflow-wrap:anywhere;line-height:1.25;font-size:14px;
+      }
+      .chips{gap:7px;margin-top:15px}
+      .chips .chip{padding:7px 10px;font-size:11px}
+    }
+    @media(max-width:560px){
+      /* Sur iPhone : un seul dock compact, deux accès côte à côte. */
+      .pay-pro-secure-dock{
+        padding:5px 9px calc(5px + env(safe-area-inset-bottom,0px));
+      }
+      .pay-pro-secure-inner{
+        display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;
+      }
+      .pay-pro-secure-inner a{
+        min-width:0;min-height:48px;padding:8px 7px;
+        border-radius:13px;font-size:11px;line-height:1.2;
+        white-space:normal;overflow-wrap:anywhere;
+      }
+      body{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
+    }
+
     /* DIGIY CARNET PRO — sécurité accès PRO bas de page */
     .pay-pro-secure-dock{
       position:fixed;
