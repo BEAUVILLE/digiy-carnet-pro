@@ -445,7 +445,50 @@
     }
 
 
-    /* DIGIY CARNET PRO — CORRECTIF MOBILE 2026-10-30.
+    /* DIGIY CARNET PRO — sécurité accès PRO bas de page */
+    .pay-pro-secure-dock{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:55;
+      padding:9px 12px calc(9px + env(safe-area-inset-bottom,0px));
+      background:linear-gradient(180deg,rgba(18,16,15,0),rgba(18,16,15,.92) 24%,rgba(18,16,15,.98));
+      backdrop-filter:blur(12px);
+      pointer-events:none;
+    }
+    .pay-pro-secure-inner{
+      width:min(var(--max),calc(100% - 0px));
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      pointer-events:auto;
+    }
+    .pay-pro-secure-inner a{
+      min-height:56px;
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:0 14px;
+      font-weight:1000;
+      box-shadow:var(--shadow);
+    }
+    .pay-pro-secure-inner .signup{
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      color:#17120e;
+    }
+    .pay-pro-secure-inner .pro{
+      background:linear-gradient(135deg,var(--green),#99c5a7);
+      color:#101812;
+      border:1px solid rgba(255,255,255,.12);
+    }
+    @media(max-width:560px){
+      .pay-pro-secure-inner{grid-template-columns:1fr;}
+    }
+      /* DIGIY CARNET PRO — CORRECTIF MOBILE 2026-10-30.
        Réduit l'en-tête, garde l'accès aux 8 langues sans élargir la page,
        et protège la présentation des docks et CTA superposés. */
     @media(max-width:700px){
@@ -514,50 +557,7 @@
       body{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
     }
 
-    /* DIGIY CARNET PRO — sécurité accès PRO bas de page */
-    .pay-pro-secure-dock{
-      position:fixed;
-      left:0;
-      right:0;
-      bottom:0;
-      z-index:55;
-      padding:9px 12px calc(9px + env(safe-area-inset-bottom,0px));
-      background:linear-gradient(180deg,rgba(18,16,15,0),rgba(18,16,15,.92) 24%,rgba(18,16,15,.98));
-      backdrop-filter:blur(12px);
-      pointer-events:none;
-    }
-    .pay-pro-secure-inner{
-      width:min(var(--max),calc(100% - 0px));
-      margin:0 auto;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      pointer-events:auto;
-    }
-    .pay-pro-secure-inner a{
-      min-height:56px;
-      border-radius:18px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:0 14px;
-      font-weight:1000;
-      box-shadow:var(--shadow);
-    }
-    .pay-pro-secure-inner .signup{
-      background:linear-gradient(135deg,var(--gold),var(--gold2));
-      color:#17120e;
-    }
-    .pay-pro-secure-inner .pro{
-      background:linear-gradient(135deg,var(--green),#99c5a7);
-      color:#101812;
-      border:1px solid rgba(255,255,255,.12);
-    }
-    @media(max-width:560px){
-      .pay-pro-secure-inner{grid-template-columns:1fr;}
-    }
-  </style>
+</style>
 </head>
 <body>
 
