@@ -15,13 +15,15 @@
 (async()=>{
 const sb=window.supabase.createClient("https://wesqmwjjtsefyjnluosj.supabase.co","sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const msg=document.getElementById("msg"),back=document.getElementById("back");
+const recovery=new URLSearchParams(location.search).get("recuperation")==="1"||sessionStorage.getItem("digiy_pin_recovery_intent")==="1";
 const fail=t=>{msg.textContent=t;back.hidden=false};
 for(let i=0;i<12;i++){const {data}=await sb.auth.getSession();if(data&&data.session)break;await new Promise(r=>setTimeout(r,250))}
 const {data:{user},error:ue}=await sb.auth.getUser();
 if(ue||!user){fail("Lien invalide ou expiré. Demandez un nouveau magic-link.");return}
 const {data:allowed,error}=await sb.rpc("digiy_carnet_owner_has_access");
 if(error||allowed!==true){await sb.auth.signOut();fail("Cet e-mail ne possède pas encore un accès CARNET PRO activé.");return}
-location.replace("https://pro-carnet.digiylyfe.com/pin.html");
+sessionStorage.removeItem("digiy_pin_recovery_intent");
+location.replace(recovery?"./recuperation-pin.html":"https://pro-carnet.digiylyfe.com/pin.html");
 })().catch(()=>{const e=document.getElementById("msg");e.textContent="Accès indisponible. Recommencez depuis la page CARNET PRO.";document.getElementById("back").hidden=false});
 </script>
 </body>
