@@ -32,6 +32,7 @@ html[dir="rtl"] body{direction:rtl}
 <script>
 (()=>{
 const sb=window.supabase.createClient("https://wesqmwjjtsefyjnluosj.supabase.co","sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const isRecovery=new URLSearchParams(location.search).get("recuperation")==="1";
 const T={
 fr:{title:"Accès propriétaire",lead:"Saisissez l’e-mail utilisé pour votre adhésion CARNET PRO. Vous recevrez un lien unique de connexion.",send:"Envoyer le magic-link",back:"← Retour à CARNET PRO",sent:"Lien envoyé. Vérifiez votre e-mail.",email:"E-mail requis."},
 en:{title:"Owner access",lead:"Enter the email used for your CARNET PRO membership. You will receive a one-time sign-in link.",send:"Send magic link",back:"← Back to CARNET PRO",sent:"Link sent. Check your email.",email:"Email required."},
@@ -42,12 +43,23 @@ de:{title:"Inhaberzugang",lead:"Geben Sie die E-Mail Ihrer CARNET-PRO-Mitgliedsc
 nl:{title:"Eigenaartoegang",lead:"Voer het e-mailadres van uw CARNET PRO-lidmaatschap in. U ontvangt een eenmalige inloglink.",send:"Magic-link sturen",back:"← Terug naar CARNET PRO",sent:"Link verzonden. Controleer uw e-mail.",email:"E-mail verplicht."},
 ar:{title:"دخول المالك",lead:"أدخل البريد الإلكتروني المستخدم لاشتراك CARNET PRO. سيصلك رابط دخول لمرة واحدة.",send:"إرسال رابط الدخول",back:"العودة إلى CARNET PRO ←",sent:"تم إرسال الرابط. تحقق من بريدك الإلكتروني.",email:"البريد الإلكتروني مطلوب."}
 };
+const R={
+fr:{title:"Code oublié ?",lead:"Recevez un lien sécurisé sur l’e-mail déjà associé à votre accès. Le PIN ne sera jamais envoyé par e-mail.",send:"Recevoir le lien de récupération"},
+en:{title:"Forgot your PIN?",lead:"Get a secure link at the email already linked to your account. Your PIN will never be emailed.",send:"Send recovery link"},
+es:{title:"¿Olvidó su código?",lead:"Reciba un enlace seguro en el correo ya asociado a su acceso. El PIN nunca se envía por correo.",send:"Enviar enlace de recuperación"},
+pt:{title:"Esqueceu o PIN?",lead:"Receba um link seguro no e-mail já associado à sua conta. O PIN nunca será enviado por e-mail.",send:"Enviar link de recuperação"},
+it:{title:"PIN dimenticato?",lead:"Ricevi un link sicuro all'e-mail già associata al tuo accesso. Il PIN non sarà mai inviato via e-mail.",send:"Invia link di recupero"},
+de:{title:"PIN vergessen?",lead:"Erhalten Sie einen sicheren Link an Ihre bereits verknüpfte E-Mail. Ihr PIN wird niemals per E-Mail versendet.",send:"Wiederherstellungslink senden"},
+nl:{title:"Pincode vergeten?",lead:"Ontvang een beveiligde link op het gekoppelde e-mailadres. De pincode wordt nooit gemaild.",send:"Herstellink versturen"},
+ar:{title:"هل نسيت الرمز؟",lead:"استلم رابطاً آمناً على بريدك الإلكتروني المرتبط بحسابك. لا يُرسل الرمز السري بالبريد.",send:"إرسال رابط الاستعادة"}
+};
+if(isRecovery)for(const code of Object.keys(R))Object.assign(T[code],R[code]);
 let lang=(new URLSearchParams(location.search).get("lang")||localStorage.getItem("digiy_lang")||"fr").slice(0,2).toLowerCase();if(!T[lang])lang="fr";
 const $=id=>document.getElementById(id),tr=k=>T[lang][k]||T.fr[k]||k;
 function apply(){document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=tr(el.dataset.i18n));document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang));localStorage.setItem("digiy_lang",lang)}
 document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;apply()});
 function msg(t,type="bad"){const e=$("msg");e.textContent=t;e.className="msg show "+type}
-$("send").onclick=async()=>{const email=$("email").value.trim();if(!email){msg(tr("email"));return}$("send").disabled=true;const redirect=new URL("./proprietaire-entree.html",location.href);const {error}=await sb.auth.signInWithOtp({email,options:{shouldCreateUser:true,emailRedirectTo:redirect.href}});$("send").disabled=false;if(error){msg(error.message);return}msg(tr("sent"),"ok")};apply();
+$("send").onclick=async()=>{const email=$("email").value.trim();if(!email){msg(tr("email"));return}$("send").disabled=true;const redirect=new URL("./proprietaire-entree.html",location.href);if(isRecovery)redirect.searchParams.set("recuperation","1");sessionStorage.setItem("digiy_pin_recovery_intent",isRecovery?"1":"0");const {error}=await sb.auth.signInWithOtp({email,options:{shouldCreateUser:!isRecovery,emailRedirectTo:redirect.href}});$("send").disabled=false;if(error){msg(error.message);return}msg(tr("sent"),"ok")};apply();
 })();
 </script>
 </body>
