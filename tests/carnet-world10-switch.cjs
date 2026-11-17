@@ -32,7 +32,7 @@ function check(lang,existing){
  const body={querySelectorAll(){return [...buttons,link]}};
  const document={
   readyState:'complete',documentElement:{lang:'fr',dir:'ltr'},body,
-  querySelector(){return bar},createElement(){return{dataset:{},style:{}}},
+  querySelector(){return bar},querySelectorAll(selector){return body.querySelectorAll(selector)},createElement(){return{dataset:{},style:{}}},
   createTreeWalker(){let done=false;return{nextNode(){if(done)return null;done=true;this.currentNode=node;return node}}},
  };
  const store={};
