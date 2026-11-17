@@ -17,15 +17,16 @@ function ensureControls(){
  var bar=document.querySelector(nativeBarSelectors);
  if(!bar)return;
  ['wo','zh'].forEach(function(code){
-  if(bar.querySelector('[data-world8-lang="'+code+'"],[data-lang="'+code+'"],[data-lang-btn="'+code+'"]'))return;
-  var a=document.createElement('a');
+  var a=bar.querySelector('[data-world8-lang="'+code+'"],[data-lang="'+code+'"],[data-lang-btn="'+code+'"]');
+  if(!a){a=document.createElement('a');bar.appendChild(a)}
+  // Le vieux bridge WORLD8 réécrit tous les liens en FR/EN. Rétablir
+  // le vrai destinataire du bouton et préserver les autres paramètres.
   var u=new URL(location.href);u.searchParams.set('lang',code);
   a.href=u.toString();
   a.className='langBtn'+(requested===code?' active':'');
   a.dataset.world8Lang=code;a.lang=code==='zh'?'zh-CN':'wo';
   a.textContent=code==='wo'?'🇸🇳 WO':'🇨🇳 中文';
   a.style.cssText='flex:0 0 auto;min-height:34px;padding:7px 10px;border:1px solid rgba(214,168,95,.35);border-radius:999px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;font:900 11px system-ui;color:inherit';
-  bar.appendChild(a);
  });
 }
 function translateText(root){
