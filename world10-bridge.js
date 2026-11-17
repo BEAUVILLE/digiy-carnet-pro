@@ -1,51 +1,85 @@
-/* DIGIY CARNET · pont local WO/ZH pour la façade uniquement.
-   Ne touche ni aux écrans propriétaires, ni aux paiements, ni aux enregistrements. */
+/* DIGIY CARNET PRO · correction de la façade publique 10 langues.
+   Le shell natif FR/EN + les deux anciens moteurs WORLD8 sont conservés.
+   Ce pont rend WO et ZH accessibles dans toutes les langues, sans toucher
+   aux accès propriétaires, aux tarifs ou aux données professionnelles.
+*/
 (function(){
 'use strict';
-var lang=(new URLSearchParams(location.search).get('lang')||'').slice(0,2).toLowerCase();
-if(lang!=='wo'&&lang!=='zh')return;
-var dict=(window.DIGIY_WORLD8_PAGE&&window.DIGIY_WORLD8_PAGE[lang])||{};
-if(!Object.keys(dict).length)return;
+var QUERY=new URLSearchParams(location.search);
+var requested=String(QUERY.get('lang')||window.DIGIY_CARNET_ENTRY_LANG||'fr').slice(0,2).toLowerCase();
+var lang=(requested==='wo'||requested==='zh')?requested:'';
+var nativeBarSelectors='[data-world8-bar],.language-buttons,.langbar,.langs,.langSwitch,.digiyLangSwitch,.digiy-langbar';
+function dict(){return (window.DIGIY_WORLD8_PAGE&&window.DIGIY_WORLD8_PAGE[lang])||{}}
+function recognizedDomain(url){
+ return /(^|\.)digiylyfe\.com$/i.test(url.hostname)&&/^https?:$/.test(url.protocol);
+}
+function ensureControls(){
+ var bar=document.querySelector(nativeBarSelectors);
+ if(!bar)return;
+ ['wo','zh'].forEach(function(code){
+  var a=bar.querySelector('[data-world8-lang="'+code+'"],[data-lang="'+code+'"],[data-lang-btn="'+code+'"]');
+  if(!a){a=document.createElement('a');bar.appendChild(a)}
+  // Le vieux bridge WORLD8 réécrit tous les liens en FR/EN. Rétablir
+  // le vrai destinataire du bouton et préserver les autres paramètres.
+  var u=new URL(location.href);u.searchParams.set('lang',code);
+  a.href=u.toString();
+  a.className='langBtn'+(requested===code?' active':'');
+  a.dataset.world8Lang=code;a.lang=code==='zh'?'zh-CN':'wo';
+  a.textContent=code==='wo'?'🇸🇳 WO':'🇨🇳 中文';
+  a.style.cssText='flex:0 0 auto;min-height:34px;padding:7px 10px;border:1px solid rgba(214,168,95,.35);border-radius:999px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;font:900 11px system-ui;color:inherit';
+ });
+}
 function translateText(root){
- if(!root)return;
+ var copy=dict();if(!root||!Object.keys(copy).length)return;
  var walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:function(n){
   var p=n.parentElement;
-  if(!p||p.closest('script,style,textarea,option,select,noscript,pre,code,[contenteditable="true"]'))return NodeFilter.FILTER_REJECT;
-  return NodeFilter.FILTER_ACCEPT;
+  return !p||p.closest('script,style,textarea,option,select,noscript,pre,code,[contenteditable="true"]')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT;
  }});
- var n;while((n=walker.nextNode())){var raw=n.nodeValue,trim=raw.trim();
-  if(Object.prototype.hasOwnProperty.call(dict,trim)){var t=dict[trim];if(typeof t==='string'&&t!==trim)n.nodeValue=raw.replace(trim,t);}
+ var n;
+ while((n=walker.nextNode())){
+  var value=n.nodeValue||'',trim=value.trim();
+  if(Object.prototype.hasOwnProperty.call(copy,trim)&&typeof copy[trim]==='string'&&copy[trim]!==trim){
+   n.nodeValue=value.replace(trim,copy[trim]);
+  }
  }
 }
-function samePlatform(url){return /(^|\.)digiylyfe\.com$/i.test(url.hostname)&&/^https?:$/.test(url.protocol)}
 function updateLinks(root){
- (root||document).querySelectorAll('a[href]').forEach(function(a){
-  var raw=a.getAttribute('href');if(!raw||raw.charAt(0)==='#'||/^(mailto:|tel:|javascript:)/i.test(raw))return;
-  try{var u=new URL(raw,location.href);if(!samePlatform(u))return;
-  if(u.searchParams.get('lang')!==lang){u.searchParams.set('lang',lang);a.href=u.toString();}
+ if(!lang||!root||!root.querySelectorAll)return;
+ root.querySelectorAll('a[href]').forEach(function(a){
+  if(a.hasAttribute('data-world8-lang'))return;
+  var raw=a.getAttribute('href');
+  if(!raw||raw.charAt(0)==='#'||/^(mailto:|tel:|javascript:)/i.test(raw))return;
+  try{
+   var u=new URL(raw,location.href);
+   if(!recognizedDomain(u))return;
+   if(u.searchParams.get('lang')!==lang){
+    u.searchParams.set('lang',lang);a.href=u.toString();
+   }
   }catch(e){}
  });
 }
-function ensureControls(){
- var bar=document.querySelector('[data-world8-bar],.language-buttons,.langbar,.langs,.langSwitch,.digiyLangSwitch,.digiy-langbar');
- if(!bar)return;
- ['wo','zh'].forEach(function(l){if(bar.querySelector('[data-world8-lang="'+l+'"],[data-lang="'+l+'"]'))return;
-  var a=document.createElement('a');a.href='?lang='+l;a.dataset.world8Lang=l;a.lang=l;
-  a.textContent=l==='wo'?'🇸🇳 WO':'🇨🇳 中文';
-  a.style.cssText='min-height:34px;padding:7px 10px;border:1px solid #f6c453;border-radius:999px;color:inherit;text-decoration:none;font:900 11px system-ui;display:inline-flex;align-items:center';
-  if(l===lang)a.style.background='#e8bf61';
-  bar.appendChild(a);
- });
-}
 function start(){
- document.documentElement.lang=lang==='zh'?'zh-CN':lang;
+ // Les 2 boutons doivent apparaître aussi sur l'accueil normal en français.
+ ensureControls();
+ if(!lang)return;
+ document.documentElement.lang=lang==='zh'?'zh-CN':'wo';
  document.documentElement.dir='ltr';
- try{localStorage.setItem('digiy-lang',lang);localStorage.setItem('digiy_lang',lang)}catch(e){}
- translateText(document.body);updateLinks(document);ensureControls();
+ try{
+  localStorage.setItem('digiy-lang',lang);
+  localStorage.setItem('digiy_lang',lang);
+ }catch(e){}
+ translateText(document.body);
+ updateLinks(document);
+ // Le contenu public peut être ajouté après DOMContentLoaded.
+ // Ne pas observer la frappe ou la saisie des usagers.
  var observer=new MutationObserver(function(rs){
-  rs.forEach(function(r){r.addedNodes.forEach(function(n){if(n.nodeType===1){translateText(n);updateLinks(n)}else if(n.nodeType===3){var p=n.parentElement;if(p)translateText(p)}})});
+  rs.forEach(function(r){r.addedNodes.forEach(function(n){
+   if(n.nodeType===1){translateText(n);updateLinks(n)}
+   else if(n.nodeType===3&&n.parentElement)translateText(n.parentElement);
+  })});
  });
  observer.observe(document.body,{childList:true,subtree:true});
 }
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
+else start();
 })();
