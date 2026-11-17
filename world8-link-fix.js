@@ -1,10 +1,11 @@
-/* DIGIY CARNET PRO — navigation commerciale vers la source ADHÉRENT — 20260927 */
+/* DIGIY CARNET PRO — navigation commerciale vers la source ADHÉRENT — 20260927
+   WORLD10 P0 : ne jamais reconstruire la barre avec 8 boutons après chargement. */
 (function(){
   'use strict';
   var HOME='https://digiylyfe.com/';
   var ADHERENT='https://digiylyfe.com/tarifs-adherents-1.html?country=sn#carnet-pro';
-  var LANGS=['fr','en','es','pt','de','it','nl','ar'];
-  var FLAGS={fr:'🇫🇷 FR',en:'🇬🇧 EN',es:'🇪🇸 ES',pt:'🇵🇹 PT',de:'🇩🇪 DE',it:'🇮🇹 IT',nl:'🇳🇱 NL',ar:'🌙 AR'};
+  var LANGS=['fr','en','es','pt','de','it','nl','ar','wo','zh'];
+  var FLAGS={fr:'🇫🇷 FR',en:'🇬🇧 EN',es:'🇪🇸 ES',pt:'🇵🇹 PT',de:'🇩🇪 DE',it:'🇮🇹 IT',nl:'🇳🇱 NL',ar:'🌙 AR',wo:'🇸🇳 WO',zh:'🇨🇳 中文'};
   var LABEL={
     fr:'📒 ACTIVER CARNET PRO',
     en:'📒 ACTIVATE CARNET PRO',
@@ -13,7 +14,9 @@
     de:'📒 CARNET PRO AKTIVIEREN',
     it:'📒 ATTIVA CARNET PRO',
     nl:'📒 CARNET PRO ACTIVEREN',
-    ar:'📒 تفعيل CARNET PRO'
+    ar:'📒 تفعيل CARNET PRO',
+    wo:'📒 Laaj CARNET PRO',
+    zh:'📒 申请 CARNET PRO'
   };
   var PRICE={
     fr:'CARNET PRO · 13 000 FCFA / mois · tarif unique · aucun palier',
@@ -23,7 +26,9 @@
     de:'CARNET PRO · 13.000 FCFA / Monat · ein Preis · keine Stufen',
     it:'CARNET PRO · 13 000 FCFA / mese · prezzo unico · nessun livello',
     nl:'CARNET PRO · 13.000 FCFA / maand · één prijs · geen niveaus',
-    ar:'CARNET PRO · 13 000 FCFA / شهر · سعر واحد · بدون مستويات'
+    ar:'CARNET PRO · 13 000 FCFA / شهر · سعر واحد · بدون مستويات',
+    wo:'CARNET PRO · 13 000 FCFA / weer · benn njëg · amul palier',
+    zh:'CARNET PRO · 每月 13 000 FCFA · 统一价格 · 无分级'
   };
   function active(){
     try{
@@ -56,7 +61,9 @@
     de:'🔐 INHABERZUGANG',
     it:'🔐 ACCESSO PROPRIETARIO',
     nl:'🔐 EIGENAARTOEGANG',
-    ar:'🔐 دخول المالك'
+    ar:'🔐 دخول المالك',
+    wo:'🔐 Dugg ci boroom CARNET',
+    zh:'🔐 管理者入口'
   };
   function ownerTarget(){
     return './acces-proprietaire.html?lang='+encodeURIComponent(active());
