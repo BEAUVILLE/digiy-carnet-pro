@@ -32,7 +32,7 @@ function check(lang,existing){
  const body={querySelectorAll(){return [...buttons,link]}};
  const document={
   readyState:'complete',documentElement:{lang:'fr',dir:'ltr'},body,
-  querySelector(){return bar},querySelectorAll(selector){return body.querySelectorAll(selector)},createElement(){return{dataset:{},style:{}}},
+  querySelector(){return bar},querySelectorAll(selector){return body.querySelectorAll(selector)},createElement(){return{dataset:{},style:{},getAttribute(k){return k==='href'?this.href:null},hasAttribute(k){return k==='data-world8-lang'&&!!this.dataset.world8Lang}}},
   createTreeWalker(){let done=false;return{nextNode(){if(done)return null;done=true;this.currentNode=node;return node}}},
  };
  const store={};
