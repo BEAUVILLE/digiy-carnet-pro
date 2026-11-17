@@ -1,0 +1,23 @@
+name: DIGIY CARNET · accès propriétaire WORLD10
+on:
+  pull_request:
+    paths:
+      - 'acces-proprietaire.html'
+      - 'tests/carnet-owner-world10.cjs'
+      - '.github/workflows/carnet-owner-world10.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'acces-proprietaire.html'
+      - 'tests/carnet-owner-world10.cjs'
+      - '.github/workflows/carnet-owner-world10.yml'
+permissions:
+  contents: read
+jobs:
+  owner-access-translations:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vérification accès propriétaire WO/ZH et récupération
+        run: node tests/carnet-owner-world10.cjs
