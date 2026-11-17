@@ -1,0 +1,17 @@
+name: DIGIY CARNET · façade WO ZH
+on:
+  pull_request:
+    paths: ['index.html','world8-dict.js','world10-bridge.js','tests/test_carnet_world10_facade.py','.github/workflows/carnet-world10-facade.yml']
+  push:
+    branches: [main]
+    paths: ['index.html','world8-dict.js','world10-bridge.js','tests/test_carnet_world10_facade.py','.github/workflows/carnet-world10-facade.yml']
+permissions:
+  contents: read
+jobs:
+  facade-translations:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Langues, chargement et isolation PRO
+        run: python3 -m unittest discover -s tests -p 'test_carnet_world10_facade.py' -v
