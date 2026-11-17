@@ -1,10 +1,10 @@
 name: DIGIY CARNET · façade WO ZH
 on:
   pull_request:
-    paths: ['index.html','index-native-world8-source.html','world8-dict.js','world10-bridge.js','tests/test_carnet_world10_facade.py','tests/carnet-world10-switch.cjs','.github/workflows/carnet-world10-facade.yml']
+    paths: ['index.html','index-native-world8-source.html','world8-dict.js','world8-link-fix.js','world10-bridge.js','tests/test_carnet_world10_facade.py','tests/carnet-world10-switch.cjs','tests/carnet-world10-linkfix.cjs','.github/workflows/carnet-world10-facade.yml']
   push:
     branches: [main]
-    paths: ['index.html','index-native-world8-source.html','world8-dict.js','world10-bridge.js','tests/test_carnet_world10_facade.py','tests/carnet-world10-switch.cjs','.github/workflows/carnet-world10-facade.yml']
+    paths: ['index.html','index-native-world8-source.html','world8-dict.js','world8-link-fix.js','world10-bridge.js','tests/test_carnet_world10_facade.py','tests/carnet-world10-switch.cjs','tests/carnet-world10-linkfix.cjs','.github/workflows/carnet-world10-facade.yml']
 permissions:
   contents: read
 jobs:
@@ -17,3 +17,5 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_carnet_world10_facade.py' -v
       - name: Simulation des liens après le moteur 8 langues
         run: node tests/carnet-world10-switch.cjs
+      - name: Barre des 10 langues stable après les timers WORLD8
+        run: node tests/carnet-world10-linkfix.cjs
