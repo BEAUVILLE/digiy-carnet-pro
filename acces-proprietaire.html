@@ -20,7 +20,7 @@ html[dir="rtl"] body{direction:rtl}
 <main class="card">
 <div class="brand">📒 DIGIY CARNET PRO</div>
 <div class="langs">
-<button data-lang="fr">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button><button data-lang="pt">PT</button><button data-lang="it">IT</button><button data-lang="de">DE</button><button data-lang="nl">NL</button><button data-lang="ar">AR</button>
+<button data-lang="fr">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button><button data-lang="pt">PT</button><button data-lang="it">IT</button><button data-lang="de">DE</button><button data-lang="nl">NL</button><button data-lang="ar">AR</button><button data-lang="wo" lang="wo">🇸🇳 WO</button><button data-lang="zh" lang="zh-CN">🇨🇳 中文</button>
 </div>
 <h1 data-i18n="title">Accès propriétaire</h1>
 <p class="lead" data-i18n="lead">Saisissez l’e-mail utilisé pour votre adhésion CARNET PRO. Vous recevrez un lien unique de connexion.</p>
@@ -41,7 +41,9 @@ pt:{title:"Acesso do proprietário",lead:"Introduza o e-mail usado na adesão CA
 it:{title:"Accesso proprietario",lead:"Inserisci l’e-mail usata per l’adesione CARNET PRO. Riceverai un link unico.",send:"Invia magic-link",back:"← Torna a CARNET PRO",sent:"Link inviato. Controlla l’e-mail.",email:"E-mail richiesta."},
 de:{title:"Inhaberzugang",lead:"Geben Sie die E-Mail Ihrer CARNET-PRO-Mitgliedschaft ein. Sie erhalten einen einmaligen Login-Link.",send:"Magic-Link senden",back:"← Zurück zu CARNET PRO",sent:"Link gesendet. E-Mail prüfen.",email:"E-Mail erforderlich."},
 nl:{title:"Eigenaartoegang",lead:"Voer het e-mailadres van uw CARNET PRO-lidmaatschap in. U ontvangt een eenmalige inloglink.",send:"Magic-link sturen",back:"← Terug naar CARNET PRO",sent:"Link verzonden. Controleer uw e-mail.",email:"E-mail verplicht."},
-ar:{title:"دخول المالك",lead:"أدخل البريد الإلكتروني المستخدم لاشتراك CARNET PRO. سيصلك رابط دخول لمرة واحدة.",send:"إرسال رابط الدخول",back:"العودة إلى CARNET PRO ←",sent:"تم إرسال الرابط. تحقق من بريدك الإلكتروني.",email:"البريد الإلكتروني مطلوب."}
+ar:{title:"دخول المالك",lead:"أدخل البريد الإلكتروني المستخدم لاشتراك CARNET PRO. سيصلك رابط دخول لمرة واحدة.",send:"إرسال رابط الدخول",back:"العودة إلى CARNET PRO ←",sent:"تم إرسال الرابط. تحقق من بريدك الإلكتروني.",email:"البريد الإلكتروني مطلوب."},
+wo:{title:"Duggu boroom CARNET",lead:"Bindal e-mail bi nga jëfandikoo ngir sa CARNET PRO. Dinañu la yónnee lien bu kenn mën a jëfandikoo benn yoon ngir duggu.",send:"Yónnee lien bi ngir duggu",back:"← Dellu CARNET PRO",sent:"Yónnee nañu lien bi. Seetal sa e-mail.",email:"Danga wara bind e-mail."},
+zh:{title:"经营者登录",lead:"请输入注册 CARNET PRO 时使用的电子邮箱。我们会向您发送一次性登录链接。",send:"发送登录链接",back:"← 返回 CARNET PRO",sent:"链接已发送，请查收电子邮件。",email:"请输入电子邮箱。"}
 };
 const R={
 fr:{title:"Code oublié ?",lead:"Recevez un lien sécurisé sur l’e-mail déjà associé à votre accès. Le PIN ne sera jamais envoyé par e-mail.",send:"Recevoir le lien de récupération"},
@@ -51,7 +53,9 @@ pt:{title:"Esqueceu o PIN?",lead:"Receba um link seguro no e-mail já associado 
 it:{title:"PIN dimenticato?",lead:"Ricevi un link sicuro all'e-mail già associata al tuo accesso. Il PIN non sarà mai inviato via e-mail.",send:"Invia link di recupero"},
 de:{title:"PIN vergessen?",lead:"Erhalten Sie einen sicheren Link an Ihre bereits verknüpfte E-Mail. Ihr PIN wird niemals per E-Mail versendet.",send:"Wiederherstellungslink senden"},
 nl:{title:"Pincode vergeten?",lead:"Ontvang een beveiligde link op het gekoppelde e-mailadres. De pincode wordt nooit gemaild.",send:"Herstellink versturen"},
-ar:{title:"هل نسيت الرمز؟",lead:"استلم رابطاً آمناً على بريدك الإلكتروني المرتبط بحسابك. لا يُرسل الرمز السري بالبريد.",send:"إرسال رابط الاستعادة"}
+ar:{title:"هل نسيت الرمز؟",lead:"استلم رابطاً آمناً على بريدك الإلكتروني المرتبط بحسابك. لا يُرسل الرمز السري بالبريد.",send:"إرسال رابط الاستعادة"},
+wo:{title:"Fàtte nga sa PIN?",lead:"Dinañu la yónnee lien bu aar ci e-mail bi ñu boole ak sa kont. Duñu yónnee PIN bi ci e-mail.",send:"Yónnee lien bi ngir jëfandikoo kont bi"},
+zh:{title:"忘记 PIN 码？",lead:"我们会向与账户关联的邮箱发送安全链接。PIN 码绝不会通过邮件发送。",send:"发送恢复链接"}
 };
 if(isRecovery)for(const code of Object.keys(R))Object.assign(T[code],R[code]);
 let lang=(new URLSearchParams(location.search).get("lang")||localStorage.getItem("digiy_lang")||"fr").slice(0,2).toLowerCase();if(!T[lang])lang="fr";
