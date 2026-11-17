@@ -33,7 +33,7 @@ function check(lang,existing){
  const document={
   readyState:'complete',documentElement:{lang:'fr',dir:'ltr'},body,
   querySelector(){return bar},createElement(){return{dataset:{},style:{}}},
-  createTreeWalker(){let done=false;return{nextNode(){if(done)return false;done=true;this.currentNode=node;return true}}},
+  createTreeWalker(){let done=false;return{nextNode(){if(done)return null;done=true;this.currentNode=node;return node}}},
  };
  const store={};
  const dicts={wo:{'Ton activité.':'Sa liggéey.'},zh:{'Ton activité.':'您的业务。'}};
