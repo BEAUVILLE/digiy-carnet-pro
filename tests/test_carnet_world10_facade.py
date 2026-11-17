@@ -9,6 +9,7 @@ ROOT=Path(__file__).resolve().parents[1]
 ENTRY=(ROOT/"index.html").read_text(encoding="utf-8")
 DICTS=(ROOT/"world8-dict.js").read_text(encoding="utf-8")
 BRIDGE=(ROOT/"world10-bridge.js").read_text(encoding="utf-8")
+NATIVE=(ROOT/"index-native-world8-source.html").read_text(encoding="utf-8")
 
 
 class CarnetFacadeWorldTen(unittest.TestCase):
@@ -17,6 +18,10 @@ class CarnetFacadeWorldTen(unittest.TestCase):
         self.assertIn("world10-bridge.js",ENTRY)
         self.assertIn("world8-link-fix.js",ENTRY)
         self.assertIn("index-native-world8-source.html",ENTRY)
+        self.assertIn("DIGIY_CARNET_ENTRY_LANG",ENTRY)
+        self.assertIn("world10-switch-v2",ENTRY)
+        self.assertIn("data-world8-lang=\"wo\"",NATIVE)
+        self.assertIn("data-world8-lang=\"zh\"",NATIVE)
 
     def test_two_complete_new_dictionaries(self):
         prefix="window.DIGIY_WORLD8_PAGE="
@@ -32,7 +37,10 @@ class CarnetFacadeWorldTen(unittest.TestCase):
         self.assertIn("0 % commission",DICTS)
 
     def test_bridge_is_local_and_does_not_change_owner(self):
-        self.assertIn("if(lang!=='wo'&&lang!=='zh')return",BRIDGE)
+        self.assertIn("ensureControls();",BRIDGE)
+        self.assertIn("if(!lang)return;",BRIDGE)
+        self.assertIn("u.searchParams.set('lang',code);",BRIDGE)
+        self.assertIn("bar.querySelector",BRIDGE)
         self.assertIn("document.documentElement.lang",BRIDGE)
         self.assertIn("window.DIGIY_WORLD8_PAGE",BRIDGE)
         self.assertIn("updateLinks(document)",BRIDGE)
