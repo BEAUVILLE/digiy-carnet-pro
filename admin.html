@@ -569,7 +569,7 @@
         document.querySelectorAll("nav.actions a[href]").forEach(link => {
           try{
             const url = new URL(link.getAttribute("href"), location.href);
-            if(!/^https?:$/.test(url.protocol) || !/(^|\\.)digiylyfe\\.com$/i.test(url.hostname)) return;
+            if(!/^https?:$/.test(url.protocol) || !/(^|\.)digiylyfe\.com$/i.test(url.hostname)) return;
             url.searchParams.set("lang", lang);
             link.href = url.toString();
           }catch(_){}
