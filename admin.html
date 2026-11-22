@@ -225,54 +225,54 @@
 </head>
 
 <body>
-  <main class="card" aria-label="DIGIY PAY admin réservé">
+  <main class="card" aria-label="DIGIY PAY admin réservé" data-i18n-aria="title">
     <section class="top">
       <div class="mark">🔐</div>
-      <p class="kicker">DIGIY PAY · espace réservé</p>
-      <h1>Cette porte est professionnelle.</h1>
-      <p class="sub">
+      <p class="kicker" data-i18n="kicker">DIGIY PAY · espace réservé</p>
+      <h1 data-i18n="title">Cette porte est professionnelle.</h1>
+      <p class="sub" data-i18n="sub">
         Les réglages PAY ne se font plus ici côté public. Pour gérer la carte, les preuves,
         le cockpit et les mouvements, il faut passer par PAY PRO.
       </p>
     </section>
 
-    <div class="notice">
+    <div class="notice" data-i18n="notice">
       Sécurité DIGIY : cette page publique ne doit pas afficher de téléphone, de slug,
       de session ou de réglage professionnel.
     </div>
 
-    <section class="audio-panel" aria-label="Aide audio">
-      <strong>🎧 Besoin d’explication ?</strong>
-      <span>
+    <section class="audio-panel" aria-label="Aide audio" data-i18n-aria="audioTitle">
+      <strong data-i18n="audioTitle">🎧 Besoin d’explication ?</strong>
+      <span data-i18n="audioHelp">
         Écoute DIGIY : cette page protège les réglages pro et t’indique le bon chemin.
       </span>
-      <button class="btn primary" id="audioBtn" type="button">🎧 Écouter DIGIY</button>
+      <button class="btn primary" id="audioBtn" type="button" data-i18n="audioStart">🎧 Écouter DIGIY</button>
     </section>
 
-    <section class="steps" aria-label="Orientation">
+    <section class="steps" aria-label="Orientation" data-i18n-aria="stepsAria">
       <div class="step">
-        <strong>1 · Client</strong>
-        <span>Le client reste sur la carte publique PAY.</span>
+        <strong data-i18n="clientTitle">1 · Client</strong>
+        <span data-i18n="clientText">Le client reste sur la carte publique PAY.</span>
       </div>
       <div class="step">
-        <strong>2 · Professionnel</strong>
-        <span>Le pro gère ses preuves et son cockpit dans PAY PRO.</span>
+        <strong data-i18n="proTitle">2 · Professionnel</strong>
+        <span data-i18n="proText">Le pro gère ses preuves et son cockpit dans PAY PRO.</span>
       </div>
       <div class="step">
-        <strong>3 · Sécurité</strong>
-        <span>Aucune donnée sensible n’est exposée ici.</span>
+        <strong data-i18n="safetyTitle">3 · Sécurité</strong>
+        <span data-i18n="safetyText">Aucune donnée sensible n’est exposée ici.</span>
       </div>
     </section>
 
-    <nav class="actions" aria-label="Navigation">
-      <a class="btn green" href="https://pro-pay.digiylyfe.com/">🔐 Ouvrir PAY PRO</a>
-      <a class="btn" href="./index.html">💳 Retour carte PAY</a>
-      <a class="btn" href="https://digiylyfe.com/">🌍 Site DIGIYLYFE</a>
-      <a class="btn" href="https://digiy-hub.digiylyfe.com/">🧭 HUB</a>
-      <a class="btn primary" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
+    <nav class="actions" aria-label="Navigation" data-i18n-aria="navAria">
+      <a class="btn green" href="https://pro-pay.digiylyfe.com/" data-i18n="openPro">🔐 Ouvrir PAY PRO</a>
+      <a class="btn" href="./index.html" data-i18n="backPay">💳 Retour carte PAY</a>
+      <a class="btn" href="https://digiylyfe.com/" data-i18n="site">🌍 Site DIGIYLYFE</a>
+      <a class="btn" href="https://digiy-hub.digiylyfe.com/" data-i18n="hub">🧭 HUB</a>
+      <a class="btn primary" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer" data-i18n="prices">📦 Tarifs</a>
     </nav>
 
-    <div class="foot">
+    <div class="foot" data-i18n="foot">
       DIGIY PAY public sert à payer directement et à envoyer une preuve.
       PAY PRO sert à gérer, vérifier et organiser l’activité.
     </div>
@@ -281,6 +281,300 @@
   <script>
     (() => {
       "use strict";
+
+
+      // WORLD10 · Porte d'orientation publique uniquement. Aucun accès professionnel modifié.
+      const TRANSLATIONS = {
+        "fr": {
+          "kicker": "DIGIY PAY · espace réservé",
+          "title": "Cette porte est professionnelle.",
+          "sub": "Les réglages PAY ne se font plus ici côté public. Pour gérer la carte, les preuves, le cockpit et les mouvements, passez par PAY PRO.",
+          "notice": "Sécurité DIGIY : cette page publique ne doit pas afficher de téléphone, de slug, de session ou de réglages professionnels.",
+          "audioTitle": "🎧 Besoin d’explication ?",
+          "audioHelp": "Écoutez DIGIY : cette page protège les réglages pro et indique le bon chemin.",
+          "audioStart": "🎧 Écouter DIGIY",
+          "audioUnavailable": "🔇 Audio indisponible dans cette langue sur cet appareil",
+          "clientTitle": "1 · Client",
+          "clientText": "Le client reste sur la carte publique PAY.",
+          "proTitle": "2 · Professionnel",
+          "proText": "Le pro gère ses preuves et son cockpit dans PAY PRO.",
+          "safetyTitle": "3 · Sécurité",
+          "safetyText": "Aucune donnée sensible n’est exposée ici.",
+          "openPro": "🔐 Ouvrir PAY PRO",
+          "backPay": "💳 Retour carte PAY",
+          "site": "🌍 Site DIGIYLYFE",
+          "hub": "🧭 HUB",
+          "prices": "📦 Tarifs",
+          "foot": "DIGIY PAY public sert à payer directement et envoyer une preuve. PAY PRO sert à gérer, vérifier et organiser l’activité.",
+          "stop": "Arrêter",
+          "stepsAria": "Orientation",
+          "navAria": "Navigation"
+        },
+        "wo": {
+          "kicker": "DIGIY PAY · bunt bu ñu jagleel pro yi",
+          "title": "Bunt bii ngir profesioneel yi la.",
+          "sub": "Duñu def réglage PAY fii ci pàccu publik bi. Ngir saytu kart bi, firnde yi, cockpit bi ak yëngu-yëngu yi, dugg ci PAY PRO.",
+          "notice": "Kaaraange DIGIY: xët wu ñépp man a gis wii du wone nimero telefon, slug, sesiyoŋ walla réglage yu pro.",
+          "audioTitle": "🎧 Danga bëgg leeral?",
+          "audioHelp": "Déggal DIGIY: xët wii day aar réglage pro yi te wone la yoon wi war.",
+          "audioStart": "🎧 Déggal DIGIY",
+          "audioUnavailable": "🔇 Audio amul ci làkk wii ci sa aparey",
+          "clientTitle": "1 · Kiliyaan",
+          "clientText": "Kiliyaan bi des na ci kart PAY bu publik bi.",
+          "proTitle": "2 · Profesioneel",
+          "proText": "Profesioneel bi dafay saytu firnde yi ak cockpit bi ci PAY PRO.",
+          "safetyTitle": "3 · Kaaraange",
+          "safetyText": "Amul benn xibaar bu nëbbu buñu wone fii.",
+          "openPro": "🔐 Ubbi PAY PRO",
+          "backPay": "💳 Dellu ci kart PAY",
+          "site": "🌍 Site DIGIYLYFE",
+          "hub": "🧭 HUB",
+          "prices": "📦 Njëg yi",
+          "foot": "PAY publik ngir fay ci kanam ak yónnee firnde. PAY PRO ngir saytu, seet ak tëral liggéey bi.",
+          "stop": "Taxawal",
+          "stepsAria": "Yoon wi",
+          "navAria": "Nawigasion"
+        },
+        "en": {
+          "kicker": "DIGIY PAY · restricted access",
+          "title": "This entrance is for professionals.",
+          "sub": "PAY settings are no longer managed on this public page. To manage your card, proofs, dashboard and transactions, use PAY PRO.",
+          "notice": "DIGIY security: this public page must not show phone numbers, slugs, sessions or professional settings.",
+          "audioTitle": "🎧 Need an explanation?",
+          "audioHelp": "Listen to DIGIY: this page protects professional settings and shows you the correct route.",
+          "audioStart": "🎧 Listen to DIGIY",
+          "audioUnavailable": "🔇 Audio unavailable in this language on this device",
+          "clientTitle": "1 · Customer",
+          "clientText": "Customers remain on the public PAY card.",
+          "proTitle": "2 · Professional",
+          "proText": "Professionals manage proofs and the dashboard in PAY PRO.",
+          "safetyTitle": "3 · Security",
+          "safetyText": "No sensitive data is displayed here.",
+          "openPro": "🔐 Open PAY PRO",
+          "backPay": "💳 Back to PAY card",
+          "site": "🌍 DIGIYLYFE website",
+          "hub": "🧭 HUB",
+          "prices": "📦 Prices",
+          "foot": "Public DIGIY PAY lets customers pay directly and send proof. PAY PRO is for managing, verifying and organizing the business.",
+          "stop": "Stop",
+          "stepsAria": "Guidance",
+          "navAria": "Navigation"
+        },
+        "es": {
+          "kicker": "DIGIY PAY · acceso restringido",
+          "title": "Esta entrada es para profesionales.",
+          "sub": "Los ajustes de PAY ya no se realizan en esta página pública. Para gestionar la tarjeta, los comprobantes, el panel y los movimientos, entra en PAY PRO.",
+          "notice": "Seguridad DIGIY: esta página pública no debe mostrar teléfonos, identificadores, sesiones ni ajustes profesionales.",
+          "audioTitle": "🎧 ¿Necesitas una explicación?",
+          "audioHelp": "Escucha DIGIY: esta página protege los ajustes profesionales y te indica el camino correcto.",
+          "audioStart": "🎧 Escuchar DIGIY",
+          "audioUnavailable": "🔇 Audio no disponible en este idioma en este dispositivo",
+          "clientTitle": "1 · Cliente",
+          "clientText": "El cliente permanece en la tarjeta pública PAY.",
+          "proTitle": "2 · Profesional",
+          "proText": "El profesional gestiona sus comprobantes y su panel en PAY PRO.",
+          "safetyTitle": "3 · Seguridad",
+          "safetyText": "Aquí no se muestran datos sensibles.",
+          "openPro": "🔐 Abrir PAY PRO",
+          "backPay": "💳 Volver a la tarjeta PAY",
+          "site": "🌍 Sitio DIGIYLYFE",
+          "hub": "🧭 HUB",
+          "prices": "📦 Tarifas",
+          "foot": "DIGIY PAY público permite pagar directamente y enviar comprobantes. PAY PRO sirve para gestionar, verificar y organizar la actividad.",
+          "stop": "Detener",
+          "stepsAria": "Orientación",
+          "navAria": "Navegación"
+        },
+        "pt": {
+          "kicker": "DIGIY PAY · acesso reservado",
+          "title": "Esta entrada é para profissionais.",
+          "sub": "As definições PAY já não são geridas nesta página pública. Para gerir o cartão, os comprovativos, o painel e os movimentos, aceda ao PAY PRO.",
+          "notice": "Segurança DIGIY: esta página pública não deve mostrar telefones, identificadores, sessões ou definições profissionais.",
+          "audioTitle": "🎧 Precisa de uma explicação?",
+          "audioHelp": "Ouça o DIGIY: esta página protege as definições profissionais e indica o caminho certo.",
+          "audioStart": "🎧 Ouvir DIGIY",
+          "audioUnavailable": "🔇 Áudio indisponível neste idioma neste dispositivo",
+          "clientTitle": "1 · Cliente",
+          "clientText": "O cliente permanece no cartão PAY público.",
+          "proTitle": "2 · Profissional",
+          "proText": "O profissional gere os comprovativos e o painel no PAY PRO.",
+          "safetyTitle": "3 · Segurança",
+          "safetyText": "Nenhum dado sensível é apresentado aqui.",
+          "openPro": "🔐 Abrir PAY PRO",
+          "backPay": "💳 Voltar ao cartão PAY",
+          "site": "🌍 Site DIGIYLYFE",
+          "hub": "🧭 HUB",
+          "prices": "📦 Preços",
+          "foot": "O DIGIY PAY público permite pagar diretamente e enviar comprovativos. O PAY PRO permite gerir, verificar e organizar a atividade.",
+          "stop": "Parar",
+          "stepsAria": "Orientação",
+          "navAria": "Navegação"
+        },
+        "it": {
+          "kicker": "DIGIY PAY · accesso riservato",
+          "title": "Questo accesso è per professionisti.",
+          "sub": "Le impostazioni PAY non si gestiscono più in questa pagina pubblica. Per gestire la carta, le prove, il pannello e le operazioni, usa PAY PRO.",
+          "notice": "Sicurezza DIGIY: questa pagina pubblica non deve mostrare numeri di telefono, identificativi, sessioni o impostazioni professionali.",
+          "audioTitle": "🎧 Hai bisogno di spiegazioni?",
+          "audioHelp": "Ascolta DIGIY: questa pagina protegge le impostazioni professionali e indica il percorso corretto.",
+          "audioStart": "🎧 Ascolta DIGIY",
+          "audioUnavailable": "🔇 Audio non disponibile in questa lingua su questo dispositivo",
+          "clientTitle": "1 · Cliente",
+          "clientText": "Il cliente rimane sulla carta PAY pubblica.",
+          "proTitle": "2 · Professionista",
+          "proText": "Il professionista gestisce le prove e il pannello in PAY PRO.",
+          "safetyTitle": "3 · Sicurezza",
+          "safetyText": "Qui non vengono mostrati dati sensibili.",
+          "openPro": "🔐 Apri PAY PRO",
+          "backPay": "💳 Torna alla carta PAY",
+          "site": "🌍 Sito DIGIYLYFE",
+          "hub": "🧭 HUB",
+          "prices": "📦 Tariffe",
+          "foot": "DIGIY PAY pubblico consente di pagare direttamente e inviare una prova. PAY PRO serve a gestire, verificare e organizzare l'attività.",
+          "stop": "Interrompi",
+          "stepsAria": "Indicazioni",
+          "navAria": "Navigazione"
+        },
+        "de": {
+          "kicker": "DIGIY PAY · geschützter Zugang",
+          "title": "Dieser Zugang ist für Fachleute.",
+          "sub": "PAY-Einstellungen werden nicht mehr auf dieser öffentlichen Seite verwaltet. Für Karte, Nachweise, Cockpit und Vorgänge öffnen Sie PAY PRO.",
+          "notice": "DIGIY-Sicherheit: Diese öffentliche Seite darf keine Telefonnummern, Kennungen, Sitzungen oder professionellen Einstellungen anzeigen.",
+          "audioTitle": "🎧 Benötigen Sie eine Erklärung?",
+          "audioHelp": "DIGIY anhören: Diese Seite schützt professionelle Einstellungen und zeigt den richtigen Weg.",
+          "audioStart": "🎧 DIGIY anhören",
+          "audioUnavailable": "🔇 Audio für diese Sprache auf diesem Gerät nicht verfügbar",
+          "clientTitle": "1 · Kunde",
+          "clientText": "Kunden bleiben auf der öffentlichen PAY-Karte.",
+          "proTitle": "2 · Fachkraft",
+          "proText": "Fachkräfte verwalten Nachweise und Cockpit in PAY PRO.",
+          "safetyTitle": "3 · Sicherheit",
+          "safetyText": "Hier werden keine sensiblen Daten angezeigt.",
+          "openPro": "🔐 PAY PRO öffnen",
+          "backPay": "💳 Zurück zur PAY-Karte",
+          "site": "🌍 DIGIYLYFE-Website",
+          "hub": "🧭 HUB",
+          "prices": "📦 Preise",
+          "foot": "Öffentliches DIGIY PAY ermöglicht direkte Zahlung und Übermittlung eines Nachweises. PAY PRO dient zur Verwaltung, Prüfung und Organisation des Geschäfts.",
+          "stop": "Stopp",
+          "stepsAria": "Orientierung",
+          "navAria": "Navigation"
+        },
+        "nl": {
+          "kicker": "DIGIY PAY · beveiligde toegang",
+          "title": "Deze ingang is voor professionals.",
+          "sub": "PAY-instellingen worden niet meer op deze openbare pagina beheerd. Open PAY PRO om de kaart, betaalbewijzen, het dashboard en transacties te beheren.",
+          "notice": "DIGIY-beveiliging: deze openbare pagina mag geen telefoonnummers, identificaties, sessies of professionele instellingen tonen.",
+          "audioTitle": "🎧 Uitleg nodig?",
+          "audioHelp": "Luister naar DIGIY: deze pagina beschermt professionele instellingen en wijst de juiste weg.",
+          "audioStart": "🎧 Luister naar DIGIY",
+          "audioUnavailable": "🔇 Audio niet beschikbaar in deze taal op dit apparaat",
+          "clientTitle": "1 · Klant",
+          "clientText": "Klanten blijven op de openbare PAY-kaart.",
+          "proTitle": "2 · Professional",
+          "proText": "Professionals beheren betaalbewijzen en hun dashboard in PAY PRO.",
+          "safetyTitle": "3 · Beveiliging",
+          "safetyText": "Hier worden geen gevoelige gegevens getoond.",
+          "openPro": "🔐 Open PAY PRO",
+          "backPay": "💳 Terug naar PAY-kaart",
+          "site": "🌍 DIGIYLYFE-website",
+          "hub": "🧭 HUB",
+          "prices": "📦 Tarieven",
+          "foot": "Openbaar DIGIY PAY maakt rechtstreeks betalen en het versturen van bewijs mogelijk. PAY PRO is er om het bedrijf te beheren, controleren en organiseren.",
+          "stop": "Stoppen",
+          "stepsAria": "Wegwijzer",
+          "navAria": "Navigatie"
+        },
+        "ar": {
+          "kicker": "DIGIY PAY · دخول مخصص للمحترفين",
+          "title": "هذا المدخل مخصص للمحترفين.",
+          "sub": "لم تعد إعدادات PAY تُدار من هذه الصفحة العامة. لإدارة البطاقة والإثباتات ولوحة التحكم والمعاملات، افتح PAY PRO.",
+          "notice": "أمان DIGIY: يجب ألا تعرض هذه الصفحة العامة أرقام الهواتف أو المعرفات أو الجلسات أو إعدادات المحترفين.",
+          "audioTitle": "🎧 هل تحتاج إلى توضيح؟",
+          "audioHelp": "استمع إلى DIGIY: تحمي هذه الصفحة إعدادات المحترفين وتوضح المسار الصحيح.",
+          "audioStart": "🎧 استمع إلى DIGIY",
+          "audioUnavailable": "🔇 الصوت غير متاح بهذه اللغة على هذا الجهاز",
+          "clientTitle": "1 · العميل",
+          "clientText": "يبقى العميل على بطاقة PAY العامة.",
+          "proTitle": "2 · المحترف",
+          "proText": "يدير المحترف إثباتاته ولوحة التحكم في PAY PRO.",
+          "safetyTitle": "3 · الأمان",
+          "safetyText": "لا تُعرض هنا أي بيانات حساسة.",
+          "openPro": "🔐 فتح PAY PRO",
+          "backPay": "💳 العودة إلى بطاقة PAY",
+          "site": "🌍 موقع DIGIYLYFE",
+          "hub": "🧭 HUB",
+          "prices": "📦 الأسعار",
+          "foot": "يتيح DIGIY PAY العام الدفع المباشر وإرسال الإثبات. أما PAY PRO فيُستخدم لإدارة النشاط والتحقق منه وتنظيمه.",
+          "stop": "إيقاف",
+          "stepsAria": "التوجيه",
+          "navAria": "التنقل"
+        },
+        "zh": {
+          "kicker": "DIGIY PAY · 专业用户入口",
+          "title": "此入口仅供专业用户使用。",
+          "sub": "PAY 设置不再通过此公开页面管理。请进入 PAY PRO 管理卡片、付款凭证、控制台和交易记录。",
+          "notice": "DIGIY 安全提醒：此公开页面不得显示电话号码、标识、会话或专业设置。",
+          "audioTitle": "🎧 需要说明吗？",
+          "audioHelp": "收听 DIGIY：本页面保护专业设置，并指引您前往正确入口。",
+          "audioStart": "🎧 收听 DIGIY",
+          "audioUnavailable": "🔇 此设备不支持该语言的语音",
+          "clientTitle": "1 · 客户",
+          "clientText": "客户继续使用公开的 PAY 卡片。",
+          "proTitle": "2 · 商家",
+          "proText": "商家在 PAY PRO 中管理凭证和控制台。",
+          "safetyTitle": "3 · 安全",
+          "safetyText": "此处不会展示任何敏感数据。",
+          "openPro": "🔐 打开 PAY PRO",
+          "backPay": "💳 返回 PAY 卡片",
+          "site": "🌍 DIGIYLYFE 网站",
+          "hub": "🧭 HUB",
+          "prices": "📦 价格",
+          "foot": "公开的 DIGIY PAY 用于直接付款和提交凭证；PAY PRO 用于管理、核验和组织业务。",
+          "stop": "停止",
+          "stepsAria": "入口指引",
+          "navAria": "导航"
+        }
+      };
+      const LANGS = ["fr","wo","en","es","pt","it","de","nl","ar","zh"];
+      const LANG_VOICES = {fr:"fr-FR",wo:"wo-SN",en:"en-US",es:"es-ES",pt:"pt-PT",it:"it-IT",de:"de-DE",nl:"nl-NL",ar:"ar-SA",zh:"zh-CN"};
+      const paramLang = (new URLSearchParams(location.search)).get("lang");
+      let storedLang = "";
+      try{ storedLang = localStorage.getItem("digiy-lang") || localStorage.getItem("digiy_lang") || ""; }catch(_){}
+      function normalizeLang(value){
+        const code = String(value || "").trim().slice(0,2).toLowerCase();
+        return LANGS.includes(code) ? code : "";
+      }
+      const lang = normalizeLang(paramLang) || normalizeLang(storedLang) || "fr";
+      const tr = (key) => TRANSLATIONS[lang][key] || TRANSLATIONS.fr[key];
+      function applyLanguage(){
+        document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        document.querySelectorAll("[data-i18n]").forEach(node => {
+          node.textContent = tr(node.getAttribute("data-i18n"));
+        });
+        document.querySelectorAll("[data-i18n-aria]").forEach(node => {
+          node.setAttribute("aria-label", tr(node.getAttribute("data-i18n-aria")));
+        });
+        document.title = "DIGIY PAY — " + tr("title");
+        const description = document.querySelector('meta[name="description"]');
+        if(description) description.content = tr("sub");
+        try{
+          localStorage.setItem("digiy-lang",lang);
+          localStorage.setItem("digiy_lang",lang);
+        }catch(_){}
+      }
+      function preserveLanguageOnNavigation(){
+        // Ne transmettre que "lang" — jamais les paramètres sensibles de la page.
+        document.querySelectorAll("nav.actions a[href]").forEach(link => {
+          try{
+            const url = new URL(link.getAttribute("href"), location.href);
+            if(!/^https?:$/.test(url.protocol) || !/(^|\\.)digiylyfe\\.com$/i.test(url.hostname)) return;
+            url.searchParams.set("lang", lang);
+            link.href = url.toString();
+          }catch(_){}
+        });
+      }
 
       const SENSITIVE_KEYS = [
         "phone",
@@ -343,64 +637,63 @@
         return "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
       }
 
-      function getFrenchVoice(){
+      function preferredVoice(){
+        if(!canSpeak()) return null;
         try{
           const voices = speechSynthesis.getVoices() || [];
-          return voices.find(v => /fr[-_]?fr/i.test(v.lang || "")) ||
-                 voices.find(v => /^fr/i.test(v.lang || "")) ||
-                 voices[0] ||
+          const locale = LANG_VOICES[lang].toLowerCase();
+          return voices.find(v => String(v.lang || "").toLowerCase().replace("_","-") === locale) ||
+                 voices.find(v => String(v.lang || "").toLowerCase().startsWith(lang === "zh" ? "zh" : lang+"-")) ||
                  null;
-        }catch(_){
-          return null;
-        }
+        }catch(_){return null;}
+      }
+
+      function refreshAudioButton(){
+        const btn = document.getElementById("audioBtn");
+        if(!btn) return;
+        const ready = !!preferredVoice();
+        btn.disabled = !ready;
+        btn.textContent = ready ? tr("audioStart") : tr("audioUnavailable");
+        btn.title = ready ? "" : tr("audioUnavailable");
       }
 
       function stopAudio(){
         try{ if(canSpeak()) speechSynthesis.cancel(); }catch(_){}
-        const btn = document.getElementById("audioBtn");
-        if(btn) btn.textContent = "🎧 Écouter DIGIY";
+        refreshAudioButton();
       }
 
       function speakAudio(){
-        if(!canSpeak()) return;
-
+        const voice = preferredVoice();
+        if(!voice) return;
         stopAudio();
-
-        const text =
-          "Cette page est une porte de sécurité DIGIY PAY. Elle ne sert pas aux clients pour payer, et elle ne sert plus au professionnel pour régler sa carte dans le domaine public. Le client doit rester sur la carte PAY publique. Le professionnel doit ouvrir PAY PRO pour gérer son cockpit, ses preuves, ses mouvements et ses réglages. Ici, aucune donnée sensible ne doit être affichée : pas de téléphone, pas de slug, pas de session. DIGIY protège la route : public d’un côté, professionnel de l’autre.";
-
-        const run = () => {
-          const u = new SpeechSynthesisUtterance(text);
-          const voice = getFrenchVoice();
-          if(voice) u.voice = voice;
-          u.lang = voice?.lang || "fr-FR";
-          u.rate = 0.86;
-          u.pitch = 1.04;
-          u.volume = 1;
-
-          const btn = document.getElementById("audioBtn");
-          if(btn) btn.textContent = "⏹ Stop";
-
-          u.onend = () => { if(btn) btn.textContent = "🎧 Écouter DIGIY"; };
-          u.onerror = () => { if(btn) btn.textContent = "🎧 Écouter DIGIY"; };
-
-          speechSynthesis.speak(u);
-        };
-
-        const voices = speechSynthesis.getVoices();
-        if(voices && voices.length) run();
-        else{
-          speechSynthesis.onvoiceschanged = run;
-          setTimeout(run, 650);
-        }
+        const content = [tr("sub"), tr("clientText"), tr("proText"), tr("safetyText")].join(" ");
+        const utterance = new SpeechSynthesisUtterance(content);
+        utterance.voice = voice;
+        utterance.lang = LANG_VOICES[lang];
+        utterance.rate = 0.86;
+        utterance.pitch = 1.04;
+        utterance.volume = 1;
+        const btn = document.getElementById("audioBtn");
+        if(btn) btn.textContent = "⏹ " + tr("stop");
+        utterance.onend = refreshAudioButton;
+        utterance.onerror = refreshAudioButton;
+        speechSynthesis.speak(utterance);
       }
 
       cleanVisibleUrl();
-
-      if(document.readyState === "loading"){
-        document.addEventListener("DOMContentLoaded", cleanLinks);
-      }else{
+      function initGate(){
+        applyLanguage();
         cleanLinks();
+        preserveLanguageOnNavigation();
+        refreshAudioButton();
+        if(canSpeak()){
+          speechSynthesis.addEventListener("voiceschanged", refreshAudioButton);
+        }
+      }
+      if(document.readyState === "loading"){
+        document.addEventListener("DOMContentLoaded", initGate, {once:true});
+      }else{
+        initGate();
       }
 
       document.getElementById("audioBtn")?.addEventListener("click", () => {
